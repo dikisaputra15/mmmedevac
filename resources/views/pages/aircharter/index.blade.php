@@ -93,7 +93,7 @@
 <div class="card">
      <div class="d-flex justify-content-between p-3" style="background-color: #dfeaf1;">
         <div class="d-flex gap-2 align-items-center">
-            <h2 class="fw-bold">AIR CHARTER INFORMATION - Thailand </h2>
+            <h2 class="fw-bold">AIR CHARTER INFORMATION - Myanmar </h2>
         </div>
 
         <div class="d-flex gap-2 ms-auto">
@@ -115,7 +115,7 @@
 
             <!-- Button 7 -->
             <a href="{{ url('embassiees') }}" class="btn btn-danger d-flex flex-column align-items-center p-3">
-            <img src="{{ asset('images/icon-embassy.png') }}" style="width: 24px; height: 24px;">
+            <img src="{{ asset('images/icon-Embessy.png') }}" style="width: 24px; height: 24px;">
                 <small>Embassies</small>
             </a>
         </div>

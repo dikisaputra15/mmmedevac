@@ -11,7 +11,7 @@ use App\Http\Controllers\{
     AircharterController,
     MasterairportController,
     MasterhospitalController,
-    MasterembessyController,
+    MasterEmbessyController,
     MasteraircharterController,
     RoleController,
     UserController,
@@ -85,14 +85,14 @@ Route::middleware(['web', 'jwt.login'])->group(function () {
         // === MASTER DATA ===
         Route::resource('airportdata', MasterairportController::class);
         Route::resource('hospitaldata', MasterhospitalController::class);
-        Route::resource('embessydata', MasterembessyController::class);
+        Route::resource('Embessydata', MasterEmbessyController::class);
         Route::resource('aircharterdata', MasteraircharterController::class);
         Route::resource('roles', RoleController::class);
         Route::resource('user', UserController::class);
 
         Route::post('/airportdata/{id}/toggle-status', [MasterairportController::class, 'toggleStatus'])->name('airportdata.toggleStatus');
         Route::post('/hospitaldata/{id}/toggle-status', [MasterhospitalController::class, 'toggleStatus'])->name('hospitaldata.toggleStatus');
-        Route::post('/embassydata/{id}/toggle-status', [MasterembessyController::class, 'toggleStatus'])->name('embassydata.toggleStatus');
+        Route::post('/Embessydata/{id}/toggle-status', [MasterEmbessyController::class, 'toggleStatus'])->name('Embessydata.toggleStatus');
 
         // === FITUR APP ===
         Route::resource('hospital', HospitalController::class);
@@ -113,14 +113,14 @@ Route::middleware(['web', 'jwt.login'])->group(function () {
 
         // === API FILTER ===
         Route::get('/api/airports', [AirportsController::class, 'filter']);
-        Route::get('/api/embassy', [EmbassieesController::class, 'filter']);
+        Route::get('/api/Embessy', [EmbassieesController::class, 'filter']);
         Route::get('/api/hospital', [HospitalController::class, 'filter']);
 
         // === USER ROLE ===
         Route::post('/user/{user}/update-role', [UserController::class, 'updateRole'])->name('user.updateRole');
 
         // === DEPENDENCY ===
-        Route::get('/get-cities/{province_id}', [MasterembessyController::class, 'getCities']);
+        Route::get('/get-cities/{province_id}', [MasterEmbessyController::class, 'getCities']);
     });
 });
 

@@ -26,7 +26,7 @@
         border-radius: 5px;
         padding: 10px;
     }
-    .total-embassy {
+    .total-Embessy {
         background: white;
         padding: 8px 12px;
         border-radius: 8px;
@@ -195,7 +195,7 @@
             </a>
 
             <a href="{{ url('embassiees') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees') ? 'active' : '' }}">
-            <img src="{{ asset('images/icon-embassy.png') }}" style="width: 24px; height: 24px;">
+            <img src="{{ asset('images/icon-Embessy.png') }}" style="width: 24px; height: 24px;">
                 <small>Embassies</small>
             </a>
 
@@ -208,8 +208,8 @@
                  <div class="col-md-2">
                         <label for="name" class="form-label">Diplomatic Missions</label>
                         <select id="name" class="form-select select2-search" name="name">
-                            <option value="">🔍 All Embassy</option>
-                            @foreach($embassyNames as $name)
+                            <option value="">🔍 All Embessy</option>
+                            @foreach($EmbessyNames as $name)
                                 <option value="{{ $name }}">{{ $name }}</option>
                             @endforeach
                         </select>
@@ -219,7 +219,7 @@
                         <label for="location" class="form-label">Location</label>
                         <select id="location" class="form-select select2-search" name="location">
                             <option value="">🔍 All Locations</option>
-                            @foreach($embassyLocations as $location)
+                            @foreach($EmbessyLocations as $location)
                                 <option value="{{ $location }}">{{ $location }}</option>
                             @endforeach
                         </select>
@@ -335,7 +335,7 @@ document.addEventListener('click', e => {
 
     const map = L.map('map', {
         fullscreenControl: true
-    }).setView([15.561656906765931, 100.85374832882776], 6);
+    }).setView([21.909935841888522, 95.91172488921482], 6);
 
     // --- Define Tile Layers ---
     // 1. OpenStreetMap (Peta Jalan) - Ini akan menjadi default
@@ -363,9 +363,9 @@ document.addEventListener('click', e => {
     // Tambahkan kontrol layer ke peta (akan muncul di pojok kanan atas secara default)
     L.control.layers(baseLayers).addTo(map);
 
-    let embassyMarkers = L.featureGroup().addTo(map);
+    let EmbessyMarkers = L.featureGroup().addTo(map);
     let centerMarker = null;
-    let lastClickedEmbassy = null;
+    let lastClickedEmbessy = null;
     let destinationMarker = null;
     let destinationCoordinates = null;
     let drawnPolygonGeoJSON = null;
@@ -412,8 +412,8 @@ document.addEventListener('click', e => {
 
     const totalControl = L.control({ position: 'topright' });
     totalControl.onAdd = function (map) {
-        const div = L.DomUtil.create('div', 'total-embassy');
-        div.innerHTML = 'Loading embassy count...';
+        const div = L.DomUtil.create('div', 'total-Embessy');
+        div.innerHTML = 'Loading Embessy count...';
         return div;
     };
     totalControl.addTo(map);
@@ -436,8 +436,8 @@ document.addEventListener('click', e => {
         destinationMarker.bindPopup("<b>Destination</b>").openPopup();
 
         // Opsional: Sesuaikan tampilan peta untuk menyertakan tujuan
-        if (embassyMarkers.getLayers().length > 0) {
-            const bounds = embassyMarkers.getBounds().extend(destinationCoordinates);
+        if (EmbessyMarkers.getLayers().length > 0) {
+            const bounds = EmbessyMarkers.getBounds().extend(destinationCoordinates);
             map.fitBounds(bounds, { padding: [50, 50] });
         } else {
             map.setView(destinationCoordinates, 10); // Jika tidak ada kedutaan lain, fokus ke tujuan
@@ -447,7 +447,7 @@ document.addEventListener('click', e => {
     // Fungsi untuk memperbarui lingkaran radius
     function updateRadiusCircle() {
         const radius = parseInt(document.getElementById('radiusRange').value);
-        const center = lastClickedEmbassy ?? map.getCenter(); // Gunakan kedutaan terakhir diklik, atau pusat peta
+        const center = lastClickedEmbessy ?? map.getCenter(); // Gunakan kedutaan terakhir diklik, atau pusat peta
 
         // Pastikan centerMarker dihapus sebelum membuat yang baru, jika ada
         if (centerMarker) {
@@ -472,12 +472,12 @@ document.addEventListener('click', e => {
 
     // Event listener untuk klik pada peta untuk menentukan pusat radius secara manual
     map.on('click', function(e) {
-        lastClickedEmbassy = { lat: e.latlng.lat, lng: e.latlng.lng }; // Set pusat radius ke lokasi klik
+        lastClickedEmbessy = { lat: e.latlng.lat, lng: e.latlng.lng }; // Set pusat radius ke lokasi klik
         updateRadiusCircle(); // Perbarui lingkaran radius
     });
 
-    async function fetchAndDisplayembassy(filters = {}) {
-        embassyMarkers.clearLayers();
+    async function fetchAndDisplayEmbessy(filters = {}) {
+        EmbessyMarkers.clearLayers();
 
         const params = new URLSearchParams();
         Object.keys(filters).forEach(key => {
@@ -496,47 +496,47 @@ document.addEventListener('click', e => {
         }
 
         // --- Simpan parameter filter ke localStorage untuk persistensi ---
-        localStorage.setItem('embessyFilterParams', params.toString());
+        localStorage.setItem('EmbessyFilterParams', params.toString());
         if (drawnPolygonGeoJSON) {
-            localStorage.setItem('embessyDrawnPolygon', JSON.stringify(drawnPolygonGeoJSON));
+            localStorage.setItem('EmbessyDrawnPolygon', JSON.stringify(drawnPolygonGeoJSON));
         } else {
-            localStorage.removeItem('embessyDrawnPolygon');
+            localStorage.removeItem('EmbessyDrawnPolygon');
         }
-        if (lastClickedEmbassy) {
-            localStorage.setItem('embessyLastClickedCenter', JSON.stringify(lastClickedEmbassy));
+        if (lastClickedEmbessy) {
+            localStorage.setItem('EmbessyLastClickedCenter', JSON.stringify(lastClickedEmbessy));
         } else {
-            localStorage.removeItem('embessyLastClickedCenter');
+            localStorage.removeItem('EmbessyLastClickedCenter');
         }
 
         try {
-            const response = await fetch(`/api/embassy?${params.toString()}`);
+            const response = await fetch(`/api/Embessy?${params.toString()}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const embassy = await response.json();
+            const Embessy = await response.json();
 
-            document.querySelector('.total-embassy').innerText = `Total embassy: ${embassy.length}`;
+            document.querySelector('.total-Embessy').innerText = `Total Embessy: ${Embessy.length}`;
 
-            if (embassy.length === 0) {
-                embassyMarkers.clearLayers();
+            if (Embessy.length === 0) {
+                EmbessyMarkers.clearLayers();
                 return;
             }
 
-            embassy.forEach(embassy => {
-                const embassyIcon = L.icon({
-                    iconUrl: '/images/embassy-icon-new.png', // Pastikan path ikon ini benar
+            Embessy.forEach(Embessy => {
+                const EmbessyIcon = L.icon({
+                    iconUrl: '/images/Embessy-icon-new.png', // Pastikan path ikon ini benar
                     iconSize: [24, 24],
                     iconAnchor: [12, 24],
                     popupAnchor: [0, -20]
             });
 
-            const marker = L.marker([embassy.latitude, embassy.longitude], { icon: embassyIcon }).addTo(embassyMarkers);
+            const marker = L.marker([Embessy.latitude, Embessy.longitude], { icon: EmbessyIcon }).addTo(EmbessyMarkers);
 
             // Simpan kedutaan terakhir yang diklik
             marker.on('click', () => {
-                lastClickedEmbassy = {
-                    lat: embassy.latitude,
-                    lng: embassy.longitude
+                lastClickedEmbessy = {
+                    lat: Embessy.latitude,
+                    lng: Embessy.longitude
                 };
                 updateRadiusCircle(); // Perbarui lingkaran saat marker kedutaan diklik
             });
@@ -546,16 +546,16 @@ document.addEventListener('click', e => {
             // Jika Anda ingin ini berfungsi, tambahkan tombol dengan class 'set-destination-btn'
             // dan atribut data-lat, data-lng ke dalam string popup.
             marker.bindPopup(`
-                <h5 style="border-bottom:1px solid #cccccc;">${embassy.name_embassiees || 'N/A'}</h5>
-                <strong>Address:</strong> ${embassy.location || 'N/A'}<br>
-                <strong>Telephone:</strong> ${embassy.telephone || 'N/A'}<br>
-                ${embassy.website ? `<strong>Website:</strong><a href='${embassy.website}' target='__blank'> ${embassy.website} </a><br>` : ''}
-                ${embassy.id ? `<a href="/embassiees/${embassy.id}/detail" class="btn btn-primary btn-sm mt-2" style="color:white;">Read More</a>` : ''}
+                <h5 style="border-bottom:1px solid #cccccc;">${Embessy.name_embassiees || 'N/A'}</h5>
+                <strong>Address:</strong> ${Embessy.location || 'N/A'}<br>
+                <strong>Telephone:</strong> ${Embessy.telephone || 'N/A'}<br>
+                ${Embessy.website ? `<strong>Website:</strong><a href='${Embessy.website}' target='__blank'> ${Embessy.website} </a><br>` : ''}
+                ${Embessy.id ? `<a href="/embassiees/${Embessy.id}/detail" class="btn btn-primary btn-sm mt-2" style="color:white;">Read More</a>` : ''}
             `);
         });
 
-        if (embassyMarkers.getLayers().length > 0) {
-            let bounds = embassyMarkers.getBounds();
+        if (EmbessyMarkers.getLayers().length > 0) {
+            let bounds = EmbessyMarkers.getBounds();
             if (destinationCoordinates) { // Perluas batas jika ada penanda tujuan
                 bounds.extend(destinationCoordinates);
             }
@@ -564,8 +564,8 @@ document.addEventListener('click', e => {
             map.setView(destinationCoordinates, 10);
         }
     } catch (error) {
-            console.error('Error fetching embessy data:', error);
-            document.querySelector('.total-embassy').innerText = 'Error loading hospitals.';
+            console.error('Error fetching Embessy data:', error);
+            document.querySelector('.total-Embessy').innerText = 'Error loading hospitals.';
         }
     }
 
@@ -584,21 +584,21 @@ document.addEventListener('click', e => {
         };
 
         if (radius > 0) {
-            const center = lastClickedEmbassy ?? map.getCenter();
+            const center = lastClickedEmbessy ?? map.getCenter();
             filters.radius = radius;
             filters.center_lat = center.lat;
             filters.center_lng = center.lng;
         }
 
-        fetchAndDisplayembassy(filters);
+        fetchAndDisplayEmbessy(filters);
         // updateRadiusCircle();
     }
 
      // Fungsi untuk memuat filter dari localStorage dan menerapkannya
     function loadFiltersAndApply() {
-        const savedParamsString = localStorage.getItem('embessyFilterParams');
-        const savedPolygonString = localStorage.getItem('embessyDrawnPolygon');
-        const savedCenterString = localStorage.getItem('embessyLastClickedCenter');
+        const savedParamsString = localStorage.getItem('EmbessyFilterParams');
+        const savedPolygonString = localStorage.getItem('EmbessyDrawnPolygon');
+        const savedCenterString = localStorage.getItem('EmbessyLastClickedCenter');
 
         // Pastikan Select2 sudah diinisialisasi sebelum mencoba mengatur nilainya
         $('.select2-search').select2({
@@ -629,9 +629,9 @@ document.addEventListener('click', e => {
             $('#name').val(params.get('name')).trigger('change');
             $('#location').val(params.get('location')).trigger('change');
 
-            // Pulihkan lastClickedEmbassy untuk lingkaran radius jika tersedia
+            // Pulihkan lastClickedEmbessy untuk lingkaran radius jika tersedia
             if (savedCenterString) {
-                lastClickedEmbassy = JSON.parse(savedCenterString);
+                lastClickedEmbessy = JSON.parse(savedCenterString);
             }
 
             // Pulihkan poligon yang digambar
@@ -653,7 +653,7 @@ document.addEventListener('click', e => {
             updateRadiusCircle(); // Pastikan lingkaran radius diperbarui setelah semua data dimuat
         } else {
             // Jika tidak ada filter yang disimpan, ambil data awal (tanpa filter)
-            fetchAndDisplayembassy();
+            fetchAndDisplayEmbessy();
         }
     }
 
@@ -682,19 +682,19 @@ document.addEventListener('click', e => {
             destinationCoordinates = null;
         }
 
-        lastClickedEmbassy = null;
+        lastClickedEmbessy = null;
 
         // Bersihkan poligon yang digambar dari peta dan variabel
         drawnItems.clearLayers();
         drawnPolygonGeoJSON = null; // Reset GeoJSON yang tersimpan
 
          // Hapus filter yang disimpan dari localStorage
-        localStorage.removeItem('embassyFilterParams');
-        localStorage.removeItem('embassyDrawnPolygon');
-        localStorage.removeItem('embassyLastClickedCenter');
+        localStorage.removeItem('EmbessyFilterParams');
+        localStorage.removeItem('EmbessyDrawnPolygon');
+        localStorage.removeItem('EmbessyLastClickedCenter');
 
         map.setView([-6.80188562253168, 144.0733101155011], 6);
-        fetchAndDisplayembassy();
+        fetchAndDisplayEmbessy();
         updateRadiusCircle();
     });
 

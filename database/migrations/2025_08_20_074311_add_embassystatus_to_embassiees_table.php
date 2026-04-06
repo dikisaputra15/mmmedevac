@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('embassiees', function (Blueprint $table) {
-             $table->boolean('embassy_status')->default(true)->after('image');
+             $table->boolean('Embessy_status')->default(true)->after('image');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('embassiees', function (Blueprint $table) {
-            $table->dropColumn('embassy_status');
+            $table->dropColumn('Embessy_status');
         });
     }
 };

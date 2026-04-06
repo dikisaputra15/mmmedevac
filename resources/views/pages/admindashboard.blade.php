@@ -328,7 +328,7 @@
                     </a>
 
                     <a href="{{ url('embassiees') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees') ? 'active' : '' }}">
-                    <img src="{{ asset('images/icon-embassy.png') }}" style="width: 24px; height: 24px;">
+                    <img src="{{ asset('images/icon-Embessy.png') }}" style="width: 24px; height: 24px;">
                         <small>Embassies</small>
                     </a>
                 </div>
@@ -606,7 +606,7 @@
 
 <script>
     // --- Map Initialization ---
-    const map = L.map('map').setView([15.561656906765931, 100.85374832882776], 6);
+    const map = L.map('map').setView([21.909935841888522, 95.91172488921482], 6);
 
     const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors', maxZoom: 19

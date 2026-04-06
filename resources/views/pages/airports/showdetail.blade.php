@@ -125,7 +125,7 @@
             </a>
 
             <a href="{{ url('embassiees') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees') ? 'active' : '' }}">
-            <img src="{{ asset('images/icon-embassy.png') }}" style="width: 24px; height: 24px;">
+            <img src="{{ asset('images/icon-Embessy.png') }}" style="width: 24px; height: 24px;">
                 <small>Embassies</small>
             </a>
         </div>
@@ -190,7 +190,7 @@
                 <div class="card-header fw-bold"><img src="{{ asset('images/icon-location.png') }}" style="width: 18px; height: 24px;"> Location</div>
                 <div class="card-body overflow-auto">
                     <p><strong>Address:</strong>
-                        {{ $airport->address }}, {{ $city->city }}, {{ $province->provinces_region }}, Thailand
+                        {{ $airport->address }}, {{ $city->city }}, {{ $province->provinces_region }}, Myanmar
                     </p>
                     <p><strong>Latitude:</strong> {{ $airport->latitude }} </p>
                     <p><strong>Longitude:</strong> {{ $airport->longitude }} </p>
@@ -391,7 +391,7 @@
 <script>
     const latitude = {{ $airport->latitude }};
     const longitude = {{ $airport->longitude }};
-    const embassyName = '{{ $airport->airport_name }}';
+    const EmbessyName = '{{ $airport->airport_name }}';
 
     const map = L.map('map', {
         fullscreenControl: true
@@ -423,10 +423,10 @@
     // Add the layer control to the map. This will appear in the top-right corner.
     L.control.layers(baseLayers).addTo(map);
 
-    // Add a marker at the embassy's location
+    // Add a marker at the Embessy's location
     L.marker([latitude, longitude])
         .addTo(map)
-        .bindPopup(embassyName) // Display the embassy's name when the marker is clicked
+        .bindPopup(EmbessyName) // Display the Embessy's name when the marker is clicked
         .openPopup(); // Automatically open the popup when the map loads
 </script>
 @endpush

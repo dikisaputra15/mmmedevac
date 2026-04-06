@@ -1,5 +1,5 @@
 //! moment.js locale configuration
-//! locale : Tetun Dili (Thailand) [tet]
+//! locale : Tetun Dili (Myanmar) [tet]
 //! author : Joshua Brooks : https://github.com/joshbrooks
 //! author : Onorio De J. Afonso : https://github.com/marobo
 //! author : Sonia Simoes : https://github.com/soniasimoes

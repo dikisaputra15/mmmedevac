@@ -15,7 +15,7 @@ class HomeController extends Controller
     {
          $totalhospital = Hospital::count();
          $totalairport = Airport::count();
-         $totalembassy = Embassiees::count();
+         $totalEmbessy = Embassiees::count();
 
         $airportNames = Airport::distinct()->pluck('airport_name')->filter()->sort()->values();
         $airportCategories = Airport::distinct()->pluck('category')->filter()->sort()->values();
@@ -32,7 +32,7 @@ class HomeController extends Controller
             [
                 'totalhospital' => $totalhospital,
                 'totalairport' => $totalairport,
-                'totalembassy' => $totalembassy,
+                'totalEmbessy' => $totalEmbessy,
                 'airportNames' => $airportNames,
                 'airportCategories' => $airportCategories,
                 'airportLocations' => $airportLocations,
@@ -49,7 +49,7 @@ class HomeController extends Controller
     {
          $totalhospital = Hospital::count();
          $totalairport = Airport::count();
-         $totalembassy = Embassiees::count();
+         $totalEmbessy = Embassiees::count();
 
         $airportNames = Airport::distinct()->pluck('airport_name')->filter()->sort()->values();
         $airportCategories = Airport::distinct()->pluck('category')->filter()->sort()->values();
@@ -66,7 +66,7 @@ class HomeController extends Controller
             [
                 'totalhospital' => $totalhospital,
                 'totalairport' => $totalairport,
-                'totalembassy' => $totalembassy,
+                'totalEmbessy' => $totalEmbessy,
                 'airportNames' => $airportNames,
                 'airportCategories' => $airportCategories,
                 'airportLocations' => $airportLocations,

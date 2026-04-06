@@ -1,6 +1,6 @@
 @extends('layouts.master-admin')
 
-@section('title','Edit Embessy')
+@section('title','Edit Embassy')
 
 @section('conten')
 
@@ -9,14 +9,14 @@
         <h3>Edit Embassy</h3>
     </div>
 
-<form action="{{ route('embessydata.update', $embassy->id) }}" enctype="multipart/form-data" method="POST">
+<form action="{{ route('Embessydata.update', $Embessy->id) }}" enctype="multipart/form-data" method="POST">
     @csrf
     @method('PUT')
     <div class="card-body">
         <div class="col-md-12">
             <div class="form-group">
                 <label>Embassy Name</label>
-                <input type="text" class="form-control" name="embassy_name" value="{{ $embassy->name_embassiees; }}">
+                <input type="text" class="form-control" name="Embessy_name" value="{{ $Embessy->name_embassiees; }}">
             </div>
         </div>
 
@@ -27,7 +27,7 @@
                     <?php
                         foreach ($provinces as $prov) {
 
-                            if ($prov->id==$embassy->province_id) {
+                            if ($prov->id==$Embessy->province_id) {
                                 $select="selected";
                             }else{
                                 $select="";
@@ -49,7 +49,7 @@
                     <?php
                         foreach ($cities as $city) {
 
-                            if ($city->id==$embassy->city_id) {
+                            if ($city->id==$Embessy->city_id) {
                                 $select="selected";
                             }else{
                                 $select="";
@@ -67,21 +67,21 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label>Latitude</label>
-                <input type="text" class="form-control" name="latitude" value="{{$embassy->latitude}}">
+                <input type="text" class="form-control" name="latitude" value="{{$Embessy->latitude}}">
             </div>
         </div>
 
         <div class="col-md-12">
             <div class="form-group">
                 <label>Longitude</label>
-                <input type="text" class="form-control" name="longitude" value="{{$embassy->longitude}}">
+                <input type="text" class="form-control" name="longitude" value="{{$Embessy->longitude}}">
             </div>
         </div>
 
         <div class="col-md-12">
             <div class="form-group">
                 <label>Location</label>
-                <input type="text" class="form-control" name="location" value="{{ $embassy->location; }}">
+                <input type="text" class="form-control" name="location" value="{{ $Embessy->location; }}">
             </div>
         </div>
 
@@ -96,7 +96,7 @@
             <div class="card-body">
 
                 <textarea id="summernote" name="telephone">
-                    <?php echo $embassy->telephone; ?>
+                    <?php echo $Embessy->telephone; ?>
                 </textarea>
 
             </div>
@@ -115,7 +115,7 @@
             <div class="card-body">
 
                 <textarea id="summernote4" name="fax">
-                    <?php echo $embassy->fax; ?>
+                    <?php echo $Embessy->fax; ?>
                 </textarea>
 
             </div>
@@ -134,7 +134,7 @@
             <div class="card-body">
 
                 <textarea id="summernote2" name="email">
-                    <?php echo $embassy->email; ?>
+                    <?php echo $Embessy->email; ?>
                 </textarea>
 
             </div>
@@ -153,7 +153,7 @@
             <div class="card-body">
 
                 <textarea id="summernote3" name="website">
-                    <?php echo $embassy->website; ?>
+                    <?php echo $Embessy->website; ?>
                 </textarea>
 
             </div>

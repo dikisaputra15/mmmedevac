@@ -14,11 +14,11 @@ class EmbassieesController extends Controller
      */
     public function index(Request $request)
     {
-        $embassyNames = DB::table('embassiees')->distinct()->pluck('name_embassiees')->filter()->sort()->values();
-        $embassyLocations = DB::table('embassiees')->distinct()->pluck('location')->filter()->sort()->values();
+        $EmbessyNames = DB::table('embassiees')->distinct()->pluck('name_embassiees')->filter()->sort()->values();
+        $EmbessyLocations = DB::table('embassiees')->distinct()->pluck('location')->filter()->sort()->values();
 
         $provinces = Provincesregion::all();
-        return view('pages.embassiees.index', compact('provinces','embassyNames','embassyLocations'));
+        return view('pages.embassiees.index', compact('provinces','EmbessyNames','EmbessyLocations'));
     }
 
     /**
@@ -76,17 +76,17 @@ class EmbassieesController extends Controller
 
     public function showdetail($id)
     {
-        $embassy = Embassiees::findOrFail($id);
-        $city = DB::table('cities')->where('id', $embassy->city_id)->first();
-        $province = DB::table('provincesregions')->where('id', $embassy->province_id)->first();
-        return view('pages.embassiees.showdetail', compact('embassy','city','province'));
+        $Embessy = Embassiees::findOrFail($id);
+        $city = DB::table('cities')->where('id', $Embessy->city_id)->first();
+        $province = DB::table('provincesregions')->where('id', $Embessy->province_id)->first();
+        return view('pages.embassiees.showdetail', compact('Embessy','city','province'));
     }
 
     public function filter(Request $request)
     {
         $query = Embassiees::query();
 
-        $query->where('embassy_status', true);
+        $query->where('Embessy_status', true);
 
         // Filter by name
         $query->when($request->filled('name'), function ($q) use ($request) {
@@ -178,7 +178,7 @@ class EmbassieesController extends Controller
         }
 
          // Execute the query and return JSON response
-        $embessy = $query->get();
-        return response()->json($embessy);
+        $Embessy = $query->get();
+        return response()->json($Embessy);
     }
 }

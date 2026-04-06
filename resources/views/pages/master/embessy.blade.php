@@ -1,6 +1,6 @@
 @extends('layouts.master-admin')
 
-@section('title','Embessy')
+@section('title','Embassy')
 
 @section('conten')
 
@@ -13,9 +13,9 @@
 
     <div class="card-body">
          <div class="form-group">
-            <a href="{{route('embessydata.create')}}" class="btn btn-primary">Add Data</a>
+            <a href="{{route('Embessydata.create')}}" class="btn btn-primary">Add Data</a>
         </div>
-            <table id="embessyTable" class="table" style="width:100%">
+            <table id="EmbessyTable" class="table" style="width:100%">
                   <thead>
                     <tr>
                       <th>No</th>
@@ -47,10 +47,10 @@
             }
 
             // table data
-            $('#embessyTable').DataTable({
+            $('#EmbessyTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "/embessydata",
+                ajax: "/Embessydata",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
@@ -75,7 +75,7 @@
             });
 
                // Event listener untuk tombol hapus
-            $('#embessyTable').on('click', '.delete-btn', function () {
+            $('#EmbessyTable').on('click', '.delete-btn', function () {
                 var roleId = $(this).data('id');
 
                 Swal.fire({
@@ -90,7 +90,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: '/embessydata/' + roleId,
+                            url: '/Embessydata/' + roleId,
                             type: 'DELETE',
                             data: {
                                 _token: '{{ csrf_token() }}'
@@ -98,7 +98,7 @@
                             success: function(response){
                             if(response.success == 1){
                                 alert("Record deleted.");
-                                var oTable = $('#embessyTable').dataTable();
+                                var oTable = $('#EmbessyTable').dataTable();
                                 oTable.fnDraw(false);
                             }else{
                                     alert("Invalid ID.");
@@ -116,7 +116,7 @@
 
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: "Do you want to " + buttonText + " this embassy?",
+                    text: "Do you want to " + buttonText + " this Embessy?",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -125,7 +125,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: '/embassydata/' + id + '/toggle-status',
+                            url: '/Embessydata/' + id + '/toggle-status',
                             type: 'POST',
                             data: {
                                 _token: '{{ csrf_token() }}'
@@ -134,10 +134,10 @@
                                 if(res.success) {
                                     Swal.fire(
                                         'Updated!',
-                                        'Embassy status changed to: ' + (res.status ? 'Publish' : 'Unpublish'),
+                                        'Embessy status changed to: ' + (res.status ? 'Publish' : 'Unpublish'),
                                         'success'
                                     );
-                                    $('#embessyTable').DataTable().ajax.reload();
+                                    $('#EmbessyTable').DataTable().ajax.reload();
                                 }
                             }
                         });

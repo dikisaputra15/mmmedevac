@@ -57,9 +57,9 @@
                 </a>
               </li>
                <li class="nav-item">
-                <a href="{{ url('embessydata') }}" class="nav-link">
+                <a href="{{ url('Embessydata') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Embassy</p>
+                  <p>Embessy</p>
                 </a>
               </li>
                <li class="nav-item">
