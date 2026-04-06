@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
-class MasterEmbessyController extends Controller
+class MasterembessyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,10 +24,10 @@ class MasterEmbessyController extends Controller
                 return Carbon::parse($row->created_at)->format('Y-m-d H:i:s');
             })
             ->addColumn('action', function($row){
-                 $updateButton = '<a href="' . route('Embessydata.edit', $row->id) . '" class="btn btn-primary btn-sm">Edit</a>';
+                 $updateButton = '<a href="' . route('embessydata.edit', $row->id) . '" class="btn btn-primary btn-sm">Edit</a>';
                  $deleteButton = '<button class="btn btn-sm btn-danger delete-btn" data-id="'.$row->id.'">Delete</button>';
 
-                  if ($row->Embessy_status) {
+                  if ($row->embassy_status) {
                         // Kalau status = true (publish), tombol jadi Unpublish
                         $statusButton = '<button class="btn btn-sm btn-warning status-btn" data-id="'.$row->id.'">Unpublish</button>';
                     } else {
@@ -41,7 +41,7 @@ class MasterEmbessyController extends Controller
             ->addIndexColumn()
             ->make(true);
         }
-        return view('pages.master.Embessy');
+        return view('pages.master.embessy');
     }
 
     /**
@@ -49,8 +49,8 @@ class MasterEmbessyController extends Controller
      */
     public function create()
     {
-        $provinces = Provincesregion::orderByRaw('LOWER(provinces_region) ASC')->get();
-        return view('pages.master.createEmbessy', [
+         $provinces = Provincesregion::all();
+        return view('pages.master.createembessy', [
             'provinces' => $provinces
         ]);
     }
@@ -60,33 +60,33 @@ class MasterEmbessyController extends Controller
      */
     public function store(Request $request)
     {
-        $Embessy = new Embassiees();
+        $embassy = new Embassiees();
 
          if ($request->hasFile('image')) {
             $extension = $request->file('image')->getClientOriginalExtension();
             $randomName = Str::random(40) . '.' . $extension;
 
             // Simpan di folder 'images' di disk 'public'
-            $path = $request->file('image')->storeAs('image/Embessy', $randomName, 'public');
+            $path = $request->file('image')->storeAs('image/embassy', $randomName, 'public');
 
             // Simpan path ke database
-            $Embessy->image = 'storage/'.$path;
+            $embassy->image = 'storage/'.$path;
 
          }
 
-        $Embessy->province_id = $request->input('province_id');
-        $Embessy->city_id = $request->input('city');
-        $Embessy->name_embassiees = $request->input('Embessy_name');
-        $Embessy->location = $request->input('location');
-        $Embessy->telephone = $request->input('telephone');
-        $Embessy->fax = $request->input('fax');
-        $Embessy->email = $request->input('email');
-        $Embessy->website = $request->input('website');
-        $Embessy->latitude = $request->input('latitude');
-        $Embessy->longitude = $request->input('longitude');
+        $embassy->province_id = $request->input('province_id');
+        $embassy->city_id = $request->input('city');
+        $embassy->name_embassiees = $request->input('embassy_name');
+        $embassy->location = $request->input('location');
+        $embassy->telephone = $request->input('telephone');
+        $embassy->fax = $request->input('fax');
+        $embassy->email = $request->input('email');
+        $embassy->website = $request->input('website');
+        $embassy->latitude = $request->input('latitude');
+        $embassy->longitude = $request->input('longitude');
 
-        $Embessy->save();
-        return redirect()->route('Embessydata.index')->with('success', 'Data Succesfully Save');
+        $embassy->save();
+        return redirect()->route('embessydata.index')->with('success', 'Data Succesfully Save');
     }
 
     /**
@@ -102,11 +102,11 @@ class MasterEmbessyController extends Controller
      */
     public function edit($id)
     {
-        $Embessy = Embassiees::findOrFail($id);
-        $provinces = Provincesregion::orderByRaw('LOWER(provinces_region) ASC')->get();
-        $cities = City::where('province_id', $Embessy->province_id)->orderByRaw('LOWER(city) ASC')->get();
-        return view('pages.master.editEmbessy', [
-            'Embessy' => $Embessy,
+        $embassy = Embassiees::findOrFail($id);
+        $provinces = Provincesregion::all();
+        $cities = City::all();
+        return view('pages.master.editembassy', [
+            'embassy' => $embassy,
             'provinces' => $provinces,
             'cities' => $cities
         ]);
@@ -118,13 +118,13 @@ class MasterEmbessyController extends Controller
     public function update(Request $request, $id)
     {
         // Cari data airport berdasarkan ID
-        $Embessy = Embassiees::findOrFail($id);
+        $embassy = Embassiees::findOrFail($id);
 
          // Update data
         $data = [
             'province_id' => $request->input('province_id'),
             'city_id' => $request->input('city'),
-            'name_embassiees' => $request->input('Embessy_name'),
+            'name_embassiees' => $request->input('embassy_name'),
             'location' => $request->input('location'),
             'telephone' => $request->input('telephone'),
             'fax' => $request->input('fax'),
@@ -135,21 +135,21 @@ class MasterEmbessyController extends Controller
         ];
 
          if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('image/Embessy', 'public');
+            $path = $request->file('image')->store('image/embassy', 'public');
 
             // Hapus gambar lama jika ada
-            if ($Embessy->image && Storage::disk('public')->exists($Embessy->image)) {
-                Storage::disk('public')->delete($Embessy->image);
+            if ($embassy->image && Storage::disk('public')->exists($embassy->image)) {
+                Storage::disk('public')->delete($embassy->image);
             }
 
             $data['image'] = 'storage/'.$path;
 
         }
 
-         $Embessy->update($data);
+         $embassy->update($data);
 
          // Redirect dengan pesan sukses
-        return redirect()->route('Embessydata.index')->with('success', 'Data berhasil diupdate');
+        return redirect()->route('embessydata.index')->with('success', 'Data berhasil diupdate');
     }
 
     /**
@@ -172,13 +172,13 @@ class MasterEmbessyController extends Controller
 
     public function toggleStatus($id)
     {
-        $Embessy = Embassiees::findOrFail($id);
-        $Embessy->Embessy_status = $Embessy->Embessy_status ? 0 : 1; // toggle
-        $Embessy->save();
+        $embassy = Embassiees::findOrFail($id);
+        $embassy->embassy_status = $embassy->embassy_status ? 0 : 1; // toggle
+        $embassy->save();
 
         return response()->json([
             'success' => true,
-            'status' => $Embessy->Embessy_status
+            'status' => $embassy->embassy_status
         ]);
     }
 

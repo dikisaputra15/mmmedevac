@@ -76,12 +76,12 @@
 
     <div class="d-flex justify-content-between p-3" style="background-color: #dfeaf1;">
         <div class="d-flex gap-2 align-items-center">
-            <h2 class="fw-bold">{{ $Embessy->name_embassiees }}</h2>
+            <h2 class="fw-bold">{{ $embassy->name_embassiees }}</h2>
         </div>
 
         <div class="d-flex gap-2 ms-auto">
             <!-- Button 2 -->
-            <a href="{{ url('embassiees') }}/{{$Embessy->id}}/detail" class="btn btn-outline-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees/'.$Embessy->id.'/detail') ? 'active' : '' }}">
+            <a href="{{ url('embassiees') }}/{{$embassy->id}}/detail" class="btn btn-outline-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees/'.$embassy->id.'/detail') ? 'active' : '' }}">
                 <img src="{{ asset('images/icon-menu-general-info.png') }}" style="width: 18px; height: 24px;">
                 <small>General</small>
             </a>
@@ -104,7 +104,7 @@
             </a>
 
             <a href="{{ url('embassiees') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees') ? 'active' : '' }}">
-            <img src="{{ asset('images/icon-Embessy.png') }}" style="width: 24px; height: 24px;">
+            <img src="{{ asset('images/icon-embassy.png') }}" style="width: 24px; height: 24px;">
                 <small>Embassies</small>
             </a>
         </div>
@@ -112,10 +112,10 @@
 
     <div class="card mb-4 position-relative">
         <div class="card-body" style="padding:0 7px;">
-            <small><i>Last Updated {{ $Embessy->created_at->format('M Y') }}</i></small>
+            <small><i>Last Updated {{ $embassy->created_at->format('M Y') }}</i></small>
 
             @role('admin')
-            <a href="{{ route('Embessydata.edit', $Embessy->id) }}"
+            <a href="{{ route('embessydata.edit', $embassy->id) }}"
             style="position:absolute; right:7px;" title="edit">
                 <i class="fas fa-edit"></i>
             </a>
@@ -129,27 +129,24 @@
                 <div class="card-header fw-bold"><i class="fas fa-phone"></i> Contact Information</div>
                 <div class="card-body">
                 <p>
-                    <strong>Telephone:</strong> {!! $Embessy->telephone ?? '-' !!}
+                    <strong>Telephone:</strong> {!! $embassy->telephone ?? '-' !!}
                 </p>
                 <p>
-                    <strong>Fax:</strong> {!! $Embessy->fax ?? '-' !!}
+                    <strong>Fax:</strong> {!! $embassy->fax ?? '-' !!}
                 </p>
-                    <strong>Email:</strong> {!! $Embessy->email ?? '-' !!}
-                </p>
-                <p>
-                    <strong>Website:</strong> {!! $Embessy->website !!}
+                    <strong>Email:</strong> {!! $embassy->email ?? '-' !!}
                 </p>
                 <p>
-                    <strong>Latitude:</strong> {{ $Embessy->latitude ?? '-' }}
+                    <strong>Website:</strong> {!! $embassy->website !!}
                 </p>
                 <p>
-                    <strong>Longitude:</strong> {{ $Embessy->longitude ?? '-' }}
+                    <strong>Latitude:</strong> {{ $embassy->latitude ?? '-' }}
+                </p>
+                <p>
+                    <strong>Longitude:</strong> {{ $embassy->longitude ?? '-' }}
                 </p>
                  <p>
-                    <strong>Location:</strong>
-                    {{ $Embessy->location ?? '-' }},
-                    {{ optional($city)->city ?? '-' }},
-                    {{ optional($province)->provinces_region ?? '-' }}, Myanmar
+                    <strong>Location:</strong> {{ $embassy->location ?? '-' }}
                 </p>
             </div>
             </div>
@@ -174,9 +171,9 @@
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.6.0/Control.FullScreen.js"></script>
 <script>
-    const latitude = @json($Embessy->latitude);
-    const longitude = @json($Embessy->longitude);
-    const EmbessyName = @json($Embessy->name_embassiees);
+    const latitude = @json($embassy->latitude);
+    const longitude = @json($embassy->longitude);
+    const embassyName = @json($embassy->name_embassiees);
 
     const map = L.map('map', {
         fullscreenControl: true
@@ -208,10 +205,10 @@
     // Add the layer control to the map. This will appear in the top-right corner.
     L.control.layers(baseLayers).addTo(map);
 
-    // Add a marker at the Embessy's location
+    // Add a marker at the embassy's location
     L.marker([latitude, longitude])
         .addTo(map)
-        .bindPopup(EmbessyName) // Display the Embessy's name when the marker is clicked
+        .bindPopup(embassyName) // Display the embassy's name when the marker is clicked
         .openPopup(); // Automatically open the popup when the map loads
 </script>
 

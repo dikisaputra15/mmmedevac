@@ -9,13 +9,13 @@
         <h3>Add Embassy</h3>
     </div>
 
-<form action="{{ route('Embessydata.store') }}" enctype="multipart/form-data" method="POST">
+<form action="{{ route('embessydata.store') }}" enctype="multipart/form-data" method="POST">
     @csrf
     <div class="card-body">
         <div class="col-md-12">
             <div class="form-group">
                 <label>Embassy Name</label>
-                <input type="text" class="form-control" name="Embessy_name">
+                <input type="text" class="form-control" name="embassy_name">
             </div>
         </div>
 
@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label>Region</label>
                 <select class="form-control" name="province_id" id="province">
-                        <option value="0">-Choosse Region-</option>
+                        <option value="0">-Choose Region-</option>
                     @foreach($provinces as $prov)
                         <option value="{{$prov->id}}">{{$prov->provinces_region}}</option>
                     @endforeach
@@ -35,7 +35,7 @@
             <div class="form-group">
                 <label for="city">City</label>
                 <select name="city" id="city" class="form-control">
-                    <option value="">-Choosse City-</option>
+                    <option value="">-Choose City-</option>
                 </select>
             </div>
         </div>
