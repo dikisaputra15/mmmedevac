@@ -254,13 +254,30 @@
                       </div>
 
                       <!-- Medical Facility Legend -->
-                      <div style="flex-direction: column;">
+                     <div style="flex-direction: column;">
                         <!-- Title -->
                         <div>
                             <div class="class-header class-medical-classification">Medical Facility Classification</div>
                         </div>
                         <div style="display: flex; flex-direction: row;">
                             <!-- Advanced -->
+                            <div class="class-column">
+                              <div class="class-header class-advanced">&nbsp</div>
+                              <div class="hospital-list">
+                                <div class="hospital-item">
+                                  <button class="btn p-1">
+                                    Public
+                                  </button>
+                                </div>
+                                <div class="hospital-item">
+                                    <button class="btn p-1">
+                                      Private
+                                    </button>
+                                  </div>
+                              </div>
+                            </div>
+
+                             <!-- Advanced -->
                             <div class="class-column">
                               <div class="class-header class-advanced">Advanced</div>
                               <div class="hospital-list">
@@ -270,6 +287,12 @@
                                     <small>Tertiary</small>
                                   </button>
                                 </div>
+                                <div class="hospital-item">
+                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level55Modal">
+                                      <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-blue.png" style="width:24px; height:24px;">
+                                      <small>Large Private</small>
+                                    </button>
+                                  </div>
                               </div>
                             </div>
 
@@ -277,14 +300,18 @@
                             <div class="class-column">
                               <div class="class-header class-intermediate">Intermediate</div>
                               <div class="hospital-list">
-                                <div class="hospital-row">
                                   <div class="hospital-item">
-                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level55Modal">
-                                      <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-blue.png" style="width:24px; height:24px;">
+                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level44Modal">
+                                      <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-purple.png" style="width:24px; height:24px;">
                                       <small>Secondary</small>
                                     </button>
                                   </div>
-                                </div>
+                                  <div class="hospital-item">
+                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level33Modal">
+                                      <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-green.png" style="width:24px; height:24px;">
+                                      <small>Medium Private</small>
+                                    </button>
+                                  </div>
                               </div>
                             </div>
 
@@ -292,15 +319,19 @@
                             <div class="class-column">
                               <div class="class-header class-basic">Basic</div>
                               <div class="hospital-list">
-                                <div class="hospital-row">
                                   <div class="hospital-item">
-                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level44Modal">
-                                      <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-purple.png" style="width:24px; height:24px;">
-                                      <small>Primary</small>
+                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level111Modal">
+                                        <img src="https://id.concordreview.com/wp-content/uploads/2026/02/hospital_pin-orange.png" style="width:24px; height:24px;">
+                                        <small>Primary</small>
                                     </button>
                                   </div>
+                                   <div class="hospital-item">
+                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level11Modal">
+                                        <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-tosca.png" style="width:24px; height:24px;">
+                                        <small>Small Private</small>
+                                    </button>
+                                    </div>
                                 </div>
-                              </div>
                             </div>
                         </div>
                       </div>
