@@ -888,7 +888,7 @@
                             @endforeach
                         </select>
                         <label>Facility Level</label>
-                        ${['Tertiary','Secondary','Primary'].map(c => `
+                        ${['Tertiary','Secondary','Primary','Large Private','Medium Private','Small Private'].map(c => `
                             <label style="display:block;font-size:13px;">
                                 <input type="checkbox" name="hospitalLevel" value="${c}"> ${c}
                             </label>`).join('')}
