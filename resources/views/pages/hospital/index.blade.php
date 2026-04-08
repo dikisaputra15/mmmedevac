@@ -153,7 +153,7 @@
             </a>
 
             <a href="{{ url('embassiees') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees') ? 'active' : '' }}">
-            <img src="{{ asset('images/icon-Embessy.png') }}" style="width: 24px; height: 24px;">
+            <img src="{{ asset('images/icon-embassy.png') }}" style="width: 24px; height: 24px;">
                 <small>Embassies</small>
             </a>
 
@@ -561,7 +561,7 @@ const FilterPanel = L.Control.extend({
                     @endforeach
                 </select>
                 <label>Facility Level:</label>
-                ${['Tertiary','Secondary','Primary'].map(c => `
+                ${['Tertiary','Secondary','Primary','Large Private','Medium Private','Small Private'].map(c => `
                     <label style="display:block;font-size:13px;">
                         <input type="checkbox" name="hospitalLevel" value="${c}"> ${c}
                     </label>`).join('')}
