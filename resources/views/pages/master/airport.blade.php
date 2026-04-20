@@ -23,6 +23,8 @@
                       <th>Airport Name</th>
                       <th>City</th>
                       <th>Created At</th>
+                      <th>Updated At</th>
+                      <th>Last Updated By</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -74,6 +76,14 @@
                     {
                         data: 'created_at',
                         name: 'created_at'
+                    },
+                    {
+                        data: 'updated_at',
+                        name: 'updated_at'
+                    },
+                    {
+                        data: 'updated_by',
+                        name: 'updated_by'
                     },
                     {
                         data: 'action',

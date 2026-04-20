@@ -17,36 +17,50 @@ class MasterairportController extends Controller
      */
     public function index()
 {
-    if (request()->ajax()) {
-        $airports = Airport::select(
-                'airports.*',
-                'cities.city as citi' // kolom dari tabel city
-            )
-            ->leftJoin('cities', 'cities.id', '=', 'airports.city_id') // join ke tabel city
-            ->orderBy('airports.id', 'desc');
+     if(request()->ajax()) {
 
-        return datatables()->of($airports)
-            ->addColumn('created_at', function ($row) {
-                return \Carbon\Carbon::parse($row->created_at)->format('Y-m-d H:i:s');
+            $data = Airport::query()
+             ->select(
+                'airports.*',
+                'cities.city as citi'
+            )
+            ->join('cities', 'cities.id', '=', 'airports.city_id');
+
+            return datatables()->of($data)
+
+            ->editColumn('created_at', function ($row) {
+                return $row->created_at
+                    ? Carbon::parse($row->created_at)->format('Y-m-d H:i:s')
+                    : '-';
             })
-            ->addColumn('action', function ($row) {
+
+            ->editColumn('updated_at', function ($row) {
+                return $row->updated_at
+                    ? Carbon::parse($row->updated_at)->format('Y-m-d H:i:s')
+                    : '-';
+            })
+
+            ->addColumn('action', function($row){
+
                 $updateButton = '<a href="' . route('airportdata.edit', $row->id) . '" class="btn btn-primary btn-sm">Edit</a>';
-                $deleteButton = '<button class="btn btn-sm btn-danger delete-btn" data-id="' . $row->id . '">Delete</button>';
+
+                $deleteButton = '<button class="btn btn-sm btn-danger delete-btn" data-id="'.$row->id.'">Delete</button>';
 
                 if ($row->airport_status) {
-                    $statusButton = '<button class="btn btn-sm btn-warning status-btn" data-id="' . $row->id . '">Unpublish</button>';
+                    $statusButton = '<button class="btn btn-sm btn-warning status-btn" data-id="'.$row->id.'">Unpublish</button>';
                 } else {
-                    $statusButton = '<button class="btn btn-sm btn-success status-btn" data-id="' . $row->id . '">Publish</button>';
+                    $statusButton = '<button class="btn btn-sm btn-success status-btn" data-id="'.$row->id.'">Publish</button>';
                 }
 
-                return $updateButton . " " . $deleteButton . " " . $statusButton;
+                return $updateButton." ".$deleteButton." ".$statusButton;
             })
-            ->rawColumns(['action', 'created_at'])
+
+            ->rawColumns(['action'])
             ->addIndexColumn()
             ->make(true);
-    }
+        }
 
-    return view('pages.master.airport');
+        return view('pages.master.airport');
 }
 
     /**
@@ -133,6 +147,8 @@ class MasterairportController extends Controller
         $airport->icon = $request->input('icon');
         $airport->dgoca = $request->input('dgoca');
         $airport->soao = $request->input('soao');
+        $airport->created_at = Carbon::now();
+        $airport->updated_by = auth()->user()->name;
 
         $airport->save();
         return redirect()->route('airportdata.index')->with('success', 'Data Succesfully Save');
@@ -230,6 +246,8 @@ class MasterairportController extends Controller
             'icon' => $request->input('icon'),
             'dgoca' => $request->input('dgoca'),
             'soao' => $request->input('soao'),
+            'updated_at' => Carbon::now(),
+            'updated_by' => auth()->user()->name,
         ];
 
           if ($request->hasFile('image')) {

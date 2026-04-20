@@ -18,29 +18,43 @@ class MasterembessyController extends Controller
     public function index()
     {
          if(request()->ajax()) {
-            return datatables()->of(Embassiees::select('*')->orderBy('id', 'desc'))
-            ->addColumn('created_at', function ($row) {
-                // Format tanggal jadi dd-mm-yyyy HH:MM
-                return Carbon::parse($row->created_at)->format('Y-m-d H:i:s');
+
+            $data = Embassiees::query();
+
+            return datatables()->of($data)
+
+            ->editColumn('created_at', function ($row) {
+                return $row->created_at
+                    ? Carbon::parse($row->created_at)->format('Y-m-d H:i:s')
+                    : '-';
             })
+
+            ->editColumn('updated_at', function ($row) {
+                return $row->updated_at
+                    ? Carbon::parse($row->updated_at)->format('Y-m-d H:i:s')
+                    : '-';
+            })
+
             ->addColumn('action', function($row){
-                 $updateButton = '<a href="' . route('embessydata.edit', $row->id) . '" class="btn btn-primary btn-sm">Edit</a>';
-                 $deleteButton = '<button class="btn btn-sm btn-danger delete-btn" data-id="'.$row->id.'">Delete</button>';
 
-                  if ($row->embassy_status) {
-                        // Kalau status = true (publish), tombol jadi Unpublish
-                        $statusButton = '<button class="btn btn-sm btn-warning status-btn" data-id="'.$row->id.'">Unpublish</button>';
-                    } else {
-                        // Kalau status = false (unpublish), tombol jadi Publish
-                        $statusButton = '<button class="btn btn-sm btn-success status-btn" data-id="'.$row->id.'">Publish</button>';
-                    }
+                $updateButton = '<a href="' . route('embessydata.edit', $row->id) . '" class="btn btn-primary btn-sm">Edit</a>';
 
-                 return $updateButton." ".$deleteButton." ".$statusButton;
+                $deleteButton = '<button class="btn btn-sm btn-danger delete-btn" data-id="'.$row->id.'">Delete</button>';
+
+                if ($row->embassy_status) {
+                    $statusButton = '<button class="btn btn-sm btn-warning status-btn" data-id="'.$row->id.'">Unpublish</button>';
+                } else {
+                    $statusButton = '<button class="btn btn-sm btn-success status-btn" data-id="'.$row->id.'">Publish</button>';
+                }
+
+                return $updateButton." ".$deleteButton." ".$statusButton;
             })
-            ->rawColumns(['action','created_at'])
+
+            ->rawColumns(['action'])
             ->addIndexColumn()
             ->make(true);
         }
+
         return view('pages.master.embessy');
     }
 
@@ -84,6 +98,8 @@ class MasterembessyController extends Controller
         $embassy->website = $request->input('website');
         $embassy->latitude = $request->input('latitude');
         $embassy->longitude = $request->input('longitude');
+        $embassy->created_at = Carbon::now();
+        $embassy->updated_by = auth()->user()->name;
 
         $embassy->save();
         return redirect()->route('embessydata.index')->with('success', 'Data Succesfully Save');
@@ -132,6 +148,8 @@ class MasterembessyController extends Controller
             'website' => $request->input('website'),
             'latitude' => $request->input('latitude'),
             'longitude' => $request->input('longitude'),
+            'updated_at' => Carbon::now(),
+            'updated_by' => auth()->user()->name,
         ];
 
          if ($request->hasFile('image')) {

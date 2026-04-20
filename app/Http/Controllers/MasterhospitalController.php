@@ -18,35 +18,48 @@ class MasterhospitalController extends Controller
     public function index()
     {
          if(request()->ajax()) {
-            return datatables()->of(Hospital::select(
+
+             $data = Hospital::query()
+            ->select(
                 'hospitals.*',
-                'cities.city as citi' // kolom dari tabel city
+                'cities.city as citi'
             )
-            ->join('cities', 'cities.id', '=', 'hospitals.city_id') // join ke tabel city
-            ->orderBy('hospitals.id', 'desc'))
+            ->join('cities', 'cities.id', '=', 'hospitals.city_id');
 
-            ->addColumn('created_at', function ($row) {
-                // Format tanggal jadi dd-mm-yyyy HH:MM
-                return Carbon::parse($row->created_at)->format('Y-m-d H:i:s');
+            return datatables()->of($data)
+
+            ->editColumn('created_at', function ($row) {
+                return $row->created_at
+                    ? Carbon::parse($row->created_at)->format('Y-m-d H:i:s')
+                    : '-';
             })
+
+            ->editColumn('updated_at', function ($row) {
+                return $row->updated_at
+                    ? Carbon::parse($row->updated_at)->format('Y-m-d H:i:s')
+                    : '-';
+            })
+
             ->addColumn('action', function($row){
-                 $updateButton = '<a href="' . route('hospitaldata.edit', $row->id) . '" class="btn btn-primary btn-sm">Edit</a>';
-                 $deleteButton = '<button class="btn btn-sm btn-danger delete-btn" data-id="'.$row->id.'">Delete</button>';
 
-                  if ($row->hospital_status) {
-                        // Kalau status = true (publish), tombol jadi Unpublish
-                        $statusButton = '<button class="btn btn-sm btn-warning status-btn" data-id="'.$row->id.'">Unpublish</button>';
-                    } else {
-                        // Kalau status = false (unpublish), tombol jadi Publish
-                        $statusButton = '<button class="btn btn-sm btn-success status-btn" data-id="'.$row->id.'">Publish</button>';
-                    }
+                $updateButton = '<a href="' . route('hospitaldata.edit', $row->id) . '" class="btn btn-primary btn-sm">Edit</a>';
 
-                 return $updateButton." ".$deleteButton." ".$statusButton;
+                $deleteButton = '<button class="btn btn-sm btn-danger delete-btn" data-id="'.$row->id.'">Delete</button>';
+
+                if ($row->hospital_status) {
+                    $statusButton = '<button class="btn btn-sm btn-warning status-btn" data-id="'.$row->id.'">Unpublish</button>';
+                } else {
+                    $statusButton = '<button class="btn btn-sm btn-success status-btn" data-id="'.$row->id.'">Publish</button>';
+                }
+
+                return $updateButton." ".$deleteButton." ".$statusButton;
             })
-            ->rawColumns(['action','created_at'])
+
+            ->rawColumns(['action'])
             ->addIndexColumn()
             ->make(true);
         }
+
         return view('pages.master.hospital');
     }
 
@@ -134,6 +147,8 @@ class MasterhospitalController extends Controller
         $hospital->travel_agent = $request->input('travel_agent');
         $hospital->other_medical_info = $request->input('other_medical_info');
         $hospital->icon = $request->input('icon');
+        $hospital->created_at = Carbon::now();
+        $hospital->updated_by = auth()->user()->name;
         $hospital->save();
         return redirect()->route('hospitaldata.index')->with('success', 'Data Succesfully Save');
     }
@@ -224,6 +239,8 @@ class MasterhospitalController extends Controller
             'travel_agent' => $request->input('travel_agent'),
             'other_medical_info' => $request->input('other_medical_info'),
             'icon' => $request->input('icon'),
+            'updated_at' => Carbon::now(),
+            'updated_by' => auth()->user()->name,
         ];
 
         if ($request->hasFile('image')) {
