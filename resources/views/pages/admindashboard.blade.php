@@ -576,7 +576,7 @@
                     <li class="mt-2">
                         <strong>Diagnostic & Support Infrastructure</strong>
                         <ul>
-                            <li>Basic laboratory services (comparable to Type C)</li>
+                            <li>Basic laboratory services (comparable to Type C) <a href="{{ route('exurl') }}" target="_blank">(click here to see laboratory classifications)</a></li>
                             <li>Basic imaging (limited or none)</li>
                             <li>No advanced diagnostics</li>
                         </ul>
@@ -635,8 +635,7 @@
                     <li class="mt-2">
                         <strong>Diagnostic & Support Infrastructure</strong>
                         <ul>
-                            <li><a hre="{{ route('exurl') }}" target="_blank">Type C Basic laboratory services</a> </li>
-                            <li>Limited imaging (X-ray in some facilities) </li>
+                            <li>Type C Basic laboratory services <a href="{{ route('exurl') }}" target="_blank">(click here to see laboratory classifications)</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -681,7 +680,7 @@
                     <li class="mt-2">
                         <strong>Diagnostic & Support Infrastructure</strong>
                         <ul>
-                            <li><a hre="{{ route('exurl') }}" target="_blank">Basic laboratory (Type C) </a> </li>
+                            <li>Basic laboratory (Type C) <a href="{{ route('exurl') }}" target="_blank">(click here to see laboratory classifications)</a></li>
                             <li>Basic imaging (X-ray in some facilities) </li>
                         </ul>
                     </li>
@@ -723,7 +722,7 @@
                     <li class="mt-2">
                         <strong>Diagnostic & Support Infrastructure</strong>
                         <ul>
-                            <li><a hre="{{ route('exurl') }}" target="_blank">Basic laboratory testing  </a> </li>
+                            <li>Basic laboratory testing <a href="{{ route('exurl') }}" target="_blank">(click here to see laboratory classifications)</a></li>
                             <li>Minimal diagnostic capability  </li>
                         </ul>
                     </li>
@@ -844,8 +843,8 @@
                     <li class="mt-2">
                         <strong>Diagnostic & Support Infrastructure</strong>
                         <ul>
-                            <li><a href="" target="_blank">Laboratory services</a> (comparable to Type B) </li>
-                            <li>Basic imaging (X-ray, ultrasound)<li>
+                            <li>Laboratory services (comparable to Type B) <a href="{{ route('exurl') }}" target="_blank">(click here to see laboratory classifications)</a></li>
+                            <li>Basic imaging (X-ray, ultrasound)</li>
                             <li>Limited advanced diagnostics</li>
                         </ul>
                     </li>
@@ -922,7 +921,7 @@
                         <strong>Diagnostic & Support Infrastructure</strong>
                         <ul>
                             <li>Imaging: X-ray, Ultrasound, CT Scan (in most facilities)</li>
-                            <li><a href="{{ route('exurl') }}">Type B / Type A Laboratory</a> (level depending on facility) </li>
+                            <li>Type B / Type A Laboratory (level depending on facility) <a href="{{ route('exurl') }}" target="_blank">(click here to see laboratory classifications)</a> </li>
                         </ul>
                     </li>
                 </ul>
@@ -978,7 +977,7 @@
                         <strong>Diagnostic & Support Infrastructure</strong>
                         <ul>
                             <li>Imaging (X-ray, Ultrasound, CT in most facilities)</li>
-                            <li><a hreh="{{ route('exurl') }}" target="_blank">Laboratory</a> (Type B / Type A level depending on facility)  </li>
+                            <li>Laboratory (Type B / Type A level depending on facility) <a href="{{ route('exurl') }}" target="_blank">(click here to see laboratory classifications)</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -1028,7 +1027,7 @@
                         <strong>Diagnostic & Support Infrastructure</strong>
                         <ul>
                             <li>Imaging (X-ray, limited CT in some cases)</li>
-                            <li><a hreh="{{ route('exurl') }}">Type B Laboratory </a> (Type B / Type A level depending on facility)  </li>
+                            <li>Type B Laboratory (Type B / Type A level depending on facility) <a href="{{ route('exurl') }}" target="_blank">(click here to see laboratory classifications)</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -1156,7 +1155,7 @@
                     <li class="mt-2">
                         <strong>Diagnostic & Support Infrastructure</strong>
                         <ul>
-                            <li><a href="{{ route('exurl') }}" target="_blank">Full laboratory services</a> (comparable to Type A/B) </li>
+                            <li>Full laboratory services (comparable to Type A/B) <a href="{{ route('exurl') }}" target="_blank">(click here to see laboratory classifications)</a></li>
                             <li>Comprehensive imaging services</li>
                             <li>24/7 emergency services</li>
                         </ul>
@@ -1249,7 +1248,7 @@
                         <strong>Diagnostic & Support Infrastructure</strong>
                         <ul>
                             <li>Imaging (X-ray, Ultrasound, CT Scan, MRI, PET-CT)</li>
-                            <li><a href="{{ route('exurl') }}" target="_blank">Type A Laboratory</a></li>
+                            <li>Type A Laboratory <a href="{{ route('exurl') }}" target="_blank">(click here to see laboratory classifications)</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -1308,7 +1307,7 @@
                         <strong>Diagnostic & Support Infrastructure</strong>
                         <ul>
                             <li>Imaging: X-ray, Ultrasound, CT Scan, MRI, Advanced imaging modalities</li>
-                            <li><a href="{{ route('exurl') }}" target="_blank">Type A Laboratory</a></li>
+                            <li>Type A Laboratory <a href="{{ route('exurl') }}" target="_blank">(click here to see laboratory classifications)</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -1372,7 +1371,7 @@
                         <strong>Diagnostic & Support Infrastructure</strong>
                         <ul>
                             <li>Imaging: CT Scan, MRI, Specialty-specific imaging systems</li>
-                            <li><a href="{{ route('exurl') }}" target="_blank">Type A Laboratory</a></li>
+                            <li>Type A Laboratory <a href="{{ route('exurl') }}" target="_blank">(click here to see laboratory classifications)</a></li>
                         </ul>
                     </li>
                 </ul>
