@@ -139,6 +139,8 @@ class PoliceController extends Controller
     public function showdetail($id)
     {
         $police = Police::findOrFail($id);
-        return view('pages.police.showdetail', compact('police'));
+        $city = DB::table('cities')->where('id', $police->city_id)->first();
+        $province = DB::table('provincesregions')->where('id', $police->province_id)->first();
+        return view('pages.police.showdetail', compact('police','city','province'));
     }
 }

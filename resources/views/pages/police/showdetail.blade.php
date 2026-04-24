@@ -142,7 +142,7 @@
                     <strong>Email:</strong> {!! $police->email ?? '-' !!}
                 </p>
                 <p>
-                    <strong>Website:</strong> <a href="{{ $police->website }}" target="_blank">{!! $police->website !!}</a>
+                    <strong>Website:</strong> {!! $police->website !!}
                 </p>
                 <p>
                     <strong>Latitude:</strong> {{ $police->latitude ?? '-' }}
@@ -151,7 +151,10 @@
                     <strong>Longitude:</strong> {{ $police->longitude ?? '-' }}
                 </p>
                  <p>
-                    <strong>Location:</strong> {{ $police->location ?? '-' }}
+                    <strong>Location:</strong>
+                    {{ $police->location ?? '-' }},
+                    {{ $city->city }},
+                    {{ $province->provinces_region }}
                 </p>
             </div>
             </div>
