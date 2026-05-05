@@ -133,18 +133,18 @@
 
                 <div class="form-check mb-2">
                     <input class="form-check-input" type="radio" name="icon"
-                        value="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-blue.png">
+                        value="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-purple.png">
                     <label class="form-check-label">
-                        <img src="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-blue.png" style="width:24px; height:24px;">
+                        <img src="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-purple.png" style="width:24px; height:24px;">
                         Secondary
                     </label>
                 </div>
 
                 <div class="form-check mb-2">
                     <input class="form-check-input" type="radio" name="icon"
-                        value="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-purple.png">
+                        value="https://id.concordreview.com/wp-content/uploads/2026/02/hospital_pin-orange.png">
                     <label class="form-check-label">
-                        <img src="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-purple.png" style="width:24px; height:24px;">
+                        <img src="https://id.concordreview.com/wp-content/uploads/2026/02/hospital_pin-orange.png" style="width:24px; height:24px;">
                         Primary
                     </label>
                 </div>
