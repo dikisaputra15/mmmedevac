@@ -158,7 +158,7 @@
 
         @php
             $governmentIcons = [
-                ['url' => 'https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital-pin-red.png', 'label' => 'Tertiary`'],
+                ['url' => 'https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital-pin-red.png', 'label' => 'Tertiary'],
                 ['url' => 'https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-purple.png', 'label' => 'Secondary'],
                 ['url' => 'https://id.concordreview.com/wp-content/uploads/2026/02/hospital_pin-orange.png', 'label' => 'Primary'],
             ];
