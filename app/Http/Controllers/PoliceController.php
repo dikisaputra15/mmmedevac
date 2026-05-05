@@ -15,7 +15,7 @@ class PoliceController extends Controller
     {
         // Using `unique()` and `values()` on collections ensures distinct, sorted results.
         // `filter()` removes null/empty values.
-        $policeNames = Police::distinct()->pluck('name_police')->filter()->sort()->values();
+        $policeNames = Police::where('police_status', true)->distinct()->pluck('name_police')->filter()->sort()->values();
         $policeCategories = Police::distinct()->pluck('category')->filter()->sort()->values();
         $policeLocations = Police::distinct()->pluck('location')->filter()->sort()->values();
 
