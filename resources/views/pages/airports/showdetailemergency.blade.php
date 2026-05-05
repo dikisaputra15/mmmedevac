@@ -1556,9 +1556,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!categories.some(cat => allowed.includes(cat))) return;
             }
 
+            const isPolice = type === 'Police';
+
             const icon = L.icon({
                 iconUrl: item.icon || defaultIconUrl,
-                iconSize: [24, 24], iconAnchor: [12, 24], popupAnchor: [0, -20]
+                iconSize: isPolice ? [16, 16] : [24, 24], // kecilkan police
+                iconAnchor: isPolice ? [15, 30] : [12, 24],
+                popupAnchor: isPolice ? [0, -25] : [0, -20]
             });
 
             const marker = L.marker([item.latitude, item.longitude], { icon });
