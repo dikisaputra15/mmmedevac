@@ -554,8 +554,8 @@ document.addEventListener('click', e => {
                 <h5 style="border-bottom:1px solid #cccccc;">${embassy.name_embassiees || 'N/A'}</h5>
                 <strong>Address:</strong>
                     ${embassy.location || 'N/A'}
-                    ${embassy.district ? ', ' + embassy.district : ''}
                     ${embassy.city ? ', ' + embassy.city : ''}
+                    ${embassy.district ? ', ' + embassy.district : ''}
                     ${embassy.provinces_region ? ', ' + embassy.provinces_region : ''}, Myanmar <br>
                 <strong>Telephone:</strong> ${embassy.telephone || 'N/A'}<br>
                 ${embassy.website ? `<strong>Website:</strong><a href='${embassy.website}' target='__blank'> ${embassy.website} </a><br>` : ''}

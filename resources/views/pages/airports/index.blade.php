@@ -455,8 +455,8 @@ function addAirportMarkers(data) {
             <strong>Classification:</strong> ${airport.category || 'N/A'}<br>
             <strong>Address:</strong>
                 ${airport.address || 'N/A'}
-                ${airport.district_name ? ', ' + airport.district_name : ''}
                 ${airport.city_name ? ', ' + airport.city_name : ''}
+                ${airport.district_name ? ', ' + airport.district_name : ''}
                 ${airport.province_name ? ', ' + airport.province_name : ''}, Myanmar <br>
             <strong>Telephone:</strong> ${airport.telephone || 'N/A'}<br>
             ${airport.website ? `<strong>Website:</strong><a href='${airport.website}' target='__blank'> ${airport.website} </a><br>` : ''}

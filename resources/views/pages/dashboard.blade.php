@@ -1562,8 +1562,8 @@
                     <strong>Classification:</strong> ${item.category || 'N/A'}<br>
                     <strong>Address:</strong>
                         ${item.address || 'N/A'}
-                        ${item.district_name ? ', ' + item.district_name : ''}
                         ${item.city_name ? ', ' + item.city_name : ''}
+                        ${item.district_name ? ', ' + item.district_name : ''}
                         ${item.province_name ? ', ' + item.province_name : ''}, Myanmar <br>
                     ${item.website ? `<strong>Website:</strong> <a href='${item.website}' target='__blank'>${item.website}</a><br>` : ''}
                 `;
@@ -1576,8 +1576,8 @@
                     <strong>Country Classification:</strong> ${item.facility_level || 'N/A'}<br>
                     <strong>Address:</strong>
                         ${item.address || 'N/A'}
-                        ${item.district ? ', ' + item.district : ''}
                         ${item.city ? ', ' + item.city : ''}
+                        ${item.district ? ', ' + item.district : ''}
                         ${item.provinces_region ? ', ' + item.provinces_region : ''}, Myanmar <br>
                     <strong>Coords:</strong> ${item.latitude}, ${item.longitude}<br>
                     <strong>Province:</strong> ${item.provinces_region || 'N/A'}<br>

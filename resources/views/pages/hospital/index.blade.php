@@ -1415,8 +1415,8 @@ function addHospitalMarkers(data) {
             <strong>Country Classification:</strong> ${h.facility_level || 'N/A'}<br>
             <strong>Address:</strong>
                 ${h.address || 'N/A'}
-                ${h.district ? ', ' + h.district : ''}
                 ${h.city ? ', ' + h.city : ''}
+                ${h.district ? ', ' + h.district : ''}
                 ${h.provinces_region ? ', ' + h.provinces_region : ''}, Myanmar <br>
             <strong>Coords:</strong> ${h.latitude}, ${h.longitude}<br>
             <strong>Province:</strong> ${h.provinces_region || 'N/A'}<br>
