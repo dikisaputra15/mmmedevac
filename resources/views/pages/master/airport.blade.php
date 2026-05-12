@@ -21,7 +21,8 @@
                       <th>No</th>
                       <th>ID</th>
                       <th>Airport Name</th>
-                      <th>City</th>
+                      <th>District</th>
+                      <th>Township</th>
                       <th>Created At</th>
                       <th>Updated At</th>
                       <th>Last Updated By</th>
@@ -70,7 +71,11 @@
                         name: 'airport_name'
                     },
                     {
-                        data: 'citi',
+                        data: 'district',
+                        name: 'districts.district'
+                    },
+                    {
+                        data: 'township',
                         name: 'cities.city'
                     },
                     {

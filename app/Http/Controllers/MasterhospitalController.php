@@ -23,9 +23,11 @@ class MasterhospitalController extends Controller
              $data = Hospital::query()
             ->select(
                 'hospitals.*',
-                'cities.city as citi'
+                'cities.city as township',
+                'districts.district as district'
             )
-            ->join('cities', 'cities.id', '=', 'hospitals.city_id');
+            ->leftjoin('cities', 'cities.id', '=', 'hospitals.city_id')
+            ->leftjoin('districts', 'districts.id', '=', 'hospitals.district_id');
 
             return datatables()->of($data)
 

@@ -23,9 +23,11 @@ class MasterairportController extends Controller
             $data = Airport::query()
              ->select(
                 'airports.*',
-                'cities.city as citi'
+                'cities.city as township',
+                'districts.district as district'
             )
-            ->join('cities', 'cities.id', '=', 'airports.city_id');
+            ->leftjoin('cities', 'cities.id', '=', 'airports.city_id')
+            ->leftjoin('districts', 'districts.id', '=', 'airports.district_id');
 
             return datatables()->of($data)
 
