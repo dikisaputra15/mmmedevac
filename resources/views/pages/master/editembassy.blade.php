@@ -22,7 +22,7 @@
 
          <div class="col-md-12">
             <div class="form-group">
-                <label>Edit Region</label>
+                <label>Edit Region / State</label>
                 <select class="form-control" name="province_id" id="province">
                     <?php
                         foreach ($provinces as $prov) {
@@ -42,10 +42,32 @@
             </div>
         </div>
 
-        <div class="col-md-12">
+       <div class="col-md-12">
             <div class="form-group">
-                <label>Edit City</label>
+                <label>Edit District</label>
                 <select class="form-control" name="city" id="city">
+                    <?php
+                        foreach ($districts as $district) {
+
+                            if ($district->id==$embassy->district_id) {
+                                $select="selected";
+                            }else{
+                                $select="";
+                            }
+
+                        ?>
+                            <option <?php echo $select; ?> value="<?php echo $district->id;?>"><?php echo $district->district; ?></option>
+
+                    <?php } ?>
+
+                </select>
+            </div>
+        </div>
+
+         <div class="col-md-12">
+            <div class="form-group">
+                <label>Edit Township</label>
+                <select class="form-control" name="district_id" id="district">
                     <?php
                         foreach ($cities as $city) {
 
@@ -195,15 +217,35 @@
                 type: 'GET',
                 success: function (data) {
                     $('#city').empty();
-                    $('#city').append('<option value="">-- Choosse City/Regency --</option>');
+                    $('#city').append('<option value="">-- Choosse District --</option>');
                     $.each(data, function (key, city) {
-                        $('#city').append('<option value="' + city.id + '">' + city.city + '</option>');
+                        $('#city').append('<option value="' + city.id + '">' + city.district + '</option>');
                     });
                 }
             });
         } else {
             $('#city').empty();
-            $('#city').append('<option value="">-- Choosse City/Regency  --</option>');
+            $('#city').append('<option value="">-- Choosse District  --</option>');
+        }
+    });
+
+    $('#city').on('change', function () {
+        let cityID = $(this).val();
+        $('#district').html('<option value="">Loading...</option>');
+
+        if (cityID) {
+            $.ajax({
+                url: '/get-districts/' + cityID,
+                type: 'GET',
+                success: function (data) {
+                    $('#district').empty().append('<option value="">-Choose Township-</option>');
+                    $.each(data, function (key, district) {
+                        $('#district').append('<option value="'+ district.id +'">'+ district.city +'</option>');
+                    });
+                }
+            });
+        } else {
+            $('#district').html('<option value="">-Choose Township-</option>');
         }
     });
 </script>

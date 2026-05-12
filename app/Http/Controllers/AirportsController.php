@@ -8,6 +8,7 @@ use App\Models\Hospital;
 use App\Models\Police;
 use App\Models\Provincesregion;
 use App\Models\City;
+use App\Models\District;
 use Illuminate\Support\Facades\DB;
 use Exception; // Import Exception for better error handling
 
@@ -36,7 +37,16 @@ class AirportsController extends Controller
      */
     public function filter(Request $request)
     {
-        $query = Airport::query();
+        $query = Airport::query()
+            ->leftJoin('districts', 'airports.district_id', '=', 'districts.id')
+            ->leftJoin('cities', 'airports.city_id', '=', 'cities.id')
+            ->leftJoin('provincesregions', 'airports.province_id', '=', 'provincesregions.id')
+            ->select(
+                'airports.*',
+                'districts.district as district_name',
+                'cities.city as city_name',
+                'provincesregions.provinces_region as province_name'
+            );
 
         $query->where('airport_status', true);
 
@@ -67,7 +77,7 @@ class AirportsController extends Controller
             // Ensure province IDs are an array and valid integers
             $provinceIds = array_filter((array) $request->input('provinces'), 'is_numeric');
             if (!empty($provinceIds)) {
-                $q->whereIn('province_id', $provinceIds);
+                $q->whereIn('airports.province_id', $provinceIds);
             }
         });
 
@@ -88,7 +98,7 @@ class AirportsController extends Controller
             $haversine = "(6371 * acos(cos(radians(?)) * cos(radians(latitude))
                             * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude))))";
 
-            $query->selectRaw("airports.*, $haversine AS distance", [
+            $query->selectRaw("airports.*, districts.district as district_name, cities.city as city_name, provincesregions.provinces_region as province_name, $haversine AS distance", [
                     $centerLat, $centerLng, $centerLat
                 ])
                 ->whereRaw("$haversine < ?", [
@@ -189,9 +199,10 @@ class AirportsController extends Controller
     {
         $airport = Airport::findOrFail($id);
         $city = City::findOrFail($airport->city_id);
+        $district = District::findOrFail($airport->district_id);
         $province = Provincesregion::findOrFail($airport->province_id);
 
-        return view('pages.airports.showdetail', compact('airport', 'city', 'province'));
+        return view('pages.airports.showdetail', compact('airport', 'city', 'province', 'district'));
     }
 
     public function showdetailemergency($id)

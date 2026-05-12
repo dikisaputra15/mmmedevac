@@ -501,16 +501,16 @@ document.addEventListener('click', e => {
         }
 
         // --- Simpan parameter filter ke localStorage untuk persistensi ---
-        localStorage.setItem('embessyFilterParams', params.toString());
+        localStorage.setItem('embassyFilterParams', params.toString());
         if (drawnPolygonGeoJSON) {
-            localStorage.setItem('embessyDrawnPolygon', JSON.stringify(drawnPolygonGeoJSON));
+            localStorage.setItem('embassyDrawnPolygon', JSON.stringify(drawnPolygonGeoJSON));
         } else {
-            localStorage.removeItem('embessyDrawnPolygon');
+            localStorage.removeItem('embassyDrawnPolygon');
         }
         if (lastClickedEmbassy) {
-            localStorage.setItem('embessyLastClickedCenter', JSON.stringify(lastClickedEmbassy));
+            localStorage.setItem('embassyLastClickedCenter', JSON.stringify(lastClickedEmbassy));
         } else {
-            localStorage.removeItem('embessyLastClickedCenter');
+            localStorage.removeItem('embassyLastClickedCenter');
         }
 
         try {
@@ -552,7 +552,11 @@ document.addEventListener('click', e => {
             // dan atribut data-lat, data-lng ke dalam string popup.
             marker.bindPopup(`
                 <h5 style="border-bottom:1px solid #cccccc;">${embassy.name_embassiees || 'N/A'}</h5>
-                <strong>Address:</strong> ${embassy.location || 'N/A'}<br>
+                <strong>Address:</strong>
+                    ${embassy.location || 'N/A'}
+                    ${embassy.district ? ', ' + embassy.district : ''}
+                    ${embassy.city ? ', ' + embassy.city : ''}
+                    ${embassy.provinces_region ? ', ' + embassy.provinces_region : ''}, Myanmar <br>
                 <strong>Telephone:</strong> ${embassy.telephone || 'N/A'}<br>
                 ${embassy.website ? `<strong>Website:</strong><a href='${embassy.website}' target='__blank'> ${embassy.website} </a><br>` : ''}
                 ${embassy.id ? `<a href="/embassiees/${embassy.id}/detail" class="btn btn-primary btn-sm mt-2" style="color:white;">Read More</a>` : ''}
@@ -569,7 +573,7 @@ document.addEventListener('click', e => {
             map.setView(destinationCoordinates, 10);
         }
     } catch (error) {
-            console.error('Error fetching embessy data:', error);
+            console.error('Error fetching embassy data:', error);
             document.querySelector('.total-embassy').innerText = 'Error loading hospitals.';
         }
     }
@@ -601,9 +605,9 @@ document.addEventListener('click', e => {
 
      // Fungsi untuk memuat filter dari localStorage dan menerapkannya
     function loadFiltersAndApply() {
-        const savedParamsString = localStorage.getItem('embessyFilterParams');
-        const savedPolygonString = localStorage.getItem('embessyDrawnPolygon');
-        const savedCenterString = localStorage.getItem('embessyLastClickedCenter');
+        const savedParamsString = localStorage.getItem('embassyFilterParams');
+        const savedPolygonString = localStorage.getItem('embassyDrawnPolygon');
+        const savedCenterString = localStorage.getItem('embassyLastClickedCenter');
 
         // Pastikan Select2 sudah diinisialisasi sebelum mencoba mengatur nilainya
         $('.select2-search').select2({

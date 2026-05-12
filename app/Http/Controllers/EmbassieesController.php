@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Embassiees;
 use App\Models\Provincesregion;
+use App\Models\City;
+use App\Models\District;
 use Illuminate\Support\Facades\DB;
 
 class EmbassieesController extends Controller
@@ -77,12 +79,24 @@ class EmbassieesController extends Controller
     public function showdetail($id)
     {
         $embassy = Embassiees::findOrFail($id);
-        return view('pages.embassiees.showdetail', compact('embassy'));
+        $city = DB::table('cities')->where('id', $embassy->city_id)->first();
+        $district = DB::table('districts')->where('id', $embassy->district_id)->first();
+        $province = DB::table('provincesregions')->where('id', $embassy->province_id)->first();
+        return view('pages.embassiees.showdetail', compact('embassy', 'city', 'district', 'province'));
     }
 
     public function filter(Request $request)
     {
-        $query = Embassiees::query();
+        $query = Embassiees::query()
+            ->leftJoin('districts', 'embassiees.district_id', '=', 'districts.id')
+            ->leftJoin('cities', 'embassiees.city_id', '=', 'cities.id')
+            ->leftJoin('provincesregions', 'embassiees.province_id', '=', 'provincesregions.id')
+            ->select(
+                'embassiees.*',
+                'districts.district',
+                'cities.city',
+                'provincesregions.provinces_region'
+            );
 
         $query->where('embassy_status', true);
 
@@ -101,7 +115,7 @@ class EmbassieesController extends Controller
             // Ensure province IDs are an array and valid integers
             $provinceIds = array_filter((array) $request->input('provinces'), 'is_numeric');
             if (!empty($provinceIds)) {
-                $q->whereIn('province_id', $provinceIds);
+                $q->whereIn('embassiees.province_id', $provinceIds);
             }
         });
 
@@ -121,7 +135,7 @@ class EmbassieesController extends Controller
             $haversine = "(6371 * acos(cos(radians(?)) * cos(radians(latitude))
                         * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude))))";
 
-            $query->selectRaw("embassiees.*, $haversine AS distance", [
+            $query->selectRaw("embassiees.*, districts.district, cities.city, provincesregions.provinces_region, $haversine AS distance", [
                     $centerLat, $centerLng, $centerLat
                 ])
                 ->whereRaw("$haversine < ?", [

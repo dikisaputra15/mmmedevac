@@ -151,7 +151,12 @@
                     <strong>Longitude:</strong> {{ $embassy->longitude ?? '-' }}
                 </p>
                  <p>
-                    <strong>Location:</strong> {{ $embassy->location ?? '-' }}
+                    <strong>Address:</strong>
+                    {{ $embassy->location ?? '-' }},
+                    {{ $city->city ?? '-' }},
+                    {{ $district->district ?? '-' }},
+                    {{ $province->provinces_region ?? '-' }}, Myanmar
+
                 </p>
             </div>
             </div>

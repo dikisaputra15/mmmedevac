@@ -264,8 +264,9 @@
                     <p>
                         <strong>Address:</strong>
                         {{ $hospital->address }},
-                        {{ $city->city }},
-                        {{ $province->provinces_region }}, Myanmar
+                        {{ $district->district ?? '-' }},
+                        {{ $city->city ?? '-' }},
+                        {{ $province->provinces_region ?? '-' }}, Myanmar
                     </p>
                     <p>
                         <strong>Latitude:</strong> {{ $hospital->latitude }}

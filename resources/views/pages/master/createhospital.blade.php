@@ -22,9 +22,9 @@
 
          <div class="col-md-12">
             <div class="form-group">
-                <label>Region</label>
+                <label>Region / State</label>
                 <select class="form-control" name="province_id" id="province">
-                        <option value="0">-Choosse Region-</option>
+                        <option value="0">-Choosse Region / State-</option>
                     @foreach($provinces as $prov)
                         <option value="{{$prov->id}}">{{$prov->provinces_region}}</option>
                     @endforeach
@@ -34,9 +34,18 @@
 
         <div class="col-md-12">
             <div class="form-group">
-                <label for="city">City</label>
+                <label for="city">District</label>
                 <select name="city" id="city" class="form-control">
-                    <option value="">-Choosse City-</option>
+                    <option value="">-Choosse District-</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Township</label>
+                <select name="district_id" id="district" class="form-control">
+                    <option value="">-Choose Township-</option>
                 </select>
             </div>
         </div>
@@ -971,15 +980,35 @@
                 type: 'GET',
                 success: function (data) {
                     $('#city').empty();
-                    $('#city').append('<option value="">-- Choosse City/Regency --</option>');
+                    $('#city').append('<option value="">-- Choosse District --</option>');
                     $.each(data, function (key, city) {
-                        $('#city').append('<option value="' + city.id + '">' + city.city + '</option>');
+                        $('#city').append('<option value="' + city.id + '">' + city.district + '</option>');
                     });
                 }
             });
         } else {
             $('#city').empty();
-            $('#city').append('<option value="">-- Choosse City/Regency  --</option>');
+            $('#city').append('<option value="">-- Choosse District --</option>');
+        }
+    });
+
+     $('#city').on('change', function () {
+        let cityID = $(this).val();
+        $('#district').html('<option value="">Loading...</option>');
+
+        if (cityID) {
+            $.ajax({
+                url: '/get-districts/' + cityID,
+                type: 'GET',
+                success: function (data) {
+                    $('#district').empty().append('<option value="">-Choose Township-</option>');
+                    $.each(data, function (key, district) {
+                        $('#district').append('<option value="'+ district.id +'">'+ district.city +'</option>');
+                    });
+                }
+            });
+        } else {
+            $('#district').html('<option value="">-Choose Township-</option>');
         }
     });
 </script>

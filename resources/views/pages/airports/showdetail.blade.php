@@ -195,7 +195,10 @@
                 <div class="card-header fw-bold"><img src="{{ asset('images/icon-location.png') }}" style="width: 18px; height: 24px;"> Location</div>
                 <div class="card-body overflow-auto">
                     <p><strong>Address:</strong>
-                        {{ $airport->address }}, {{ $city->city }}, {{ $province->provinces_region }}, Myanmar
+                        {{ $airport->address ?? '-'  }},
+                        {{ $city->city ?? '-' }},
+                        {{ $district->district ?? '-' }},
+                        {{ $province->provinces_region ?? '-' }}, Myanmar
                     </p>
                     <p><strong>Latitude:</strong> {{ $airport->latitude }} </p>
                     <p><strong>Longitude:</strong> {{ $airport->longitude }} </p>

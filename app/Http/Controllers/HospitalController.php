@@ -81,6 +81,7 @@ class HospitalController extends Controller
     {
         $hospital = Hospital::findOrFail($id);
         $city = DB::table('cities')->where('id', $hospital->city_id)->first();
+        $district = DB::table('districts')->where('id', $hospital->district_id)->first();
         $province = DB::table('provincesregions')->where('id', $hospital->province_id)->first();
 
         $latitude = $hospital->latitude;
@@ -106,7 +107,7 @@ class HospitalController extends Controller
         ->orderBy('distance')
         ->get();
 
-        return view('pages.hospital.showdetail', compact('hospital','city','province','nearbyHospitals','nearbyAirports','radius_km'));
+        return view('pages.hospital.showdetail', compact('hospital','city','district','province','nearbyHospitals','nearbyAirports','radius_km'));
     }
 
     public function showdetailclinic($id)
@@ -168,11 +169,13 @@ class HospitalController extends Controller
         $query = Hospital::query();
 
         //  JOIN YANG BENAR & AMAN
+        $query->leftJoin('districts', 'districts.id', '=', 'hospitals.district_id');
         $query->leftJoin('cities', 'cities.id', '=', 'hospitals.city_id');
         $query->leftJoin('provincesregions', 'provincesregions.id', '=', 'hospitals.province_id');
 
         $query->select(
             'hospitals.*',
+            'districts.district',
             'cities.city',
             'provincesregions.provinces_region'
         );

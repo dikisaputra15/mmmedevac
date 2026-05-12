@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Embassiees;
 use App\Models\Provincesregion;
 use App\Models\City;
+use App\Models\District;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
@@ -89,7 +90,8 @@ class MasterembessyController extends Controller
          }
 
         $embassy->province_id = $request->input('province_id');
-        $embassy->city_id = $request->input('city');
+        $embassy->district_id = $request->input('city');
+        $embassy->city_id = $request->input('district_id');
         $embassy->name_embassiees = $request->input('embassy_name');
         $embassy->location = $request->input('location');
         $embassy->telephone = $request->input('telephone');
@@ -119,11 +121,13 @@ class MasterembessyController extends Controller
     public function edit($id)
     {
         $embassy = Embassiees::findOrFail($id);
-        $provinces = Provincesregion::all();
-        $cities = City::all();
+        $provinces = Provincesregion::orderByRaw('LOWER(provinces_region) ASC')->get();
+        $districts = District::where('province_id', $embassy->province_id)->orderByRaw('LOWER(district) ASC')->get();
+        $cities = City::where('district_id', $embassy->district_id)->orderByRaw('LOWER(city) ASC')->get();
         return view('pages.master.editembassy', [
             'embassy' => $embassy,
             'provinces' => $provinces,
+            'districts' => $districts,
             'cities' => $cities
         ]);
     }
@@ -139,7 +143,8 @@ class MasterembessyController extends Controller
          // Update data
         $data = [
             'province_id' => $request->input('province_id'),
-            'city_id' => $request->input('city'),
+            'district_id' => $request->input('city'),
+            'city_id' => $request->input('district_id'),
             'name_embassiees' => $request->input('embassy_name'),
             'location' => $request->input('location'),
             'telephone' => $request->input('telephone'),
@@ -202,7 +207,15 @@ class MasterembessyController extends Controller
 
     public function getCities($province_id)
     {
-        $cities = City::where('province_id', $province_id)->get();
+        $cities = District::where('province_id', $province_id)->get();
         return response()->json($cities);
+    }
+
+    public function getDistricts($city_id)
+    {
+        $districts = City::where('district_id', $city_id)
+                  ->orderByRaw('LOWER(city) ASC')
+                  ->get();
+        return response()->json($districts);
     }
 }

@@ -153,8 +153,9 @@
                  <p>
                     <strong>Location:</strong>
                     {{ $police->location ?? '-' }},
-                    {{ $city->city }},
-                    {{ $province->provinces_region }}
+                    {{ $city->city ?? '-' }},
+                    {{ $district->district ?? '-' }},
+                    {{ $province->provinces_region ?? '-' }}, Myanmar
                 </p>
             </div>
             </div>

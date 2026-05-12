@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Airport;
 use App\Models\Provincesregion;
+use App\Models\District;
 use App\Models\City;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -98,7 +99,8 @@ class MasterairportController extends Controller
          }
 
         $airport->province_id = $request->input('province_id');
-        $airport->city_id = $request->input('city');
+        $airport->district_id = $request->input('city');
+        $airport->city_id = $request->input('district_id');
         $airport->airport_name = $request->input('airport_name');
         $airport->address = $request->input('address');
         $airport->latitude = $request->input('latitude');
@@ -172,13 +174,15 @@ class MasterairportController extends Controller
         $public_facilities = !empty($airport->public_facilities) ? explode(', ', $airport->public_facilities) : [];
         $public_transportation = !empty($airport->public_transportation) ? explode(', ', $airport->public_transportation) : [];
         $provinces = Provincesregion::orderByRaw('LOWER(provinces_region) ASC')->get();
-        $cities = City::where('province_id', $airport->province_id)->orderByRaw('LOWER(city) ASC')->get();
+        $districts = District::where('province_id', $airport->province_id)->orderByRaw('LOWER(district) ASC')->get();
+        $cities = City::where('district_id', $airport->district_id)->orderByRaw('LOWER(city) ASC')->get();
         return view('pages.master.editairport', [
             'airport' => $airport,
             'category' => $category,
             'public_facilities' => $public_facilities,
             'public_transportation' => $public_transportation,
             'provinces' => $provinces,
+            'districts' => $districts,
             'cities' => $cities
         ]);
     }
@@ -197,7 +201,8 @@ class MasterairportController extends Controller
         // Update data
         $data = [
             'province_id' => $request->input('province_id'),
-            'city_id' => $request->input('city'),
+            'district_id' => $request->input('city'),
+            'city_id' => $request->input('district_id'),
             'airport_name' => $request->input('airport_name'),
             'address' => $request->input('address'),
             'latitude' => $request->input('latitude'),

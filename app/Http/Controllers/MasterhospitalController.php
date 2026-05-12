@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Hospital;
 use App\Models\Provincesregion;
+use App\Models\District;
 use App\Models\City;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -95,7 +96,8 @@ class MasterhospitalController extends Controller
 
 
         $hospital->province_id = $request->input('province_id');
-        $hospital->city_id = $request->input('city');
+        $hospital->district_id = $request->input('city');
+        $hospital->city_id = $request->input('district_id');
         $hospital->name = $request->input('name');
         $hospital->latitude = $request->input('latitude');
         $hospital->longitude = $request->input('longitude');
@@ -168,10 +170,12 @@ class MasterhospitalController extends Controller
     {
         $hospital = Hospital::findOrFail($id);
         $provinces = Provincesregion::orderByRaw('LOWER(provinces_region) ASC')->get();
-        $cities = City::where('province_id', $hospital->province_id)->orderByRaw('LOWER(city) ASC')->get();
+        $districts = District::where('province_id', $hospital->province_id)->orderByRaw('LOWER(district) ASC')->get();
+        $cities = City::where('district_id', $hospital->district_id)->orderByRaw('LOWER(city) ASC')->get();
         return view('pages.master.edithospital', [
             'hospital' => $hospital,
             'provinces' => $provinces,
+            'districts' => $districts,
             'cities' => $cities
         ]);
     }
@@ -187,7 +191,8 @@ class MasterhospitalController extends Controller
         // Update data
         $data = [
             'province_id' => $request->input('province_id'),
-            'city_id' => $request->input('city'),
+            'district_id' => $request->input('city'),
+            'city_id' => $request->input('district_id'),
             'name' => $request->input('name'),
             'latitude' => $request->input('latitude'),
             'longitude' => $request->input('longitude'),
