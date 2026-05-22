@@ -459,7 +459,7 @@ function addAirportMarkers(data) {
                 ${airport.district_name ? ', ' + airport.district_name : ''}
                 ${airport.province_name ? ', ' + airport.province_name : ''}, Myanmar <br>
             <strong>Telephone:</strong> ${airport.telephone || 'N/A'}<br>
-            <strong>Website:</strong>${airport.website || 'N/A'}<br>
+            <strong>Website:</strong> ${airport.website || 'N/A'}<br>
             ${airport.id ? `<a href="/airports/${airport.id}/detail" class="btn btn-primary btn-sm mt-2" style="color:white;">Read More</a>` : ''}
         `);
     });
