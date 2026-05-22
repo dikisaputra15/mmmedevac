@@ -558,7 +558,7 @@ document.addEventListener('click', e => {
                     ${embassy.district ? ', ' + embassy.district : ''}
                     ${embassy.provinces_region ? ', ' + embassy.provinces_region : ''}, Myanmar <br>
                 <strong>Telephone:</strong> ${embassy.telephone || 'N/A'}<br>
-                ${embassy.website ? `<strong>Website:</strong><a href='${embassy.website}' target='__blank'> ${embassy.website} </a><br>` : ''}
+                <strong>Website:</strong> ${embassy.website || 'N/A'}<br>
                 ${embassy.id ? `<a href="/embassiees/${embassy.id}/detail" class="btn btn-primary btn-sm mt-2" style="color:white;">Read More</a>` : ''}
             `);
         });
