@@ -1548,6 +1548,20 @@ document.addEventListener('DOMContentLoaded', function () {
     // buka/tutup dropdown
     provinceSelect.addEventListener('click', () => {
         provinceDropdown.classList.toggle('show');
+        const panel = document.querySelector('.leaflet-control-custom');
+
+        if (provinceDropdown.classList.contains('show')) {
+
+            const dropdownHeight =
+                provinceDropdown.scrollHeight;
+
+            panel.style.height =
+                (420 + dropdownHeight) + 'px';
+
+        } else {
+
+            panel.style.height = '420px';
+        }
     });
 
     // tutup saat klik luar
@@ -1944,7 +1958,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
             div.innerHTML = `
                 <button style="background:#007bff;color:white;border:none;width:100%;padding:8px;">Filter & Radius</button>
-                <div id="filterPanel" style="padding:10px;">
+                <div id="filterPanel" style="
+                    padding:10px;
+                    display:flex;
+                    flex-direction:column;
+                    height:100%;
+                ">
                     <strong>Radius: <span id="radiusValueMap">0</span> km</strong>
                     <input type="range" id="radiusRangeMap" min="0" max="500" value="0" style="width:100%;margin-bottom:6px;">
                     <div style="display:flex;gap:5px;">
@@ -2023,7 +2042,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
 
                     <hr>
-                    <button id="resetMapFilter" class="btn btn-sm btn-secondary w-100">Reset All</button>
+                    <button id="resetMapFilter"
+                            class="btn btn-sm btn-secondary w-100"
+                            style="margin-top:auto;">
+                        Reset All
+                    </button>
                     <div id="totalCountDisplay" style="margin-top:8px;text-align:center;font-size:13px;"></div>
                 </div>`;
             L.DomEvent.disableClickPropagation(div);

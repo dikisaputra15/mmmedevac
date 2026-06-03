@@ -1594,7 +1594,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const icon = L.icon({
                 iconUrl: item.icon || defaultIconUrl,
-                iconSize: isPolice ? [16, 16] : [24, 24], // kecilkan police
+                iconSize: isPolice ? [12, 12] : [24, 24], // kecilkan police
                 iconAnchor: isPolice ? [15, 30] : [12, 24],
                 popupAnchor: isPolice ? [0, -25] : [0, -20]
             });
