@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Hospital;
 use App\Models\Airport;
 use App\Models\Embassiees;
+use App\Models\Police;
 use App\Models\Provincesregion;
 use Illuminate\Support\Facades\DB;
 
@@ -16,6 +17,7 @@ class HomeController extends Controller
          $totalhospital = Hospital::count();
          $totalairport = Airport::count();
          $totalEmbessy = Embassiees::count();
+         $totalPolice = Police::count();
 
         $airportNames = Airport::distinct()->pluck('airport_name')->filter()->sort()->values();
         $airportCategories = Airport::distinct()->pluck('category')->filter()->sort()->values();
@@ -24,7 +26,11 @@ class HomeController extends Controller
         $hospitalNames = DB::table('hospitals')->distinct()->pluck('name')->filter()->sort()->values();
         $hospitalCategories = DB::table('hospitals')->distinct()->pluck('facility_level')->filter()->sort()->values();
         $hospitalLocations = DB::table('hospitals')->distinct()->pluck('address')->filter()->sort()->values();
-         $totalhospital = Hospital::count();
+        $totalhospital = Hospital::count();
+
+        $policeNames = Police::distinct()->pluck('name_police')->filter()->sort()->values();
+
+        $embassyNames = Embassiees::distinct()->pluck('name_embassiees')->filter()->sort()->values();
 
         $provinces = Provincesregion::all();
 
@@ -33,6 +39,7 @@ class HomeController extends Controller
                 'totalhospital' => $totalhospital,
                 'totalairport' => $totalairport,
                 'totalEmbessy' => $totalEmbessy,
+                'totalPolice' => $totalPolice,
                 'airportNames' => $airportNames,
                 'airportCategories' => $airportCategories,
                 'airportLocations' => $airportLocations,
@@ -40,7 +47,9 @@ class HomeController extends Controller
                 'hospitalNames' => $hospitalNames,
                 'hospitalCategories' => $hospitalCategories,
                 'hospitalLocations' => $hospitalLocations,
-                'totalhospital' => $totalhospital
+                'totalhospital' => $totalhospital,
+                'policeNames'        => $policeNames,
+                'embassyNames'       => $embassyNames
             ]
         );
     }

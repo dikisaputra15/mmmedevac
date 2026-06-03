@@ -157,22 +157,22 @@
                 <span class="fw-bold me-2">Map Legend:</span>
 
                 <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level6Modal">
-                    <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:15px; height:15px;">
+                    <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:12px; height:12px;">
                     <small>Myanmar Police Force (National HQ)</small>
                 </button>
 
                 <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level5Modal">
-                    <img src="{{ asset('images/dot-red.png') }}" style="width:15px; height:15px;">
+                    <img src="{{ asset('images/dot-red.png') }}" style="width:12px; height:12px;">
                     <small>State / Region Police Command</small>
                 </button>
 
                 <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level4Modal">
-                    <img src="{{ asset('images/dot-orange-ppc.png') }}" style="width:15px; height:15px;">
+                    <img src="{{ asset('images/dot-orange-ppc.png') }}" style="width:12px; height:12px;">
                     <small>District Police Command</small>
                 </button>
 
                 <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level3Modal">
-                    <img src="{{ asset('images/dot-green.png') }}" style="width:15px; height:15px;">
+                    <img src="{{ asset('images/dot-green.png') }}" style="width:12px; height:12px;">
                     <small>Township Police Station</small>
                 </button>
 
@@ -360,7 +360,7 @@ function addPoliceMarkers(data) {
 
         const icon = L.icon({
             iconUrl: police.icon ? police.icon : 'https://png.pngtree.com/png-vector/20221211/ourmid/pngtree-minimal-location-map-icon-logo-symbol-vector-design-transparent-background-png-image_6520892.png',
-            iconSize: [16, 16],
+            iconSize: [12, 12],
             iconAnchor: [15, 30],
             popupAnchor: [0, -25]
         });

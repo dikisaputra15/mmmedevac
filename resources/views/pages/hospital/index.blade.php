@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title','Hospitals')
-@section('page-title', 'Papua New Guinea Medical Facility')
+@section('page-title', 'Myanmar Medical Facility')
 
 @push('styles')
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />

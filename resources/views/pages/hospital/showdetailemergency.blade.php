@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title','Emergency Support')
-@section('page-title', 'Papua New Guinea Medical Facility')
+@section('page-title', 'Myanmar Medical Facility')
 
 @push('styles')
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -369,6 +369,43 @@
                         </div>
                       </div>
 
+                       <div class="class-column" style="margin-left: 50px;">
+                        <div class="class-header class-airport-category">Police Classification</div>
+
+                        <div class="airport-list">
+                            <div class="hospital-row" style="flex-direction: column;">
+
+                                <!-- Baris Atas (3) -->
+                                <div class="hospital-item">
+                                    <button class="btn p-1">
+                                        <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:12px; height:12px;">
+                                        <small>Myanmar Police Force (National HQ)</small>
+                                    </button>
+
+                                    <button class="btn p-1">
+                                        <img src="{{ asset('images/dot-red.png') }}" style="width:12px; height:12px;">
+                                        <small>State / Region Police Command</small>
+                                    </button>
+                                </div>
+
+                                <!-- Baris Bawah (2) -->
+                                <div class="hospital-item">
+                                    <button class="btn p-1">
+                                         <img src="{{ asset('images/dot-orange-ppc.png') }}" style="width:12px; height:12px;">
+                                        <small>District Police Command</small>
+                                    </button>
+
+                                    <button class="btn p-1">
+                                        <img src="{{ asset('images/dot-green.png') }}" style="width:12px; height:12px;">
+                                        <small>Township Police Station</small>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
                   </div>
                 <div class="card-body p-0">
                     <div id="map"></div>
@@ -393,12 +430,6 @@
                 <div class="card-header fw-bold"><img src="{{ asset('images/icon-medical-support-website.png') }}" style="width: 24px; height: 24px;"> Emergency Medical Support</div>
                 <div class="card-body" style="max-height: 192px; overflow-y: auto;">
                     <?php echo $hospital->medical_support_website; ?>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header fw-bold"><img src="{{ asset('images/icon-police.png') }}" style="width: 24px; height: 24px;"> Nearest Police station</div>
-                <div class="card-body overflow-auto">
-                    <?php echo $hospital->nearest_police_station; ?>
                 </div>
             </div>
         </div>
@@ -1448,6 +1479,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nearbyHospitals = @json($nearbyHospitals);
     const nearbyAirports = @json($nearbyAirports);
     const nearbyPolices = @json($nearbyPolices);
+    const nearbyEmbassy = @json($nearbyEmbassy);
     let radiusKm = 100; // default radius
 
     let map, mainMarker, radiusCircle, routingControl = null;
@@ -1458,6 +1490,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const DEFAULT_AIRPORT_ICON_URL  = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png';
     const DEFAULT_MAIN_HOSPITAL_ICON_URL = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png';
     const DEFAULT_POLICE_ICON_URL = 'https://png.pngtree.com/png-vector/20221211/ourmid/pngtree-minimal-location-map-icon-logo-symbol-vector-design-transparent-background-png-image_6520892.png';
+    const DEFAULT_EMBASSY_ICON_URL = '/images/embassy-icon-new.png';
 
     const mainHospitalIcon = new L.Icon({
         iconUrl: DEFAULT_MAIN_HOSPITAL_ICON_URL,
@@ -1552,8 +1585,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const marker = L.marker([item.latitude, item.longitude], { icon });
-            const name = item.name || item.airport_name || 'N/A';
-            const level = item.facility_level || item.category || 'N/A';
+            const name = item.name || item.airport_name || item.name_embassiees || 'N/A';
+            const level = item.facility_level || item.category || '';
 
             let url = '#';
 
@@ -1563,6 +1596,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 url = `/hospitals/${item.id}`;
             } else if (type === 'Police') {
                 url = `/police/${item.id}/detail`;
+            } else if (type === 'Embassy') {
+                url = `/embassiees/${item.id}/detail`;
             }
 
             marker.bindPopup(`
@@ -1627,12 +1662,43 @@ document.addEventListener('DOMContentLoaded', () => {
             addNearbyMarkers(nearbyAirports, DEFAULT_AIRPORT_ICON_URL, 'Airport', filters);
         } else if (filterType === 'police') {
             addNearbyMarkers(nearbyPolices, DEFAULT_POLICE_ICON_URL, 'Police', filters);
+        } else if (filterType === 'embassy') {
+            addNearbyMarkers(
+                nearbyEmbassy,
+                DEFAULT_EMBASSY_ICON_URL,
+                'Embassy',
+                filters
+            );
         }
         else {
-            addNearbyMarkers(nearbyHospitals, DEFAULT_HOSPITAL_ICON_URL, 'Hospital', filters);
-            addNearbyMarkers(nearbyAirports, DEFAULT_AIRPORT_ICON_URL, 'Airport', filters);
-            addNearbyMarkers(nearbyPolices, DEFAULT_POLICE_ICON_URL, 'Police', filters);
-        }
+            addNearbyMarkers(
+                nearbyHospitals,
+                DEFAULT_HOSPITAL_ICON_URL,
+                'Hospital',
+                filters
+            );
+
+            addNearbyMarkers(
+                nearbyAirports,
+                DEFAULT_AIRPORT_ICON_URL,
+                'Airport',
+                filters
+            );
+
+            addNearbyMarkers(
+                nearbyPolices,
+                DEFAULT_POLICE_ICON_URL,
+                'Police',
+                filters
+            );
+
+            addNearbyMarkers(
+                nearbyEmbassy,
+                DEFAULT_EMBASSY_ICON_URL,
+                'Embassy',
+                filters
+            );
+    }
 
         fitMapToBounds();
     }
@@ -1658,6 +1724,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <option value="hospital">Hospitals</option>
                     <option value="airport">Airports</option>
                     <option value="police">Police</option>
+                    <option value="embassy">Embassy</option>
                 </select>
 
                 <div id="hospitalFilter" style="display:none;">
@@ -1735,7 +1802,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 hospitalDiv.style.display = 'none';
                 airportDiv.style.display = 'none';
                 policeDiv.style.display = 'none';
-                radiusKm = {{ $radius_km }};
+                radiusKm = 100;
                 radiusSlider.value = radiusKm;
                 radiusLabel.textContent = radiusKm;
                 refresh();
@@ -1756,7 +1823,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // === JALANKAN ===
     initializeMap();
     addMainHospitalAndCircle();
-    updateMarkers('all', [], []);
+    updateMarkers('all', [], [], []);
     map.addControl(new FilterControl());
 });
 </script>
