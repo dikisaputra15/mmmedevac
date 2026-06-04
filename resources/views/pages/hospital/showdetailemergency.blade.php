@@ -198,7 +198,7 @@
             <!-- Button 5 -->
             <a href="{{ url('airports') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('airports') ? 'active' : '' }}">
                 <i class="bi bi-airplane fs-3"></i>
-                <small>Airports</small>
+                <small>Aviations</small>
             </a>
 
             <a href="{{ url('aircharter') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('aircharter') ? 'active' : '' }}">
@@ -299,12 +299,12 @@
                               <div class="hospital-list">
                                 <div class="hospital-item">
                                   <button class="btn p-1">
-                                    Public
+                                    <small>Public</small>
                                   </button>
                                 </div>
                                 <div class="hospital-item">
                                     <button class="btn p-1">
-                                      Private
+                                      <small>Private</small>
                                     </button>
                                   </div>
                               </div>
@@ -1722,7 +1722,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <select id="mapFilter" class="form-select form-select-sm mb-2">
                     <option value="all">Show All</option>
                     <option value="hospital">Medical</option>
-                    <option value="airport">Airports</option>
+                    <option value="airport">Aviations</option>
                     <option value="police">Police</option>
                     <option value="embassy">Embassy</option>
                 </select>

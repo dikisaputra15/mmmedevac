@@ -343,12 +343,12 @@
                               <div class="hospital-list">
                                 <div class="hospital-item">
                                   <button class="btn p-1">
-                                    Public
+                                    <small>Public</small>
                                   </button>
                                 </div>
                                 <div class="hospital-item">
                                     <button class="btn p-1">
-                                      Private
+                                      <small>Private</small>
                                     </button>
                                   </div>
                               </div>
@@ -459,17 +459,17 @@
 
                     <a href="{{ url('airports') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('airports') ? 'active' : '' }}">
                         <i class="bi bi-airplane fs-3"></i>
-                        <small>Airports</small>
-                    </a>
-
-                    <a href="{{ url('hospital') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('hospital') ? 'active' : '' }}">
-                    <img src="{{ asset('images/icon-medical.png') }}" style="width: 24px; height: 24px;">
-                        <small>Medical</small>
+                        <small>Aviations</small>
                     </a>
 
                     <a href="{{ url('aircharter') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('aircharter') ? 'active' : '' }}">
                         <img src="{{ asset('images/icon-air-charter.png') }}" style="width: 48px; height: 24px;">
                         <small>Air Charter</small>
+                    </a>
+
+                    <a href="{{ url('hospital') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('hospital') ? 'active' : '' }}">
+                    <img src="{{ asset('images/icon-medical.png') }}" style="width: 24px; height: 24px;">
+                        <small>Medical</small>
                     </a>
 
                     <a href="{{ url('police') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('police') ? 'active' : '' }}">
@@ -1998,7 +1998,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="form-check">
                         <input class="form-check-input facility-checkbox" type="checkbox" value="airport" id="facilityAirport">
                         <label class="form-check-label" for="facilityAirport">
-                            Airports (<span id="airportCount">0</span>)
+                            Aviations (<span id="airportCount">0</span>)
                         </label>
                     </div>
 
