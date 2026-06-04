@@ -1665,20 +1665,35 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     map.addControl(drawControl);
 
-    map.on(L.Draw.Event.CREATED, e => {
+    map.on(L.Draw.Event.CREATED, async e => {
         drawnItems.clearLayers();
         drawnItems.addLayer(e.layer);
+
         drawnPolygonGeoJSON = e.layer.toGeoJSON();
-        applyFiltersWithMapControl('all');
+
+        // console.log('Polygon Created', drawnPolygonGeoJSON);
+
+        await refreshCurrentFilters();
     });
-    map.on(L.Draw.Event.EDITED, e => {
-        e.layers.eachLayer(layer => drawnPolygonGeoJSON = layer.toGeoJSON());
-        applyFiltersWithMapControl('all');
+    map.on(L.Draw.Event.EDITED, async e => {
+
+        e.layers.eachLayer(layer => {
+            drawnPolygonGeoJSON = layer.toGeoJSON();
+        });
+
+        // console.log('Polygon Edited', drawnPolygonGeoJSON);
+
+        await refreshCurrentFilters();
     });
-    map.on(L.Draw.Event.DELETED, () => {
+    map.on(L.Draw.Event.DELETED, async () => {
+
         drawnItems.clearLayers();
+
         drawnPolygonGeoJSON = null;
-        applyFiltersWithMapControl('all');
+
+        // console.log('Polygon Deleted');
+
+        await refreshCurrentFilters();
     });
 
     // --- Update Radius ---
@@ -1714,6 +1729,7 @@ document.addEventListener('DOMContentLoaded', function () {
             else if (v !== '' && v != null) params.append(k, v);
         });
         if (drawnPolygonGeoJSON) params.append('polygon', JSON.stringify(drawnPolygonGeoJSON));
+        //  console.log(url + '?' + params.toString());
 
         try {
             const res = await fetch(`${url}?${params.toString()}`);
@@ -2075,6 +2091,28 @@ document.addEventListener('DOMContentLoaded', function () {
         return { facilities, hLevels, aClasses, provs, radius, airportName, hospitalName };
     }
 
+    async function refreshCurrentFilters() {
+        const {
+            facilities,
+            hLevels,
+            aClasses,
+            provs,
+            radius,
+            airportName,
+            hospitalName
+        } = getCurrentFiltersFromUI();
+
+        await applyFiltersWithMapControl(
+            facilities,
+            hLevels,
+            aClasses,
+            provs,
+            radius,
+            airportName,
+            hospitalName
+        );
+    }
+
     // === Event Logic ===
     document.addEventListener('change', async e => {
         const facilities = [...document.querySelectorAll('.facility-checkbox:checked')].map(el => el.value);
@@ -2208,7 +2246,15 @@ document.addEventListener('click', async (e) => {
         updateTotalCountDisplay();
 
         // 6) Re-fetch semua data
-        await applyFiltersWithMapControl();
+        await applyFiltersWithMapControl(
+            [],
+            [],
+            [],
+            [],
+            0,
+            '',
+            ''
+        );
 
         e.stopPropagation();
         e.preventDefault();
@@ -2250,7 +2296,7 @@ function bindFilterChangeAutoApply() {
 setTimeout(bindFilterChangeAutoApply, 350);
 
     // --- Initial Load ---
-    applyFiltersWithMapControl([]);
+    refreshCurrentFilters();
 </script>
 
 @endpush

@@ -1548,6 +1548,20 @@ document.addEventListener('DOMContentLoaded', function () {
     // buka/tutup dropdown
     provinceSelect.addEventListener('click', () => {
         provinceDropdown.classList.toggle('show');
+        const panel = document.querySelector('.leaflet-control-custom');
+
+        if (provinceDropdown.classList.contains('show')) {
+
+            const dropdownHeight =
+                provinceDropdown.scrollHeight;
+
+            panel.style.height =
+                (420 + dropdownHeight) + 'px';
+
+        } else {
+
+            panel.style.height = '420px';
+        }
     });
 
     // tutup saat klik luar
@@ -1651,20 +1665,35 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     map.addControl(drawControl);
 
-    map.on(L.Draw.Event.CREATED, e => {
+    map.on(L.Draw.Event.CREATED, async e => {
         drawnItems.clearLayers();
         drawnItems.addLayer(e.layer);
+
         drawnPolygonGeoJSON = e.layer.toGeoJSON();
-        applyFiltersWithMapControl('all');
+
+        // console.log('Polygon Created', drawnPolygonGeoJSON);
+
+        await refreshCurrentFilters();
     });
-    map.on(L.Draw.Event.EDITED, e => {
-        e.layers.eachLayer(layer => drawnPolygonGeoJSON = layer.toGeoJSON());
-        applyFiltersWithMapControl('all');
+    map.on(L.Draw.Event.EDITED, async e => {
+
+        e.layers.eachLayer(layer => {
+            drawnPolygonGeoJSON = layer.toGeoJSON();
+        });
+
+        // console.log('Polygon Edited', drawnPolygonGeoJSON);
+
+        await refreshCurrentFilters();
     });
-    map.on(L.Draw.Event.DELETED, () => {
+    map.on(L.Draw.Event.DELETED, async () => {
+
         drawnItems.clearLayers();
+
         drawnPolygonGeoJSON = null;
-        applyFiltersWithMapControl('all');
+
+        // console.log('Polygon Deleted');
+
+        await refreshCurrentFilters();
     });
 
     // --- Update Radius ---
@@ -1700,6 +1729,7 @@ document.addEventListener('DOMContentLoaded', function () {
             else if (v !== '' && v != null) params.append(k, v);
         });
         if (drawnPolygonGeoJSON) params.append('polygon', JSON.stringify(drawnPolygonGeoJSON));
+        //  console.log(url + '?' + params.toString());
 
         try {
             const res = await fetch(`${url}?${params.toString()}`);
@@ -1944,7 +1974,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
             div.innerHTML = `
                 <button style="background:#007bff;color:white;border:none;width:100%;padding:8px;">Filter & Radius</button>
-                <div id="filterPanel" style="padding:10px;">
+                <div id="filterPanel" style="
+                    padding:10px;
+                    display:flex;
+                    flex-direction:column;
+                    height:100%;
+                ">
                     <strong>Radius: <span id="radiusValueMap">0</span> km</strong>
                     <input type="range" id="radiusRangeMap" min="0" max="500" value="0" style="width:100%;margin-bottom:6px;">
                     <div style="display:flex;gap:5px;">
@@ -2023,7 +2058,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
 
                     <hr>
-                    <button id="resetMapFilter" class="btn btn-sm btn-secondary w-100">Reset All</button>
+                    <button id="resetMapFilter"
+                            class="btn btn-sm btn-secondary w-100"
+                            style="margin-top:auto;">
+                        Reset All
+                    </button>
                     <div id="totalCountDisplay" style="margin-top:8px;text-align:center;font-size:13px;"></div>
                 </div>`;
             L.DomEvent.disableClickPropagation(div);
@@ -2050,6 +2089,28 @@ document.addEventListener('DOMContentLoaded', function () {
         const airportName = document.getElementById('airport_name_map')?.value || '';
         const hospitalName = document.getElementById('hospital_name_map')?.value || '';
         return { facilities, hLevels, aClasses, provs, radius, airportName, hospitalName };
+    }
+
+    async function refreshCurrentFilters() {
+        const {
+            facilities,
+            hLevels,
+            aClasses,
+            provs,
+            radius,
+            airportName,
+            hospitalName
+        } = getCurrentFiltersFromUI();
+
+        await applyFiltersWithMapControl(
+            facilities,
+            hLevels,
+            aClasses,
+            provs,
+            radius,
+            airportName,
+            hospitalName
+        );
     }
 
     // === Event Logic ===
@@ -2185,7 +2246,15 @@ document.addEventListener('click', async (e) => {
         updateTotalCountDisplay();
 
         // 6) Re-fetch semua data
-        await applyFiltersWithMapControl();
+        await applyFiltersWithMapControl(
+            [],
+            [],
+            [],
+            [],
+            0,
+            '',
+            ''
+        );
 
         e.stopPropagation();
         e.preventDefault();
@@ -2227,7 +2296,7 @@ function bindFilterChangeAutoApply() {
 setTimeout(bindFilterChangeAutoApply, 350);
 
     // --- Initial Load ---
-    applyFiltersWithMapControl([]);
+    refreshCurrentFilters();
 </script>
 
 @endpush

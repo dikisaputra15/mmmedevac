@@ -274,6 +274,6 @@ class HospitalController extends Controller
         }
 
         return response()->json($query->get());
-}
+    }
 
 }
