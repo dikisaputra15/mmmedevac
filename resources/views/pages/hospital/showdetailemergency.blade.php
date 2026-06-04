@@ -198,7 +198,7 @@
             <!-- Button 5 -->
             <a href="{{ url('airports') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('airports') ? 'active' : '' }}">
                 <i class="bi bi-airplane fs-3"></i>
-                <small>Aviations</small>
+                <small>Aviation</small>
             </a>
 
             <a href="{{ url('aircharter') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('aircharter') ? 'active' : '' }}">
@@ -240,11 +240,11 @@
 
                 <!-- Legend container -->
                   <div class="classification">
-                    <!-- Airfield Classification -->
+                    <!-- AIRFIELD CLASSIFICATION -->
                     <div class="classification" style="margin-right: 30px; width: 30%;">
                       <!-- Airport -->
                       <div class="class-column">
-                        <div class="class-header class-airport-category">Airfield Classification</div>
+                        <div class="class-header class-airport-category">AIRFIELD CLASSIFICATION</div>
                         <div class="hospital-list">
                           <div class="hospital-row" style="flex-direction: column;">
                             <!-- Airport row 1 -->
@@ -290,7 +290,7 @@
                     <div style="flex-direction: column;">
                         <!-- Title -->
                         <div>
-                            <div class="class-header class-medical-classification">Medical Facility Classification</div>
+                            <div class="class-header class-medical-classification">MEDICAL FACILITY CLASSIFICATION</div>
                         </div>
                         <div style="display: flex; flex-direction: row;">
                             <!-- Advanced -->
@@ -370,7 +370,7 @@
                       </div>
 
                        <div class="class-column" style="margin-left: 50px;">
-                        <div class="class-header class-airport-category">Police Classification</div>
+                        <div class="class-header class-airport-category">POLICE CLASSIFICATION</div>
 
                         <div class="airport-list">
                             <div class="hospital-row" style="flex-direction: column;">
@@ -1722,7 +1722,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <select id="mapFilter" class="form-select form-select-sm mb-2">
                     <option value="all">Show All</option>
                     <option value="hospital">Medical</option>
-                    <option value="airport">Aviations</option>
+                    <option value="airport">Aviation</option>
                     <option value="police">Police</option>
                     <option value="embassy">Embassy</option>
                 </select>

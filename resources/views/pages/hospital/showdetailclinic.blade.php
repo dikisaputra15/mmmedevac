@@ -186,7 +186,7 @@
             <!-- Button 5 -->
             <a href="{{ url('airports') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('airports') ? 'active' : '' }}">
                 <i class="bi bi-airplane fs-3"></i>
-                <small>Aviations</small>
+                <small>Aviation</small>
             </a>
 
             <a href="{{ url('aircharter') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('aircharter') ? 'active' : '' }}">
@@ -227,7 +227,7 @@
             <div style="flex-direction: column;">
                         <!-- Title -->
                         <div>
-                            <div class="class-header class-medical-classification">Medical Facility Classification</div>
+                            <div class="class-header class-medical-classification">MEDICAL FACILITY CLASSIFICATION</div>
                         </div>
                         <div style="display: flex; flex-direction: row;">
                             <!-- Advanced -->
