@@ -1991,7 +1991,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="form-check">
                         <input class="form-check-input facility-checkbox" type="checkbox" value="hospital" id="facilityHospital">
                         <label class="form-check-label" for="facilityHospital">
-                            Hospitals (<span id="hospitalCount">0</span>)
+                            Medical (<span id="hospitalCount">0</span>)
                         </label>
                     </div>
 

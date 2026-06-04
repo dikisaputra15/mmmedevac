@@ -1741,7 +1741,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 <select id="mapFilter" class="form-select form-select-sm mb-2">
                     <option value="all">Show All</option>
-                    <option value="hospital">Hospitals</option>
+                    <option value="hospital">Medical</option>
                     <option value="airport">Airports</option>
                     <option value="police">Police</option>
                     <option value="embassy">Embassy</option>
