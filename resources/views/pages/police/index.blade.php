@@ -158,7 +158,7 @@
 
                 <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level6Modal">
                     <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:12px; height:12px;">
-                    <small>Myanmar Police Force (National HQ)</small>
+                    <small>National Police (HQ)</small>
                 </button>
 
                 <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level5Modal">
@@ -254,7 +254,7 @@
       <div class="modal-header">
         <div class="d-flex align-items-center">
             <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:15px; height:15px;">
-            <h5 class="modal-title" id="disclaimerLabel">Myanmar Police Force (National HQ)</h5>
+            <h5 class="modal-title" id="disclaimerLabel">National Police (HQ)</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -515,7 +515,7 @@ const FilterPanel = L.Control.extend({
 
                 <hr>
 
-                <strong>Province</strong>
+                <strong>Region / State</strong>
                 <div style="max-height:120px;overflow-y:auto;border:1px solid #ccc;padding:5px;border-radius:5px;margin-top:6px;">
                     @foreach ($provinces as $p)
                         <div class="form-check">

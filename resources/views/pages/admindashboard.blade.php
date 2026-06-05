@@ -423,7 +423,7 @@
                                 <div class="hospital-item">
                                     <button class="btn p-1">
                                         <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:12px; height:12px;">
-                                        <small>Myanmar Police Force (National HQ)</small>
+                                        <small>National Police (HQ)</small>
                                     </button>
 
                                     <button class="btn p-1">
