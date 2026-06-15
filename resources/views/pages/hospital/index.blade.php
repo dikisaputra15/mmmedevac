@@ -1445,7 +1445,10 @@ async function applyHospitalFilters() {
         filters.center_lng = lastClickedLocation.lng;
     }
 
-    const hospitals = await fetchHospitalData(filters);
+    const result = await fetchHospitalData(filters);
+
+    const hospitals = result.hospitals;
+    const levelCounts = result.levelCounts;
 
     const filteredHospitals = hospitals.filter(h => {
         if (levels.length === 0) return true;
@@ -1455,7 +1458,17 @@ async function applyHospitalFilters() {
     });
 
     addHospitalMarkers(filteredHospitals);
-    document.getElementById('totalCountDisplay').innerHTML = `<strong>Hospitals:</strong> ${filteredHospitals.length}`;
+
+    Object.keys(levelCounts).forEach(level => {
+
+        const id = level.replace(/\s+/g, '-');
+
+        const el = document.getElementById(`count-${id}`);
+
+        if (el) {
+            el.textContent = levelCounts[level];
+        }
+    });
 }
 
 // === Select2 Inisialisasi ===
@@ -1504,9 +1517,11 @@ const FilterPanel = L.Control.extend({
                 </select>
                 <label>Facility Level:</label>
                 ${['Tertiary','Secondary','Primary','Large Private','Medium Private','Small Private'].map(c => `
-                    <label style="display:block;font-size:13px;">
-                        <input type="checkbox" name="hospitalLevel" value="${c}"> ${c}
-                    </label>`).join('')}
+                <label style="display:block;font-size:13px;margin-bottom:4px;">
+                    <input type="checkbox" name="hospitalLevel" value="${c}">
+                    ${c} (<span id="count-${c.replace(/\s+/g,'-')}">0</span>)
+                </label>
+                `).join('')}
                 <hr>
                 <strong>Region</strong>
                 <div style="max-height:120px;overflow-y:auto;border:1px solid #ccc;padding:5px;border-radius:5px;margin-top:6px;">
@@ -1519,7 +1534,6 @@ const FilterPanel = L.Control.extend({
                 </div>
                 <hr>
                 <button id="resetMapFilter" class="btn btn-sm btn-secondary w-100">Reset All</button>
-                <div id="totalCountDisplay" style="margin-top:8px;text-align:center;font-size:13px;"></div>
             </div>`;
         L.DomEvent.disableClickPropagation(div);
         return div;

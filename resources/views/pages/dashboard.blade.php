@@ -1872,29 +1872,49 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // === HOSPITALS ===
         if (showHospital) {
-            const hospitals = await fetchData('/api/hospital', {
+             const result = await fetchData('/api/hospital', {
                 ...common,
                 name: hospitalName,
                 category: hospitalLevels
             });
-            addMarkers(hospitals, hospitalMarkers, null);
-            totalHospitals = hospitals.length;
+
+            addMarkers(result.hospitals, hospitalMarkers, null);
+
+            totalHospitals = result.hospitals.length;
         } else {
             hospitalMarkers.clearLayers();
         }
 
         // === AIRPORTS ===
-        if (showAirport) {
-            const airports = await fetchData('/api/airports', {
+       if (showAirport) {
+
+            const airportResponse = await fetchData('/api/airports', {
                 ...common,
                 name: airportName
             });
 
+            const airports = Array.isArray(airportResponse)
+                    ? airportResponse
+                    : airportResponse.airports || [];
+            const categoryCounts = airportResponse.categoryCounts || {};
+
             const filteredAirports = airports.filter(a => {
-                if (airportClasses.length === 0) return true;
-                if (!a.category) return false;
-                const dbCategories = a.category.split(',').map(c => c.trim().toLowerCase());
-                return airportClasses.some(sel => dbCategories.includes(sel.toLowerCase()));
+
+                if (airportClasses.length === 0) {
+                    return true;
+                }
+
+                if (!a.category) {
+                    return false;
+                }
+
+                const dbCategories = a.category
+                    .split(',')
+                    .map(c => c.trim().toLowerCase());
+
+                return airportClasses.some(sel =>
+                    dbCategories.includes(sel.toLowerCase())
+                );
             });
 
             addMarkers(
@@ -1902,17 +1922,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 airportMarkers,
                 'https://pg.concordreview.com/wp-content/uploads/2024/10/International-Airport.png'
             );
+
             totalAirports = filteredAirports.length;
-        } else {
+        }else {
             airportMarkers.clearLayers();
         }
 
         // === POLICE ===
-        if (showPolice) {
+       if (showPolice) {
 
-            const police = await fetchData('/api/polices', {
+            const result = await fetchData('/api/polices', {
                 ...common
             });
+
+            const police = result.polices || [];
+            const categoryCounts = result.categoryCounts || {};
 
             addMarkers(
                 police,
@@ -1922,6 +1946,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
             totalPolice = police.length;
 
+            Object.keys(categoryCounts).forEach(cat => {
+
+                const id = cat.replace(/[^a-zA-Z0-9]/g, '-');
+
+                const el = document.getElementById(`count-${id}`);
+
+                if (el) {
+                    el.textContent = categoryCounts[cat];
+                }
+            });
         } else {
             policeMarkers.clearLayers();
         }

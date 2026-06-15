@@ -273,7 +273,36 @@ class HospitalController extends Controller
             }
         }
 
-        return response()->json($query->get());
+        $hospitals = $query->get();
+
+        $levelCounts = [
+            'Tertiary' => 0,
+            'Secondary' => 0,
+            'Primary' => 0,
+            'Large Private' => 0,
+            'Medium Private' => 0,
+            'Small Private' => 0,
+        ];
+
+        foreach ($hospitals as $hospital) {
+
+            if (empty($hospital->facility_level)) {
+                continue;
+            }
+
+            $levels = array_map('trim', explode(',', $hospital->facility_level));
+
+            foreach ($levels as $level) {
+                if (isset($levelCounts[$level])) {
+                    $levelCounts[$level]++;
+                }
+            }
+        }
+
+        return response()->json([
+            'hospitals' => $hospitals,
+            'levelCounts' => $levelCounts
+        ]);
     }
 
 }

@@ -45,8 +45,8 @@ class PoliceController extends Controller
         });
 
         // 2. Filter by Category (case-insensitive search)
-        $query->when($request->filled('category'), function ($q) use ($request) {
-            $q->where('category', $request->input('category'));
+        $query->when($request->filled('categories'), function ($q) use ($request) {
+            $q->whereIn('category', (array) $request->categories);
         });
 
         // 3. Filter by Location (Address - case-insensitive search)
@@ -141,8 +141,34 @@ class PoliceController extends Controller
 
 
         // Execute the query and return JSON response
-        $police = $query->get();
-        return response()->json($police);
+        $polices = $query->get();
+
+        $categoryCounts = [
+            'National Police (HQ)' => 0,
+            'State / Region Police Command' => 0,
+            'District Police Command' => 0,
+            'Township Police Station' => 0,
+        ];
+
+        foreach ($polices as $police) {
+
+            if (empty($police->category)) {
+                continue;
+            }
+
+            $cats = array_map('trim', explode(',', $police->category));
+
+            foreach ($cats as $cat) {
+                if (isset($categoryCounts[$cat])) {
+                    $categoryCounts[$cat]++;
+                }
+            }
+        }
+
+        return response()->json([
+            'polices' => $polices,
+            'categoryCounts' => $categoryCounts
+        ]);
     }
 
     public function showdetail($id)
