@@ -168,6 +168,7 @@ class AirportsController extends Controller
             'Military' => 0,
             'Regional' => 0,
             'Private' => 0,
+            'Helipad' => 0,
         ];
 
         foreach ($airports as $airport) {
