@@ -382,12 +382,12 @@
 
                                 <!-- Baris Atas (3) -->
                                 <div class="hospital-item">
-                                    <button class="btn p-1">
+                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#police1Modal">
                                         <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:12px; height:12px;">
                                         <small>National Police (HQ)</small>
                                     </button>
 
-                                    <button class="btn p-1">
+                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#police2Modal">
                                         <img src="{{ asset('images/dot-red.png') }}" style="width:12px; height:12px;">
                                         <small>State / Region Police Command</small>
                                     </button>
@@ -395,12 +395,12 @@
 
                                 <!-- Baris Bawah (2) -->
                                 <div class="hospital-item">
-                                    <button class="btn p-1">
+                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#police3Modal">
                                          <img src="{{ asset('images/dot-orange-ppc.png') }}" style="width:12px; height:12px;">
                                         <small>District Police Command</small>
                                     </button>
 
-                                    <button class="btn p-1">
+                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#police4Modal">
                                         <img src="{{ asset('images/dot-green.png') }}" style="width:12px; height:12px;">
                                         <small>Township Police Station</small>
                                     </button>
@@ -441,6 +441,93 @@
 
     </div>
 
+</div>
+
+<div class="modal fade" id="police1Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="d-flex align-items-center">
+            <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:15px; height:15px;">
+            <h5 class="modal-title" id="disclaimerLabel">National Police (HQ)</h5>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="p-modal text-justify">
+            Myanmar Police Force Headquarters: Led by a Major General / Lieutenant General-level officer. Responsible for national police command, policy implementation, operational coordination, personnel management, logistics, training, discipline, and supervision of all territorial and specialized police units
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="police2Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="d-flex align-items-center">
+             <img src="{{ asset('images/dot-red.png') }}" style="width:15px; height:15px;">
+            <h5 class="modal-title" id="disclaimerLabel">State / Region Police Command</h5>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="p-modal text-justify">
+            State Police Force / Region Police Force: Led by a Police Brigadier General / Police Colonel-level officer. Responsible for area-level police command within a State or Region, including law-enforcement coordination, public-order control, crime prevention, investigation support, security reporting, and supervision of subordinate District and Township Police Forces.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="police3Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="d-flex align-items-center">
+             <img src="{{ asset('images/dot-orange-ppc.png') }}" style="width:15px; height:15px;">
+            <h5 class="modal-title" id="disclaimerLabel">District Police Command</h5>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="p-modal text-justify">
+            District Police Force: Led by a Police Lieutenant Colonel-level officer. Responsible for intermediate territorial command, district-wide law-enforcement coordination, supervision of Township Police Forces, operational reporting, public-order deployments, and support to criminal investigations.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="police4Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="d-flex align-items-center">
+             <img src="{{ asset('images/dot-green.png') }}" style="width:15px; height:15px;">
+            <h5 class="modal-title" id="disclaimerLabel">Township Police Station</h5>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="p-modal text-justify">
+            Township Police Force: Led by a Police Major / Police Captain-level officer. Responsible for local police command, supervision of police stations, police posts, and guard posts, patrol coordination, local crime reporting, investigation coordination, and reporting to the District Police Force.
+        </p>
+        <p class="p-modal text-justify">
+            Frontline Police Level: Frontline police are the lowest operational layer of the Myanmar Police Force, consisting of Police Stations, Police Posts, and Police Guard Posts. They serve as the first point of contact for local law-enforcement matters and are responsible for incident response, crime reporting, patrol operations, local security, preliminary investigations, checkpoint or guard duties, and immediate reporting to the Township Police Force. This layer provides the MPF's direct presence at town, ward, village tract, village, facility, checkpoint, and other local security areas.
+        </p>
+        <ul>
+            <li>
+                Police Station: Led by a Police Captain / Police Lieutenant-level officer. Responsible for frontline law enforcement, incident response, crime reporting, patrol operations, preliminary investigations, detention and case-processing support, public-order support, and reporting to the Township Police Force.
+            </li>
+            <li>
+                Police Post / Police Guard Post: Led by a Police Lieutenant / junior officer / senior non-commissioned officer-level personnel. Responsible for forward security presence, guard duties, checkpoint control, patrol support, incident reporting, local observation, early warning, and support to police station-level operations.
+            </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="modal fade" id="level1Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
