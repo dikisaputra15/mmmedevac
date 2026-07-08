@@ -102,26 +102,26 @@
 
                 <input type="hidden" name="icon" id="icon">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input category-radio" type="radio" name="category" value="National Police (HQ)" data-icon="{{ asset('images/dot-blue-ring-royal-papua.png') }}">
-                    <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:12px; height:12px;">
+                    <input class="form-check-input category-radio" type="radio" name="category" value="National Police (HQ)" data-icon="{{ asset('images/Layer1.png') }}">
+                    <img src="{{ asset('images/Layer1.png') }}" style="width:12px; height:12px;">
                     <label class="form-check-label">National Police (HQ)</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input category-radio" type="radio" name="category" value="State / Region Police Command" data-icon="{{ asset('images/dot-red.png') }}">
-                    <img src="{{ asset('images/dot-red.png') }}" style="width:12px; height:12px;">
+                    <input class="form-check-input category-radio" type="radio" name="category" value="State / Region Police Command" data-icon="{{ asset('images/Layer2.png') }}">
+                    <img src="{{ asset('images/Layer2.png') }}" style="width:12px; height:12px;">
                     <label class="form-check-label">State / Region Police Command</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input category-radio" type="radio" name="category" value="District Police Command" data-icon="{{ asset('images/dot-orange-ppc.png') }}">
-                    <img src="{{ asset('images/dot-orange-ppc.png') }}" style="width:12px; height:12px;">
+                    <input class="form-check-input category-radio" type="radio" name="category" value="District Police Command" data-icon="{{ asset('images/Layer3.png') }}">
+                    <img src="{{ asset('images/Layer3.png') }}" style="width:12px; height:12px;">
                     <label class="form-check-label">District Police Command</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input category-radio" type="radio" name="category" value="Township Police Station" data-icon="{{ asset('images/dot-green.png') }}">
-                    <img src="{{ asset('images/dot-green.png') }}" style="width:12px; height:12px;">
+                    <input class="form-check-input category-radio" type="radio" name="category" value="Township Police Station" data-icon="{{ asset('images/Layer4.png') }}">
+                    <img src="{{ asset('images/Layer4.png') }}" style="width:12px; height:12px;">
                     <label class="form-check-label">Township Police Station</label>
                 </div>
             </div>

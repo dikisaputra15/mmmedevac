@@ -383,12 +383,12 @@
                                 <!-- Baris Atas (3) -->
                                 <div class="hospital-item">
                                     <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#police1Modal">
-                                        <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:12px; height:12px;">
+                                        <img src="{{ asset('images/Layer1.png') }}" style="width:12px; height:12px;">
                                         <small>National Police (HQ)</small>
                                     </button>
 
                                     <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#police2Modal">
-                                        <img src="{{ asset('images/dot-red.png') }}" style="width:12px; height:12px;">
+                                        <img src="{{ asset('images/Layer2.png') }}" style="width:12px; height:12px;">
                                         <small>State / Region Police Command</small>
                                     </button>
                                 </div>
@@ -396,12 +396,12 @@
                                 <!-- Baris Bawah (2) -->
                                 <div class="hospital-item">
                                     <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#police3Modal">
-                                         <img src="{{ asset('images/dot-orange-ppc.png') }}" style="width:12px; height:12px;">
+                                         <img src="{{ asset('images/Layer3.png') }}" style="width:12px; height:12px;">
                                         <small>District Police Command</small>
                                     </button>
 
                                     <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#police4Modal">
-                                        <img src="{{ asset('images/dot-green.png') }}" style="width:12px; height:12px;">
+                                        <img src="{{ asset('images/Layer4.png') }}" style="width:12px; height:12px;">
                                         <small>Township Police Station</small>
                                     </button>
                                 </div>
@@ -448,7 +448,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
-            <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:15px; height:15px;">
+            <img src="{{ asset('images/Layer1.png') }}" style="width:15px; height:15px;">
             <h5 class="modal-title" id="disclaimerLabel">National Police (HQ)</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -494,7 +494,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
-             <img src="{{ asset('images/dot-red.png') }}" style="width:15px; height:15px;">
+             <img src="{{ asset('images/Layer2.png') }}" style="width:15px; height:15px;">
             <h5 class="modal-title" id="disclaimerLabel">State Police Force / Region Police Force</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -529,7 +529,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
-             <img src="{{ asset('images/dot-orange-ppc.png') }}" style="width:15px; height:15px;">
+             <img src="{{ asset('images/Layer3.png') }}" style="width:15px; height:15px;">
             <h5 class="modal-title" id="disclaimerLabel">District Police Force</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -560,7 +560,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
-             <img src="{{ asset('images/dot-green.png') }}" style="width:15px; height:15px;">
+             <img src="{{ asset('images/Layer4.png') }}" style="width:15px; height:15px;">
             <h5 class="modal-title" id="disclaimerLabel">Township Police Force</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

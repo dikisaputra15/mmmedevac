@@ -147,9 +147,9 @@
                         type="radio"
                         name="category"
                         value="National Police (HQ)"
-                        data-icon="{{ asset('images/dot-blue-ring-royal-papua.png') }}"
+                        data-icon="{{ asset('images/Layer1.png') }}"
                         {{ $police->category == 'National Police (HQ)' ? 'checked' : '' }}>
-                    <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" width="16">
+                    <img src="{{ asset('images/Layer1.png') }}" width="16">
                     <label>National Police (HQ)</label>
                 </div>
 
@@ -158,9 +158,9 @@
                         type="radio"
                         name="category"
                         value="State / Region Police Command"
-                        data-icon="{{ asset('images/dot-red.png') }}"
+                        data-icon="{{ asset('images/Layer2.png') }}"
                         {{ $police->category == 'State / Region Police Command' ? 'checked' : '' }}>
-                    <img src="{{ asset('images/dot-red.png') }}" width="16">
+                    <img src="{{ asset('images/Layer2.png') }}" width="16">
                     <label>State / Region Police Command</label>
                 </div>
 
@@ -169,9 +169,9 @@
                         type="radio"
                         name="category"
                         value="District Police Command"
-                        data-icon="{{ asset('images/dot-orange-ppc.png') }}"
+                        data-icon="{{ asset('images/Layer3.png') }}"
                         {{ $police->category == 'District Police Command' ? 'checked' : '' }}>
-                    <img src="{{ asset('images/dot-orange-ppc.png') }}" width="16">
+                    <img src="{{ asset('images/Layer3.png') }}" width="16">
                     <label>District Police Command</label>
                 </div>
 
@@ -180,9 +180,9 @@
                         type="radio"
                         name="category"
                         value="Township Police Station"
-                        data-icon="{{ asset('images/dot-green.png') }}"
+                        data-icon="{{ asset('images/Layer4.png') }}"
                         {{ $police->category == 'Township Police Station' ? 'checked' : '' }}>
-                    <img src="{{ asset('images/dot-green.png') }}" width="16">
+                    <img src="{{ asset('images/Layer4.png') }}" width="16">
                     <label>Township Police Station</label>
                 </div>
 
