@@ -1,130 +1,89 @@
-@extends('layouts.master-admin')
+@extends('layouts.master')
 
-@section('title', 'Dashboard')
-
-@section('page-title', 'Myanmar Crisis Management Tools')
+@section('title','More Details')
+@section('page-title', 'Myanmar Embassy')
 
 @push('styles')
 
-    
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    
-    <style>
-        #map {
-            height: 700px;
-        }
-        .filter-container {
-            margin-bottom: 20px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,.1);
-        }
-        .form-check-scrollable {
-            max-height: 150px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-        }
-        .total-info {
-            background: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            box-shadow: 0 0 6px rgba(0,0,0,0.2);
-            font-weight: bold;
-            margin-left: 10px;
-        }
+<style>
+    #map {
+        height: 600px;
+    }
 
-        .select2-container .select2-selection--single {
-            height: 45px;
-            padding: 6px 12px;
-            border: 1px solid #ced4da;
-            border-radius: 10px;
-        }
+    table {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    td {
+        border: 1px solid black;
+        padding: 4px;
+    }
 
-        .select2-container--default .select2-selection--single .select2-selection__rendered {
-            line-height: 30px;
-        }
-
-        .select2-container--default .select2-selection--single .select2-selection__arrow {
-            height: 45px;
-            right: 10px;
-        }
-
-        .p-modal{
-            text-align:justify;
-        }
-        .hospital-legend-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 0 5px;
-        }
-        .hospital-legend-item img {
-            width: 30px;
-            height: 30px;
-        }
-
-        p{
+     p{
         margin-bottom: 8px;
-            line-height: 18px;
-        }
+        line-height: 18px;
+    }
 
-        .btn-danger{
-            background-color:#395272;
-            border-color: transparent;
-        }
+     .btn-danger{
+        background-color:#395272;
+        border-color: transparent;
+    }
 
-        .btn-danger:hover{
-            background-color:#5686c3;
-            border-color: transparent;
-        }
+     .btn-danger:hover{
+        background-color:#5686c3;
+        border-color: transparent;
+    }
 
-        .btn.active {
-            background-color: #5686c3 !important;
-            border-color: transparent !important;
-            color: #fff !important;
-        }
+     .btn.active {
+        background-color: #5686c3 !important;
+        border-color: transparent !important;
+        color: #fff !important;
+    }
 
-        .p-3{
-            padding: 10px !important;
-            margin: 0 3px;
-        }
+    .p-3{
+        padding: 10px !important;
+        margin: 0 3px;
+    }
 
-        .btn-outline-danger{
-            color: #FFFFFF;
-            background-color:#395272;
-            border-color: transparent;
-        }
+    .btn-outline-danger{
+        color: #FFFFFF;
+        background-color:#395272;
+        border-color: transparent;
+    }
 
-        .btn-outline-danger:hover{
-            background-color:#5686c3;
-            border-color: transparent;
-        }
+    .btn-outline-danger:hover{
+        background-color:#5686c3;
+        border-color: transparent;
+    }
 
-        .fa,
-        .fab,
-        .fad,
-        .fal,
-        .far,
-        .fas {
-            color: #346abb;
-        }
+    .fa,
+    .fab,
+    .fad,
+    .fal,
+    .far,
+    .fas {
+        color: #346abb;
+    }
 
-        .card-header{
-            padding: 0.25rem 1.25rem;
-            color: #3c66b5;
-            font-weight: bold;
-        }
+    .card-header{
+        padding: 0.25rem 1.25rem;
+        color: #3c66b5;
+        font-weight: bold;
+    }
 
-        .mb-4{
-            margin-bottom: 0.5rem !important;
-        }
+    .mb-4{
+        margin-bottom: 0.5rem !important;
+    }
 
-    /* Classification section */
+     /* Classification section */
     .classification {
       display: flex;
       width: 100%;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 30px;
+      padding: 0 15px;
+      box-sizing: border-box;
     }
 
     .class-column {
@@ -139,23 +98,14 @@
     .class-header {
       font-weight: 600;
       padding: 0.1rem 0;
-      text-align: left;
     }
 
     /* Color bars */
-    .class-medical-classification {border: none; text-align: left; text-transform: uppercase;}
-    .class-airport-category {border: none; text-transform: uppercase;}
+    .class-medical-classification {border: none; text-align: left !important; padding-left: 0 !important; margin-left: 0 !important;}
+    .class-airport-category {border: none;}
     .class-advanced { border-bottom: 3px solid #0070c0; }
     .class-intermediate { border-bottom: 3px solid #00b050; }
     .class-basic { border-bottom: 3px solid #ffc000; }
-
-    /* Airport layout */
-    .airport-list {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 0 10px;
-    }
 
     /* Hospital layout */
     .hospital-list {
@@ -166,6 +116,7 @@
     }
 
     /* For side-by-side classes */
+
     .hospital-row {
       display: flex;
       justify-content: flex-start;
@@ -175,14 +126,34 @@
 
     .hospital-item {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 0;
-      font-size: 0.9rem;
+      font-size: 0.75rem;
       white-space: nowrap;
     }
 
+    /* Precise alignments for Airfield Classification */
+    .class-airport-category + .hospital-list .hospital-item .btn:nth-child(1) { width: 120px !important; justify-content: flex-start !important; text-align: left !important; }
+    .class-airport-category + .hospital-list .hospital-item .btn:nth-child(2) { width: 90px !important; justify-content: flex-start !important; text-align: left !important; }
+    .class-airport-category + .hospital-list .hospital-item .btn:nth-child(3) { width: 85px !important; justify-content: flex-start !important; text-align: left !important; }
+    .class-airport-category + .hospital-list .hospital-item .btn:nth-child(4) { width: 85px !important; justify-content: flex-start !important; text-align: left !important; }
+
+    /* Precise alignments for Police Classification */
+    .class-airport-category + .airport-list .hospital-item .btn:nth-child(1) { width: 155px !important; justify-content: flex-start !important; text-align: left !important; }
+    .class-airport-category + .airport-list .hospital-item .btn:nth-child(2) { width: 185px !important; justify-content: flex-start !important; text-align: left !important; }
+
     .hospital-item .btn {
-      text-align: left;
+      white-space: nowrap !important;
+      padding-left: 0 !important;
+      padding-right: 12px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+    }
+
+    .hospital-item .btn {
+      white-space: nowrap !important;
+      padding: 2px !important;
     }
 
     .hospital-icon {
@@ -191,7 +162,7 @@
       border-radius: 3px;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       overflow: hidden;
     }
 
@@ -209,137 +180,187 @@
       object-fit: contain;
     }
 
-     .select-input {
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        padding: 8px 10px;
-        background: #fff;
+    .legend-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        width: 100%;
+        align-items: start;
+    }
+
+    .legend-grid-item {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 6px;
+        width: 100%;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    .legend-grid-item img {
+        flex-shrink: 0;
+    }
+
+    .legend-grid-item small {
+        text-align: left;
+    }
+
+    /* ====== DIRECTIONS PANEL - Modern Styling ====== */
+    #directionsPanel {
+        font-family: 'Segoe UI', Roboto, -apple-system, sans-serif !important;
+        scrollbar-width: thin;
+        scrollbar-color: #c1c1c1 transparent;
+    }
+    #directionsPanel::-webkit-scrollbar { width: 5px; }
+    #directionsPanel::-webkit-scrollbar-thumb {
+        background: #c1c1c1; border-radius: 10px;
+    }
+    #directionsPanel .dp-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 10px 12px;
+        background: linear-gradient(135deg, #1a73e8, #4285f4);
+        border-radius: 8px 8px 0 0;
+        margin: 0;
+        color: #fff;
+    }
+    #directionsPanel .dp-header-title {
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    #directionsPanel .dp-header-title i { color: #fff !important; font-size: 16px; }
+    #directionsPanel .dp-close-btn {
+        background: rgba(255,255,255,0.2);
+        border: none;
+        color: #fff;
+        width: 28px; height: 28px;
+        border-radius: 50%;
         cursor: pointer;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
+        justify-content: center;
+        font-size: 14px;
+        transition: background 0.2s;
     }
+    #directionsPanel .dp-close-btn:hover { background: rgba(255,255,255,0.35); }
+    #directionsPanel .dp-close-btn i { color: #fff !important; }
 
-    .select-input input {
-        border: none;
-        width: 100%;
-        cursor: pointer;
-        background: transparent;
-        outline: none;
+    /* Google-generated table overrides */
+    #directionsPanel table { border: none !important; width: 100%; }
+    #directionsPanel td {
+        border: none !important;
+        padding: 6px 4px !important;
+        font-size: 13px;
+        vertical-align: top;
     }
+    #directionsPanel .adp-directions { margin: 0 !important; }
 
-    .select-dropdown {
-        display: none;
-        position: absolute;
-        width: 100%;
-        background: #fff;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        margin-top: 3px;
-        z-index: 9999;
-        max-height: 250px;
+    /* Route summary (origin → destination bar) */
+    #directionsPanel .adp-placemark {
+        background: #f0f4ff;
+        border-radius: 8px;
+        margin-bottom: 8px !important;
         overflow: hidden;
     }
-
-    .select-dropdown.show {
-        display: block;
+    #directionsPanel .adp-placemark td {
+        padding: 10px 12px !important;
+        font-weight: 600;
+        color: #1a3c6e;
+        font-size: 13px;
+    }
+    #directionsPanel .adp-placemark img {
+        filter: hue-rotate(200deg) saturate(1.5);
     }
 
-    .dropdown-search {
-        width: 100%;
-        border: none;
-        border-bottom: 1px solid #ddd;
-        padding: 8px;
-        outline: none;
+    /* Summary bar (distance & time) */
+    #directionsPanel .adp-summary {
+        background: linear-gradient(135deg, #e8f0fe, #d2e3fc);
+        border-radius: 8px;
+        padding: 10px 14px !important;
+        margin: 8px 0 !important;
+        font-size: 13px;
+        color: #1a3c6e;
+        font-weight: 600;
+        display: flex;
+        align-items: flex-start;
+        gap: 6px;
     }
 
-    #provinceList {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        max-height: 180px;
-        overflow-y: auto;
+    /* Step list */
+    #directionsPanel .adp-listsel,
+    #directionsPanel .adp-list {
+        border: none !important;
+    }
+    #directionsPanel .adp-listinfo {
+        border: none !important;
+        background: transparent !important;
     }
 
-    #provinceList li {
-        padding: 5px 10px;
+    /* Individual step rows */
+    #directionsPanel .adp-step {
+        border-bottom: 1px solid #eef1f5 !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-top: none !important;
+        transition: background 0.15s;
+        border-radius: 6px;
+        margin-bottom: 2px;
+    }
+    #directionsPanel .adp-step:hover {
+        background: #f5f8ff !important;
+    }
+    #directionsPanel .adp-step:last-child {
+        border-bottom: none !important;
     }
 
-    #provinceList li:hover {
-        background: #f5f5f5;
+    /* Step icon cell */
+    #directionsPanel .adp-step .adp-stepicon {
+        padding: 8px 4px 8px 8px !important;
+    }
+    #directionsPanel .adp-step .adp-stepicon .adp-maneuver {
+        width: 20px;
+        height: 20px;
     }
 
-    #provinceList label {
-        width: 100%;
-        margin: 0;
-        cursor: pointer;
+    /* Step text */
+    #directionsPanel .adp-step .adp-substep {
+        padding: 8px 12px 8px 4px !important;
+        color: #333;
+        line-height: 1.5;
+        font-size: 12.5px;
+    }
+    #directionsPanel .adp-step .adp-substep b {
+        color: #1a73e8;
+        font-weight: 600;
+    }
+    /* Step distance */
+    #directionsPanel .adp-step td:last-child {
+        color: #5f6368;
+        font-size: 12px;
+        white-space: nowrap;
+        padding-right: 10px !important;
     }
 
-    .legend-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    width: 100%;
-    align-items: start;
-}
+    /* Warning / legal */
+    #directionsPanel .adp-warnbox,
+    #directionsPanel .adp-legal {
+        font-size: 11px;
+        color: #888;
+        padding: 6px 12px !important;
+        border: none !important;
+    }
+    #directionsPanel .adp-legal a { color: #1a73e8; }
 
-.legend-grid-item {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 6px;
-    width: 100%;
-    text-align: left;
-    white-space: nowrap;
-}
-
-.legend-grid-item img {
-    width: 12px;
-    height: 12px;
-    flex-shrink: 0;
-}
-
-.legend-grid-item small {
-    text-align: left;
-}
-
-/* ===== Google Places Autocomplete Fix ===== */
-.pac-container {
-    z-index: 99999 !important;
-    border-radius: 8px !important;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2) !important;
-    font-family: inherit !important;
-    margin-top: 2px !important;
-    border: 1px solid #ddd !important;
-}
-
-.pac-item {
-    padding: 6px 12px !important;
-    cursor: pointer !important;
-    font-size: 13px !important;
-    border-top: 1px solid #f0f0f0 !important;
-}
-
-.pac-item:hover {
-    background: #f0f6ff !important;
-}
-
-.pac-item-query {
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    color: #333 !important;
-}
-
-.pac-matched {
-    color: #1a73e8 !important;
-    font-weight: 700 !important;
-}
-
-#locationSearchMap:focus {
-    outline: none !important;
-    border-color: #1a73e8 !important;
-    box-shadow: 0 0 0 2px rgba(26,115,232,0.2) !important;
-}
+    /* Highlighted / selected step */
+    #directionsPanel .adp-listsel {
+        background: #e8f0fe !important;
+        border-radius: 6px;
+    }
 
 </style>
 
@@ -348,58 +369,118 @@
 @section('conten')
 
 <div class="card">
-    <div class="row" style="background-color: #dfeaf1;">
-       <div class="col-md-9">
-            <div class="d-flex p-2" style="justify-content: flex-start;">
-                <div class="d-flex" style="gap: 5px;">
 
-                <!-- Airport -->
-                      <div>
+<div class="d-flex justify-content-between p-3" style="background-color: #dfeaf1;">
+       <div class="d-flex flex-column gap-1">
+            <h2 class="fw-bold mb-0">{{ $embassy->name_embassiees }}</h2>
+        </div>
+
+        <div class="d-flex gap-2 ms-auto">
+
+              <!-- Button 2 -->
+             <a href="{{ url('embassiees') }}/{{$embassy->id}}/detail" class="btn btn-outline-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees/'.$embassy->id.'/detail') ? 'active' : '' }}">
+                <img src="{{ asset('images/icon-menu-general-info.png') }}" style="width: 18px; height: 24px;">
+                <small>General</small>
+            </a>
+
+            <!-- Button 5 -->
+            <a href="{{ url('embassiees') }}/{{$embassy->id}}/emergency" class="btn btn-outline-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees/'.$embassy->id.'/emergency') ? 'active' : '' }}">
+                <img src="{{ asset('images/icon-emergency-support-white.png') }}" style="width: 24px; height: 24px;">
+                <small>Emergency</small>
+            </a>
+             <!-- Button 5 -->
+            <a href="{{ url('hospital') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('hospital') ? 'active' : '' }}">
+                 <img src="{{ asset('images/icon-medical.png') }}" style="width: 24px; height: 24px;">
+                <small>Medical</small>
+            </a>
+
+            <a href="{{ url('airports') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('airports') ? 'active' : '' }}">
+                <i class="bi bi-airplane fs-3"></i>
+                <small>Airports</small>
+            </a>
+
+            <!-- Button 6 -->
+            <a href="{{ url('aircharter') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('aircharter') ? 'active' : '' }}">
+                <img src="{{ asset('images/icon-air-charter.png') }}" style="width: 48px; height: 24px;">
+                <small>Air Charter</small>
+            </a>
+
+            <a href="{{ url('police') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('police') ? 'active' : '' }}">
+                <i class="bi bi-person-badge" style="width: 24px; height: 24px;"></i>
+                <small>Police</small>
+            </a>
+
+            <!-- Button 7 -->
+            <a href="{{ url('embassiees') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees') ? 'active' : '' }}">
+            <img src="{{ asset('images/icon-embassy.png') }}" style="width: 24px; height: 24px;">
+                <small>Embassies</small>
+            </a>
+
+        </div>
+</div>
+
+   <div class="card mb-4 position-relative">
+        <div class="card-body" style="padding:0 7px;">
+            <small><i>Last Updated / Verified {{ $embassy->created_at->format('M Y') }}</i></small>
+
+            @role('admin')
+            <a href="{{ route('embassiees.edit', $embassy->id) }}"
+            style="position:absolute; right:7px;" title="edit">
+                <i class="fas fa-edit"></i>
+            </a>
+            @endrole
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-8 d-flex flex-column gap-3">
+            <div class="card">
+                <div class="card-header fw-bold"><img src="{{ asset('images/icon-emergency-support.png') }}" style="width: 24px; height: 24px;"> Emergency Support Tools</div>
+
+                <div class="classification">
+                    <!-- AIRFIELD CLASSIFICATION -->
+                    <div>
+                      <!-- Airport -->
+                      <div class="class-column">
                         <div class="class-header class-airport-category">AIRFIELD CLASSIFICATION</div>
-                        <div class="airport-list">
-                          <div style="display: grid; grid-template-columns: max-content max-content max-content max-content; column-gap: 15px; row-gap: 5px;">
+                        <div class="hospital-list">
+                          <div class="hospital-row" style="flex-direction: column;">
                             <!-- Airport row 1 -->
                             <div class="hospital-item">
-                              <button class="btn p-1 text-start w-100" data-bs-toggle="modal" data-bs-target="#level6Modal">
+                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level6Modal">
                                   <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/International-Airport.png" style="width:18px; height:18px;">
                                   <small>International</small>
                               </button>
-                            </div>
-                            <div class="hospital-item">
-                              <button class="btn p-1 text-start w-100" data-bs-toggle="modal" data-bs-target="#level5Modal">
+
+                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level5Modal">
                                   <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/regional-airport.png" style="width:18px; height:18px;">
                                   <small>Domestic</small>
                               </button>
-                            </div>
-                            <div class="hospital-item">
-                              <button class="btn p-1 text-start w-100" data-bs-toggle="modal" data-bs-target="#level4Modal">
+
+                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level4Modal">
                                   <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/regional-domestic-airport.png" style="width:18px; height:18px;">
                                   <small>Regional</small>
                               </button>
                             </div>
-                            <div></div> <!-- empty grid item for row 1 -->
-                            
                             <!-- Airport row 2 -->
                             <div class="hospital-item">
-                              <button class="btn p-1 text-start w-100" data-bs-toggle="modal" data-bs-target="#level2Modal">
+                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level2Modal">
                                   <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/civil-military-airport.png" style="width:18px; height:18px;">
                                   <small>Civil-Military</small>
                               </button>
-                            </div>
-                            <div class="hospital-item">
-                              <button class="btn p-1 text-start w-100" data-bs-toggle="modal" data-bs-target="#level3Modal">
+
+                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level3Modal">
                                   <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/military-airport-red.png" style="width:18px; height:18px;">
                                   <small>Military</small>
                               </button>
-                            </div>
-                            <div class="hospital-item">
-                              <button class="btn p-1 text-start w-100" data-bs-toggle="modal" data-bs-target="#level1Modal">
+
+                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level1Modal">
                                   <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/private-airport.png" style="width:18px; height:18px;">
                                   <small>Private</small>
                               </button>
-                            </div>
-                            <div class="hospital-item">
-                              <button class="btn p-1 text-start w-100" data-bs-toggle="modal" data-bs-target="#">
+
+                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#">
                                   <img src="https://pg.concordreview.com/wp-content/uploads/2025/11/helipad-removebg.png" style="width:18px; height:18px;">
                                   <small>Helipad</small>
                               </button>
@@ -408,9 +489,10 @@
 
                         </div>
                       </div>
+                    </div>
 
-                      <!-- Medical Facility Legend -->
-                      <div style="flex-direction: column;">
+                    <!-- Hospital Classification -->
+                   <div style="flex-direction: column;">
                         <!-- Title -->
                         <div>
                             <div class="class-header class-medical-classification">MEDICAL FACILITY CLASSIFICATION</div>
@@ -490,146 +572,77 @@
                                 </div>
                             </div>
                         </div>
-                      </div>
+                    </div>
 
-                      <div>
+                    <div>
                         <div class="class-header class-airport-category">POLICE CLASSIFICATION</div>
 
                         <div class="airport-list">
-                            <div style="display: grid; grid-template-columns: max-content max-content; column-gap: 15px; row-gap: 5px;">
+                            <div class="hospital-row" style="flex-direction: column;">
+
+                                <!-- Baris Atas (3) -->
                                 <div class="hospital-item">
-                                    <button class="btn p-1 text-start w-100" data-bs-toggle="modal" data-bs-target="#police1Modal">
+                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#police1Modal">
                                         <img src="{{ asset('images/Layer1.png') }}" style="width:12px; height:12px;">
                                         <small>National Police (HQ)</small>
                                     </button>
-                                </div>
-                                <div class="hospital-item">
-                                    <button class="btn p-1 text-start w-100" data-bs-toggle="modal" data-bs-target="#police2Modal">
+
+                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#police2Modal">
                                         <img src="{{ asset('images/Layer2.png') }}" style="width:12px; height:12px;">
                                         <small>State / Region Police Command</small>
                                     </button>
                                 </div>
-                                <div class="hospital-item">
-                                    <button class="btn p-1 text-start w-100" data-bs-toggle="modal" data-bs-target="#police3Modal">
+
+                                <!-- Baris Bawah (2) -->
+                                <div class="hospital-item" data-bs-toggle="modal" data-bs-target="#police3Modal">
+                                    <button class="btn p-1">
                                          <img src="{{ asset('images/Layer3.png') }}" style="width:12px; height:12px;">
                                         <small>District Police Command</small>
                                     </button>
-                                </div>
-                                <div class="hospital-item">
-                                    <button class="btn p-1 text-start w-100" data-bs-toggle="modal" data-bs-target="#police4Modal">
+
+                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#police4Modal">
                                         <img src="{{ asset('images/Layer4.png') }}" style="width:12px; height:12px;">
                                         <small>Township Police Station</small>
                                     </button>
                                 </div>
+
                             </div>
                         </div>
-
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="d-flex justify-content-end p-3">
-                <div class="d-flex gap-2 mt-2">
 
-                    <a href="{{ url('home') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('home') ? 'active' : '' }}">
-                        <i class="bi bi-house-door-fill fs-3"></i>
-                        <small>Home</small>
-                    </a>
-
-                    <a href="{{ url('airports') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('airports') ? 'active' : '' }}">
-                        <i class="bi bi-airplane fs-3"></i>
-                        <small>Airports</small>
-                    </a>
-
-                    <a href="{{ url('hospital') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('hospital') ? 'active' : '' }}">
-                    <img src="{{ asset('images/icon-medical.png') }}" style="width: 24px; height: 24px;">
-                        <small>Medical</small>
-                    </a>
-
-                    <a href="{{ url('police') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('police') ? 'active' : '' }}">
-                    <i class="bi bi-person-badge" style="width: 24px; height: 24px;"></i>
-                        <small>Police</small>
-                    </a>
-
-                    <a href="{{ url('embassiees') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees') ? 'active' : '' }}">
-                    <img src="{{ asset('images/icon-embassy.png') }}" style="width: 24px; height: 24px;">
-                        <small>Embassies</small>
-                    </a>
+                <div class="card-body p-0">
+                    <div id="map"></div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-md-12">
-        <button class="btn btn-link p-0 fw-bold text-decoration-underline text-dark" data-bs-toggle="modal" data-bs-target="#disclaimerModal">
-            <i class="bi bi-info-circle text-primary fs-5"></i>
-            <small>Disclaimer</small>
-        </button>
-    </div>
+        <div class="col-sm-4 d-flex flex-column gap-3">
+            <div class="card">
+                <div class="card-header fw-bold"><img src="https://concord-consulting.com/static/img/cmt/icon/radar-icon.png" style="width: 24px; height: 24px;"> Nearest Support Facilities</div>
+                <div class="card-body overflow-auto">
+                    <?php echo $embassy->nearest_medical_facility; ?>
+                </div>
+            </div>
 
-</div>
+            <div class="card">
+                <div class="card-header fw-bold"><img src="{{ asset('images/hotlines-icon.png') }}" style="width: 24px; height: 24px;"> Emergency Hotline</div>
+                <div class="card-body">
+                    <?php echo $hospital->travel_agent; ?>
+                </div>
+            </div>
 
-<div style="position:relative;">
+            <div class="card">
+                <div class="card-header fw-bold"><img src="{{ asset('images/icon-medical-support-website.png') }}" style="width: 24px; height: 24px;"> Emergency Medical Support</div>
+                <div class="card-body" style="max-height: 250px; overflow-y: auto;">
+                        <?php echo $hospital->medical_support_website; ?>
+                </div>
+            </div>
 
-<div id="map"></div>
-
-<!-- Route Detail Panel -->
-<div id="routePanel" style="
-    display:none;
-    position:absolute;
-    top:10px;
-    left:10px;
-    width:300px;
-    max-height:calc(100% - 20px);
-    background:#fff;
-    border-radius:10px;
-    box-shadow:0 4px 20px rgba(0,0,0,0.18);
-    z-index:999;
-    display:none;
-    flex-direction:column;
-    overflow:hidden;
-    font-family:inherit;
-">
-    <!-- Header -->
-    <div style="background:#1a73e8;padding:12px 14px;color:#fff;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
-        <div>
-            <div style="font-size:11px;opacity:0.85;letter-spacing:0.5px;">DRIVING DIRECTIONS</div>
-            <div id="routePanelTitle" style="font-size:13px;font-weight:600;margin-top:2px;">—</div>
         </div>
-        <button onclick="closeRoutePanel()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;">&times;</button>
-    </div>
-    <!-- Summary -->
-    <div id="routeSummary" style="padding:10px 14px;background:#f0f4ff;border-bottom:1px solid #dde8ff;display:flex;gap:16px;flex-shrink:0;">
-        <div style="text-align:center;">
-            <div style="font-size:18px;font-weight:700;color:#1a73e8;" id="routeDistance">—</div>
-            <div style="font-size:10px;color:#666;text-transform:uppercase;letter-spacing:0.4px;">Distance</div>
-        </div>
-        <div style="text-align:center;">
-            <div style="font-size:18px;font-weight:700;color:#395272;" id="routeDuration">—</div>
-            <div style="font-size:10px;color:#666;text-transform:uppercase;letter-spacing:0.4px;">Est. Time</div>
-        </div>
-    </div>
-    <!-- Steps -->
-    <div id="routeSteps" style="overflow-y:auto;flex:1;padding:8px 0;"></div>
-</div>
 
-</div>
-
-<div class="modal fade" id="disclaimerModal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="disclaimerLabel">Disclaimer</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-       <p class="p-modal text-justify">Every attempt has been made to ensure the completeness and accuracy of the most updated information and data available. Clients are advised, however, that provided information, and data is subject to change.</p>
-       <h5 class="modal-title" id="disclaimerLabel">Google Maps Link</h5>
-       <p class="p-modal text-justify">Google Maps may automatically display or translate content based on the user’s current region, browser settings, or Google account preferences. This issue may occur when opening google maps link from TCMT platform using Microsoft Edge. For the best experience, we recommend opening the Google Chrome link while logged into your Google account. You can also use your browser’s translation feature to view Google Maps in your preferred language.</p>
-      </div>
     </div>
-  </div>
+
 </div>
 
 <div class="modal fade" id="police1Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
@@ -809,9 +822,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p class="p-modal">Also known as private airfields or airstrips are primarily used for general and private aviation are owned by private individuals, groups, corporations, or organizations operated for their exclusive use that may include limited access for authorized personnel by the owner or manager. Owners are responsible to ensure safe operation, maintenance, repair, and control of who can use the facilities. Typically, they are not open to the public or provide scheduled commercial airline services and cater to private pilots, business aviation, and sometimes small charter operations. Services may be provided if authorized by the appropriate regulatory authority.</p>
+        <p class="p-modal text-justify">Also known as private airfields or airstrips are primarily used for general and private aviation are owned by private individuals, groups, corporations, or organizations operated for their exclusive use that may include limited access for authorized personnel by the owner or manager. Owners are responsible to ensure safe operation, maintenance, repair, and control of who can use the facilities. Typically, they are not open to the public or provide scheduled commercial airline services and cater to private pilots, business aviation, and sometimes small charter operations. Services may be provided if authorized by the appropriate regulatory authority.</p>
 
-        <p class="p-modal">A large majority of private airports are grass or dirt strip fields without services or facilities, they may feature amenities such as hangars, fueling facilities, maintenance services, and ground transportation options tailored to the needs of their owners or users. Private airports are not subject to the same level of regulatory oversight as public airports, but must still comply with applicable aviation regulations, safety standards, and environmental requirements. In the event of an emergency, landing at a private airport is authorized without any prior approval and should be done if landing anywhere else compromises the safety of the aircraft, crew, passengers, or cargo.</p>
+        <p class="p-modal text-justify">A large majority of private airports are grass or dirt strip fields without services or facilities, they may feature amenities such as hangars, fueling facilities, maintenance services, and ground transportation options tailored to the needs of their owners or users. Private airports are not subject to the same level of regulatory oversight as public airports, but must still comply with applicable aviation regulations, safety standards, and environmental requirements. In the event of an emergency, landing at a private airport is authorized without any prior approval and should be done if landing anywhere else compromises the safety of the aircraft, crew, passengers, or cargo.</p>
       </div>
     </div>
   </div>
@@ -823,12 +836,12 @@
       <div class="modal-header">
         <div class="d-flex align-items-center">
             <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/civil-military-airport.png" style="width:30px; height:30px;">
-            <h5 class="modal-title" id="disclaimerLabel">Combined Airfield</h5>
+            <h5 class="modal-title" id="disclaimerLabel">Combined (Civil-Military) Airfield</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p class="p-modal">Also called "joint-use airport," are used by both civilian and military aircraft, where a formal agreement exists between the military and a local government agency allowing shared access to infrastructure and facilities, typically with separate passenger terminals and designated operating areas, airspace allocation, and aircraft scheduling. Features can include aircraft maintenance, air traffic control, communications, emergency response, and fuel storage.</p>
+        <p class="p-modal text-justify">Also called "joint-use airport," are used by both civilian and military aircraft, where a formal agreement exists between the military and a local government agency allowing shared access to infrastructure and facilities, typically with separate passenger terminals and designated operating areas, airspace allocation, and aircraft scheduling. Features can include aircraft maintenance, air traffic control, communications, emergency response, and fuel storage.</p>
       </div>
     </div>
   </div>
@@ -845,7 +858,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p class="p-modal">Facilities where military aircraft operate, also known as a military airport, airbase, or air station. Features include aircraft maintenance, air traffic control, communications, emergency response, fuel and weapon storage, defensive systems, aircraft shelters, and personnel facilities.</p>
+        <p class="p-modal text-justify">Facilities where military aircraft operate, also known as a military airport, airbase, or air station. Features include aircraft maintenance, air traffic control, communications, emergency response, fuel and weapon storage, defensive systems, aircraft shelters, and personnel facilities.</p>
       </div>
     </div>
   </div>
@@ -862,7 +875,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p class="p-modal">A small or remote regional domestic airfield usually located in a geographically isolated area, far from major population centers, often with difficult terrain or vast distances from other airports with limited passenger traffic. May have shorter runways, basic facilities, and limited amenities, and basic infrastructure, serving primarily local communities providing access to essential services like medical transport or regional travel, rather than large-scale commercial flights.</p>
+        <p class="p-modal text-justify">A small or remote regional domestic airfield usually located in a geographically isolated area, far from major population centers, often with difficult terrain or vast distances from other airports with limited passenger traffic. May have shorter runways, basic facilities, and limited amenities, and basic infrastructure, serving primarily local communities providing access to essential services like medical transport or regional travel, rather than large-scale commercial flights.</p>
       </div>
     </div>
   </div>
@@ -879,7 +892,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p class="p-modal">Exclusively manages flights that originate and end within the same country, does not have international customs or border control facilities. Airport often has smaller and shorter runways, suitable for smaller regional aircraft used on domestic routes, and cannot support larger haul aircraft having less developed support services. Features can include aircraft maintenance, air traffic control, communications, emergency response, and fuel storage.</p>
+        <p class="p-modal text-justify">Exclusively manages flights that originate and end within the same country, does not have international customs or border control facilities. Airport often has smaller and shorter runways, suitable for smaller regional aircraft used on domestic routes, and cannot support larger haul aircraft having less developed support services. Features can include aircraft maintenance, air traffic control, communications, emergency response, and fuel storage.</p>
       </div>
     </div>
   </div>
@@ -896,24 +909,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p class="p-modal">Meet standards set by the International Air Transport Association (IATA) and the International Civil Aviation Organization (ICAO), facilitate transnational travel managing flights between countries, have customs and border control facilities to manage passengers and cargo, and may have dedicated terminals for domestic and international flights. International airports have longer runways to accommodate larger, heavier aircraft, are often a main hub for air traffic, and can serve as a base for larger airlines. Features can include aircraft maintenance, air traffic control, communications, emergency response, and fuel storage</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="level7Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="d-flex align-items-center">
-            <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/military-airport-red.png" style="width:30px; height:30px;">
-            <h5 class="modal-title" id="disclaimerLabel">Military Airfield</h5>
-        </div>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p class="p-modal">Facilities where military aircraft operate, also known as a military airport, airbase, or air station. Features include aircraft maintenance, air traffic control, communications, emergency response, fuel and weapon storage, defensive systems, aircraft shelters, and personnel facilities.</p>
+        <p class="p-modal text-justify">Meet standards set by the International Air Transport Association (IATA) and the International Civil Aviation Organization (ICAO), facilitate transnational travel managing flights between countries, have customs and border control facilities to manage passengers and cargo, and may have dedicated terminals for domestic and international flights. International airports have longer runways to accommodate larger, heavier aircraft, are often a main hub for air traffic, and can serve as a base for larger airlines. Features can include aircraft maintenance, air traffic control, communications, emergency response, and fuel storage</p>
       </div>
     </div>
   </div>
@@ -1839,175 +1835,237 @@
 
 @push('service')
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCd-WVlGgZFJwAtPZkbAEca2Np6OI7CBTM&v=3.64&libraries=places,geometry,drawing"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCd-WVlGgZFJwAtPZkbAEca2Np6OI7CBTM&libraries=places,geometry"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-document.addEventListener('click', (e) => {
-    const provinceSelectInput = e.target.closest('#provinceSelect .select-input');
-    const provinceDropdown = document.querySelector('#provinceSelect .select-dropdown');
-    const provinceSearch = document.getElementById('provinceSearch');
-    
-    if (provinceSelectInput) {
-        if (provinceDropdown) provinceDropdown.classList.toggle('show');
-    } else {
-        const provinceSelect = document.getElementById('provinceSelect');
-        if (provinceSelect && !provinceSelect.contains(e.target) && provinceDropdown) {
-            provinceDropdown.classList.remove('show');
-        }
-    }
-}, true);
+document.addEventListener('DOMContentLoaded', () => {
+    const embassyData = {!! json_encode([
+        'id'        => $embassy->id,
+        'name'      => $embassy->name_embassiees,
+        'latitude'  => $embassy->latitude,
+        'longitude' => $embassy->longitude,
+        'image'     => $embassy->image ?? '',
+        'location'  => $embassy->location ?? '',
+        'telephone' => $embassy->telephone ?? '',
+        'website'   => $embassy->website ?? '',
+    ]) !!};
 
-document.addEventListener('keyup', (e) => {
-    if (e.target.id === 'provinceSearchInput') {
-        const keyword = e.target.value.toLowerCase();
-        document.querySelectorAll('#provinceList li').forEach(li => {
-            const text = li.textContent.toLowerCase();
-            li.style.display = text.includes(keyword) ? '' : 'none';
+    const nearbyHospitals = @json($nearbyHospitals);
+    const nearbyAirports = @json($nearbyAirports);
+    const nearbyPolices = @json($nearbyPolices);
+    const nearbyEmbassy = @json($nearbyEmbassy);
+    let radiusKm = 100; // default radius
+
+    let map, mainMarker, radiusCircle, directionsService, directionsRenderer;
+    let nearbyMarkersGroup = [];
+    let searchLocation = null;
+    let searchMarker = null;
+
+    // === ICON DEFAULT ===
+    const DEFAULT_HOSPITAL_ICON_URL = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png';
+    const DEFAULT_AIRPORT_ICON_URL  = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png';
+    const DEFAULT_MAIN_EMBASSY_ICON_URL = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png';
+    const DEFAULT_POLICE_ICON_URL = 'https://png.pngtree.com/png-vector/20221211/ourmid/pngtree-minimal-location-map-icon-logo-symbol-vector-design-transparent-background-png-image_6520892.png';
+    const DEFAULT_EMBASSY_ICON_URL = '/images/embassy-icon-new.png';
+
+    // === INISIALISASI PETA ===
+    function initializeMap() {
+        const center = new google.maps.LatLng(embassyData.latitude, embassyData.longitude);
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: center,
+            zoom: 11,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            mapTypeControl: true,
+            fullscreenControl: true,
+            streetViewControl: false
+        });
+
+        const directionsPanel = document.createElement('div');
+        directionsPanel.id = 'directionsPanel';
+        directionsPanel.style.width = '370px';
+        directionsPanel.style.maxHeight = '450px';
+        directionsPanel.style.overflowY = 'auto';
+        directionsPanel.style.backgroundColor = 'white';
+        directionsPanel.style.display = 'none';
+        directionsPanel.style.boxShadow = '0 4px 20px rgba(0,0,0,0.2)';
+        directionsPanel.style.borderRadius = '12px';
+        directionsPanel.style.margin = '10px';
+        directionsPanel.style.padding = '0';
+        directionsPanel.style.fontSize = '13px';
+
+        // Header
+        const dpHeader = document.createElement('div');
+        dpHeader.className = 'dp-header';
+        dpHeader.innerHTML = `
+            <div class="dp-header-title">
+                <i class="fas fa-route"></i> Route Directions
+            </div>
+            <button class="dp-close-btn" title="Close">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        directionsPanel.appendChild(dpHeader);
+
+        // Content area (Google renders steps here)
+        const dpContent = document.createElement('div');
+        dpContent.style.padding = '10px';
+        directionsPanel.appendChild(dpContent);
+
+        // Close button handler
+        dpHeader.querySelector('.dp-close-btn').addEventListener('click', () => {
+            directionsPanel.style.display = 'none';
+            directionsRenderer.setDirections({routes: []});
+        });
+
+        google.maps.event.addDomListener(directionsPanel, 'click', e => e.stopPropagation());
+        google.maps.event.addDomListener(directionsPanel, 'dblclick', e => e.stopPropagation());
+        google.maps.event.addDomListener(directionsPanel, 'mousedown', e => e.stopPropagation());
+        google.maps.event.addDomListener(directionsPanel, 'touchstart', e => e.stopPropagation());
+        google.maps.event.addDomListener(directionsPanel, 'wheel', e => e.stopPropagation());
+
+        map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(directionsPanel);
+
+        directionsService = new google.maps.DirectionsService();
+        directionsRenderer = new google.maps.DirectionsRenderer({
+            map: map,
+            panel: dpContent,
+            suppressMarkers: true,
+            polylineOptions: {
+                strokeColor: '#1a73e8',
+                strokeOpacity: 0.8,
+                strokeWeight: 5
+            }
         });
     }
-});
 
-document.addEventListener('change', function(e) {
-    if (e.target.classList.contains('province-checkbox')) {
-        const selected = [...document.querySelectorAll('.province-checkbox:checked')]
-            .map(cb => cb.parentElement.textContent.trim());
-        const provinceSearch = document.getElementById('provinceSearch');
-        if (provinceSearch) {
-            if (selected.length === 0) {
-                provinceSearch.value = '';
-                provinceSearch.placeholder = 'Select Province';
-            } else if (selected.length <= 2) {
-                provinceSearch.value = selected.join(', ');
-            } else {
-                provinceSearch.value = selected.length + ' Province Selected';
-            }
-        }
+    function addMainEmbassyAndCircle() {
+        mainMarker = new google.maps.Marker({
+            position: new google.maps.LatLng(embassyData.latitude, embassyData.longitude),
+            map: map,
+            icon: {
+                url: DEFAULT_MAIN_EMBASSY_ICON_URL,
+                scaledSize: new google.maps.Size(25, 41)
+            },
+            title: embassyData.name
+        });
+
+        const infoWindow = new google.maps.InfoWindow({
+            content: `<b>${embassyData.name}</b><br>This is the main embassy.`
+        });
+
+        mainMarker.addListener('click', () => {
+            infoWindow.open(map, mainMarker);
+        });
+
+        radiusCircle = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.1,
+            map: map,
+            center: { lat: parseFloat(embassyData.latitude), lng: parseFloat(embassyData.longitude) },
+            radius: radiusKm * 1000
+        });
     }
 
-});
-</script>
+    function clearNearbyMarkers() {
+        for (let i = 0; i < nearbyMarkersGroup.length; i++) {
+            nearbyMarkersGroup[i].setMap(null);
+        }
+        nearbyMarkersGroup = [];
+    }
 
-<script>    // --- Map Initialization ---
-    const map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 21.9162, lng: 95.9560 },
-        zoom: 6,
-        mapTypeId: 'roadmap',
-        mapTypeControl: true,
-        fullscreenControl: true,
-        streetViewControl: false
-    });    // --- Global States ---
-    let airportMarkers = [];
-    let hospitalMarkers = [];
-    let policeMarkers = [];
-    let embassyMarkers = [];
-    const infoWindow = new google.maps.InfoWindow();
-    let drawnPolygonGeoJSON = null;
-    let radiusCircle = null;
-    let radiusPinMarker = null;
-    let lastClickedLocation = null;
-    let totalHospitals = 0;
-    let totalAirports = 0;
-    let totalPolice = 0;
-    let totalEmbassies = 0;
+    // === Tambahkan Marker Sekitar ===
+    function addNearbyMarkers(data, defaultIconUrl, type, filters = {}) {
+        data.forEach(item => {
+            const distance = calculateDistance(
+                embassyData.latitude, embassyData.longitude,
+                item.latitude, item.longitude
+            );
+            if (distance > radiusKm) return;
 
-    // --- Directions (in-map routing) ---
-    const directionsService  = new google.maps.DirectionsService();
-    const directionsRenderer = new google.maps.DirectionsRenderer({
-        suppressMarkers: false,
-        polylineOptions: { strokeColor: '#1a73e8', strokeWeight: 5, strokeOpacity: 0.85 }
-    });
-    directionsRenderer.setMap(map);
+            // Filter hospital
+            if (type === 'Hospital' && filters.hospitalLevels?.length > 0) {
+                const level = (item.facility_level || '').toLowerCase();
+                const allowed = filters.hospitalLevels.map(l => l.toLowerCase());
+                if (!allowed.includes(level)) return;
+            }
 
-    // "Clear Route" button
-    const clearRouteBtn = document.createElement('div');
-    clearRouteBtn.id = 'clearRouteBtn';
-    clearRouteBtn.innerHTML = '✕ Clear Route';
-    Object.assign(clearRouteBtn.style, {
-        display: 'none',
-        background: '#fff',
-        border: '2px solid rgba(0,0,0,0.2)',
-        borderRadius: '6px',
-        padding: '6px 12px',
-        fontSize: '13px',
-        fontWeight: '600',
-        cursor: 'pointer',
-        margin: '10px',
-        color: '#d32f2f',
-        boxShadow: '0 2px 6px rgba(0,0,0,0.15)'
-    });
-    clearRouteBtn.title = 'Clear the current route';
-    clearRouteBtn.addEventListener('click', () => {
-        directionsRenderer.setDirections({ routes: [] });
-        clearRouteBtn.style.display = 'none';
-    });
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(clearRouteBtn);
+            // Filter airport
+            if (type === 'Airport' && filters.airportClassifications?.length > 0) {
+                const categories = (item.category || '').split(',').map(c => c.trim().toLowerCase());
+                const allowed = filters.airportClassifications.map(c => c.toLowerCase());
+                if (!categories.some(cat => allowed.includes(cat))) return;
+            }
 
-    // --- Nearby Category Bar (Google Maps style) ---
+            // Filter police
+            if (type === 'Police' && filters.policeCategories?.length > 0) {
+                const categories = (item.category || '').split(',').map(c => c.trim().toLowerCase());
+                const allowed = filters.policeCategories.map(c => c.toLowerCase());
+                if (!categories.some(cat => allowed.includes(cat))) return;
+            }
+
+            const isPolice = type === 'Police';
+            const iconSize = isPolice ? new google.maps.Size(12, 12) : new google.maps.Size(24, 24);
+
+            const marker = new google.maps.Marker({
+                position: { lat: parseFloat(item.latitude), lng: parseFloat(item.longitude) },
+                map: map,
+                icon: {
+                    url: item.icon || defaultIconUrl,
+                    scaledSize: iconSize
+                }
+            });
+
+            const name = item.name || item.airport_name || item.name_police || item.name_embassiees || 'N/A';
+            const level = item.facility_level || item.category || '';
+
+            let url = '#';
+            if (type === 'Airport') url = `/airports/${item.id}/detail`;
+            else if (type === 'Hospital') url = `/hospitals/${item.id}`;
+            else if (type === 'Police') url = `/police/${item.id}/detail`;
+            else if (type === 'Embassy') url = `/embassiees/${item.id}/detail`;
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: `
+                    <div style="font-size:13px;">
+                        <a href="${url}" target="_blank">${name}</a><br>
+                        ${level}<br>
+                        <strong>Distance:</strong> ${distance.toFixed(2)} km<br>
+                        <button class="btn btn-sm btn-primary mt-2"
+                            onclick="getDirection(${item.latitude}, ${item.longitude})">
+                            Get Direction
+                        </button>
+                    </div>
+                `
+            });
+
+            marker.addListener('click', () => {
+                infoWindow.open(map, marker);
+            });
+
+            nearbyMarkersGroup.push(marker);
+        });
+    }
+
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371;
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat / 2) ** 2 +
+            Math.cos(lat1 * Math.PI / 180) *
+            Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) ** 2;
+        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+
+    // === NEARBY HOTELS (shown once a location is searched) ===
     let categoryMarkers   = [];
     let activeCategoryBtn = null;
-
-    const categoryBar = document.createElement('div');
-    categoryBar.id = 'nearbyCategBar';
-    Object.assign(categoryBar.style, {
-        display:       'none',
-        background:    'transparent',
-        padding:       '8px 10px 0',
-        display:       'none',
-        gap:           '8px',
-        flexWrap:      'nowrap',
-        overflowX:     'auto',
-        maxWidth:      '90vw',
-        scrollbarWidth:'none'
-    });
-
-    const nearbyCategories = [
-        { label: 'Hotels', icon: '🏨', type: 'lodging' }
-    ];
-
-    nearbyCategories.forEach(cat => {
-        const btn = document.createElement('button');
-        btn.textContent = cat.icon + ' ' + cat.label;
-        Object.assign(btn.style, {
-            display:      'inline-flex',
-            alignItems:   'center',
-            gap:          '4px',
-            padding:      '6px 14px',
-            borderRadius: '20px',
-            border:       '1px solid rgba(0,0,0,0.12)',
-            background:   '#fff',
-            color:        '#222',
-            fontSize:     '13px',
-            fontWeight:   '500',
-            cursor:       'pointer',
-            whiteSpace:   'nowrap',
-            boxShadow:    '0 1px 4px rgba(0,0,0,0.15)',
-            transition:   'all 0.15s'
-        });
-
-        btn.addEventListener('click', () => {
-            if (activeCategoryBtn === btn) {
-                // toggle off
-                clearCategoryMarkers();
-                resetCategoryBtn(btn);
-                activeCategoryBtn = null;
-                return;
-            }
-            if (activeCategoryBtn) resetCategoryBtn(activeCategoryBtn);
-            activeCategoryBtn = btn;
-            btn.style.background = '#1a73e8';
-            btn.style.color      = '#fff';
-            btn.style.borderColor= '#1a73e8';
-            showNearbyCategory(cat.type, cat.label);
-        });
-
-        categoryBar.appendChild(btn);
-    });
-
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(categoryBar);
+    let categoryBar       = null;
 
     function resetCategoryBtn(btn) {
         btn.style.background  = '#fff';
@@ -2021,22 +2079,13 @@ document.addEventListener('change', function(e) {
     }
 
     function showNearbyCategory(type, label) {
-        if (!lastClickedLocation) return;
+        if (!searchLocation) return;
         clearCategoryMarkers();
 
-        const center  = new google.maps.LatLng(lastClickedLocation.lat, lastClickedLocation.lng);
+        const center  = new google.maps.LatLng(searchLocation.lat, searchLocation.lng);
         const service = new google.maps.places.PlacesService(map);
 
-        // Color map per category
-        const iconColors = {
-            lodging:    '#1a73e8',
-            restaurant: '#e53935',
-            pharmacy:   '#2e7d32',
-            atm:        '#f57c00',
-            parking:    '#1565c0',
-            cafe:       '#6d4c41',
-            hospital:   '#c62828',
-        };
+        const iconColors = { lodging: '#1a73e8' };
         const color = iconColors[type] || '#555';
 
         function makeSvgIcon(col) {
@@ -2075,28 +2124,22 @@ document.addEventListener('change', function(e) {
                 const rating   = place.rating ? `⭐ ${place.rating.toFixed(1)}` : '';
                 const destLat  = place.geometry.location.lat();
                 const destLng  = place.geometry.location.lng();
-                const safeName = (place.name || '').replace(/'/g, "\\'");
 
-                marker.addListener('click', () => {
-                    infoWindow.setContent(`
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `
                         <div style="font-size:13px;min-width:190px;">
                             <h5 style="border-bottom:1px solid #ccc;margin:0 0 6px;font-size:14px;">${place.name}</h5>
                             <div style="color:#666;font-size:12px;margin-bottom:3px;">${label}</div>
                             ${rating  ? `<div style="font-size:12px;">${rating}</div>` : ''}
                             <div style="margin-top:4px;font-size:12px;color:#555;"> ${distText} from search location</div>
-                            <div style="margin-top:8px;">
-                                <button onclick="showRouteOnMap(${center.lat()},${center.lng()},${destLat},${destLng},'${safeName}')"
-                                        style="display:inline-flex;align-items:center;gap:5px;
-                                               background:#1a73e8;color:#fff;border:none;
-                                               padding:5px 12px;border-radius:6px;font-size:12px;
-                                               font-weight:500;cursor:pointer;">
-                                    <svg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'>
-                                        <polygon points='3 11 22 2 13 21 11 13 3 11'/>
-                                    </svg>
-                                    Get Directions
-                                </button>
-                            </div>
-                        </div>`);
+                            <button class="btn btn-sm btn-primary mt-2"
+                                onclick="getDirection(${destLat}, ${destLng})">
+                                Get Direction
+                            </button>
+                        </div>`
+                });
+
+                marker.addListener('click', () => {
                     infoWindow.open(map, marker);
                 });
 
@@ -2105,1149 +2148,440 @@ document.addEventListener('change', function(e) {
         });
     }
 
-    // Helper: close route panel
-    function closeRoutePanel() {
-        const panel = document.getElementById('routePanel');
-        if (panel) panel.style.display = 'none';
-        directionsRenderer.setDirections({ routes: [] });
-        clearRouteBtn.style.display = 'none';
+    function setupNearbyCategoryBar() {
+        categoryBar = document.createElement('div');
+        categoryBar.id = 'nearbyCategBar';
+        Object.assign(categoryBar.style, {
+            display:       'none',
+            background:    'transparent',
+            padding:       '8px 10px 0',
+            gap:           '8px',
+            flexWrap:      'nowrap',
+            overflowX:     'auto',
+            maxWidth:      '90vw',
+            scrollbarWidth:'none'
+        });
+
+        const nearbyCategories = [
+            { label: 'Hotels', icon: '🏨', type: 'lodging' }
+        ];
+
+        nearbyCategories.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.textContent = cat.icon + ' ' + cat.label;
+            Object.assign(btn.style, {
+                display:      'inline-flex',
+                alignItems:   'center',
+                gap:          '4px',
+                padding:      '6px 14px',
+                borderRadius: '20px',
+                border:       '1px solid rgba(0,0,0,0.12)',
+                background:   '#fff',
+                color:        '#222',
+                fontSize:     '13px',
+                fontWeight:   '500',
+                cursor:       'pointer',
+                whiteSpace:   'nowrap',
+                boxShadow:    '0 1px 4px rgba(0,0,0,0.15)',
+                transition:   'all 0.15s'
+            });
+
+            btn.addEventListener('click', () => {
+                if (activeCategoryBtn === btn) {
+                    clearCategoryMarkers();
+                    resetCategoryBtn(btn);
+                    activeCategoryBtn = null;
+                    return;
+                }
+                if (activeCategoryBtn) resetCategoryBtn(activeCategoryBtn);
+                activeCategoryBtn = btn;
+                btn.style.background = '#1a73e8';
+                btn.style.color      = '#fff';
+                btn.style.borderColor= '#1a73e8';
+                showNearbyCategory(cat.type, cat.label);
+            });
+
+            categoryBar.appendChild(btn);
+        });
+
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(categoryBar);
     }
 
-    // Helper: draw route on map + show panel
-    function showRouteOnMap(originLat, originLng, destLat, destLng, destName) {
+    // === ROUTING ===
+    window.getDirection = function(lat, lng) {
+        const origin = searchLocation
+            ? new google.maps.LatLng(searchLocation.lat, searchLocation.lng)
+            : new google.maps.LatLng(embassyData.latitude, embassyData.longitude);
+
         directionsService.route({
-            origin: new google.maps.LatLng(originLat, originLng),
-            destination: new google.maps.LatLng(destLat, destLng),
-            travelMode: google.maps.TravelMode.DRIVING
-        }, (result, status) => {
+            origin: origin,
+            destination: new google.maps.LatLng(lat, lng),
+            travelMode: 'DRIVING'
+        }, (response, status) => {
             if (status === 'OK') {
-                directionsRenderer.setDirections(result);
-                clearRouteBtn.style.display = 'inline-block';
-                infoWindow.close();
-
-                // --- Populate Route Panel ---
-                const leg = result.routes[0].legs[0];
-                const panel = document.getElementById('routePanel');
-                document.getElementById('routePanelTitle').textContent = destName || 'Destination';
-                document.getElementById('routeDistance').textContent  = leg.distance.text;
-                document.getElementById('routeDuration').textContent  = leg.duration.text;
-
-                const stepsEl = document.getElementById('routeSteps');
-                stepsEl.innerHTML = leg.steps.map((step, i) => {
-                    const raw = (step.html_instructions || step.instructions || '');
-                    const instruction = raw.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-                    if (!instruction) return ''; // skip steps with no text
-                    const icons = {
-                        'Turn left':        '↰',
-                        'Turn right':       '↱',
-                        'Keep left':        '↖',
-                        'Keep right':       '↗',
-                        'Continue':         '↑',
-                        'Head':             '↑',
-                        'Roundabout':       '↻',
-                        'U-turn':           '⟳',
-                        'Merge':            '↑',
-                        'Ramp':             '↗',
-                        'Destination':      '📍',
-                    };
-                    let icon = '•';
-                    for (const [key, val] of Object.entries(icons)) {
-                        if (instruction.startsWith(key)) { icon = val; break; }
-                    }
-                    const isLast = i === leg.steps.length - 1;
-                    return `
-                        <div style="display:flex;gap:10px;padding:8px 14px;
-                                    border-bottom:${isLast ? 'none' : '1px solid #f0f0f0'};
-                                    align-items:flex-start;">
-                            <div style="min-width:22px;height:22px;background:${isLast ? '#395272' : '#e8f0fe'};
-                                        border-radius:50%;display:flex;align-items:center;
-                                        justify-content:center;font-size:12px;
-                                        color:${isLast ? '#fff' : '#1a73e8'};flex-shrink:0;margin-top:1px;">
-                                ${icon}
-                            </div>
-                            <div style="flex:1;">
-                                <div style="font-size:12px;color:#222;line-height:1.4;">${instruction}</div>
-                                <div style="font-size:11px;color:#888;margin-top:2px;">${step.distance.text}</div>
-                            </div>
-                        </div>`;
-                }).join('');
-
-                panel.style.display = 'flex';
+                directionsRenderer.setDirections(response);
+                const panel = document.getElementById('directionsPanel');
+                if(panel) panel.style.display = 'block';
             } else {
-                if (status === 'ZERO_RESULTS') {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Route Not Found',
-                        text: 'No driving route could be found between your location and the destination. The two locations may not be connected by road.',
-                        confirmButtonColor: '#1a73e8',
-                        confirmButtonText: 'OK'
-                    });
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Directions Error',
-                        text: 'Could not get directions: ' + status,
-                        confirmButtonColor: '#1a73e8',
-                        confirmButtonText: 'OK'
-                    });
-                }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Route Not Found',
+                    text: status === 'ZERO_RESULTS'
+                        ? 'No driving route could be found between these two locations.'
+                        : 'Directions request failed (' + status + ').',
+                    confirmButtonColor: '#d33'
+                });
             }
         });
+    };
+
+    function fitMapToBounds() {
+        const bounds = new google.maps.LatLngBounds();
+        bounds.extend(new google.maps.LatLng(embassyData.latitude, embassyData.longitude));
+        if (searchLocation) {
+            bounds.extend(new google.maps.LatLng(searchLocation.lat, searchLocation.lng));
+        }
+        nearbyMarkersGroup.forEach(m => bounds.extend(m.getPosition()));
+
+        const circleBounds = radiusCircle.getBounds();
+        if(circleBounds) {
+            bounds.union(circleBounds);
+        }
+
+        map.fitBounds(bounds);
     }
 
-    // --- Polygon Draw (Custom Point-by-Point) ---
-    let isDrawingPolygon = false;
-    let polygonLatLngs = [];
-    let activePolygon = null;
-    let activePolyline = null;
-    let cursorPolyline = null;
-    let startMarker = null;
+    function updateMarkers(filterType, hospitalLevels, airportClassifications, policeCategories) {
+        clearNearbyMarkers();
+        if (radiusCircle) radiusCircle.setMap(null);
+        addMainEmbassyAndCircle();
 
-    const drawButton = document.createElement('div');
-    drawButton.innerHTML = '⬟';
-    drawButton.style.backgroundColor = 'white';
-    drawButton.style.border = '2px solid rgba(0,0,0,0.2)';
-    drawButton.style.borderRadius = '4px';
-    drawButton.style.width = '34px';
-    drawButton.style.height = '34px';
-    drawButton.style.textAlign = 'center';
-    drawButton.style.lineHeight = '30px';
-    drawButton.style.fontSize = '18px';
-    drawButton.style.cursor = 'pointer';
-    drawButton.style.margin = '10px';
-    drawButton.title = 'Draw Polygon (Click point by point, click starting point to finish)';
-
-    map.controls[google.maps.ControlPosition.LEFT_TOP].push(drawButton);
-
-    const clearButton = document.createElement('div');
-    clearButton.innerHTML = '🗑️';
-    clearButton.style.backgroundColor = 'white';
-    clearButton.style.border = '2px solid rgba(0,0,0,0.2)';
-    clearButton.style.borderRadius = '4px';
-    clearButton.style.width = '34px';
-    clearButton.style.height = '34px';
-    clearButton.style.textAlign = 'center';
-    clearButton.style.lineHeight = '30px';
-    clearButton.style.fontSize = '16px';
-    clearButton.style.cursor = 'pointer';
-    clearButton.style.margin = '10px 0';
-    clearButton.title = 'Clear Polygon';
-
-    map.controls[google.maps.ControlPosition.LEFT_TOP].push(clearButton);
-
-    drawButton.addEventListener('click', () => {
-        isDrawingPolygon = !isDrawingPolygon;
-        if (isDrawingPolygon) {
-            map.setOptions({ draggable: false });
-            drawButton.style.backgroundColor = '#ccc';
-            map.getDiv().style.cursor = 'crosshair';
-            polygonLatLngs = [];
-            if (activePolygon) activePolygon.setMap(null);
-            if (activePolyline) activePolyline.setMap(null);
-            if (cursorPolyline) cursorPolyline.setMap(null);
-            if (startMarker) startMarker.setMap(null);
-            activePolygon = null;
-            activePolyline = new google.maps.Polyline({
-                path: polygonLatLngs,
-                strokeColor: '#0000FF',
-                strokeOpacity: 0.8,
-                strokeWeight: 3,
-                clickable: false,
-                map: map
-            });
-            cursorPolyline = new google.maps.Polyline({
-                path: [],
-                strokeColor: '#0000FF',
-                strokeOpacity: 0.5,
-                strokeWeight: 3,
-                clickable: false,
-                map: map
-            });
-            startMarker = null;
-            drawnPolygonGeoJSON = null;
+        const filters = { hospitalLevels, airportClassifications, policeCategories };
+        if (filterType === 'hospital') {
+            addNearbyMarkers(nearbyHospitals, DEFAULT_HOSPITAL_ICON_URL, 'Hospital', filters);
+        } else if (filterType === 'airport') {
+            addNearbyMarkers(nearbyAirports, DEFAULT_AIRPORT_ICON_URL, 'Airport', filters);
+        } else if (filterType === 'police') {
+            addNearbyMarkers(nearbyPolices, DEFAULT_POLICE_ICON_URL, 'Police', filters);
+        } else if (filterType === 'embassy') {
+            addNearbyMarkers(nearbyEmbassy, DEFAULT_EMBASSY_ICON_URL, 'Embassy', filters);
         } else {
-            finishPolygon();
+            addNearbyMarkers(nearbyHospitals, DEFAULT_HOSPITAL_ICON_URL, 'Hospital', filters);
+            addNearbyMarkers(nearbyAirports, DEFAULT_AIRPORT_ICON_URL, 'Airport', filters);
+            addNearbyMarkers(nearbyPolices, DEFAULT_POLICE_ICON_URL, 'Police', filters);
+            addNearbyMarkers(nearbyEmbassy, DEFAULT_EMBASSY_ICON_URL, 'Embassy', filters);
         }
-    });
 
-    map.addListener('click', (e) => {
-        if (!isDrawingPolygon) return;
-        polygonLatLngs.push(e.latLng);
-        activePolyline.setPath(polygonLatLngs);
-        
-        if (polygonLatLngs.length === 1) {
-            startMarker = new google.maps.Marker({
-                position: e.latLng,
-                map: map,
-                icon: {
-                    path: google.maps.SymbolPath.CIRCLE,
-                    scale: 6,
-                    fillColor: '#FFFFFF',
-                    fillOpacity: 1,
-                    strokeColor: '#0000FF',
-                    strokeWeight: 2,
-                },
-                zIndex: 999
-            });
-            startMarker.addListener('click', () => {
-                if (isDrawingPolygon) finishPolygon();
-            });
-        }
-    });
-
-    map.addListener('mousemove', (e) => {
-        if (!isDrawingPolygon || polygonLatLngs.length === 0) return;
-        const lastPoint = polygonLatLngs[polygonLatLngs.length - 1];
-        cursorPolyline.setPath([lastPoint, e.latLng]);
-    });
-
-    map.addListener('rightclick', () => {
-        if (isDrawingPolygon) finishPolygon();
-    });
-
-    async function finishPolygon() {
-        if (!isDrawingPolygon) return;
-        isDrawingPolygon = false;
-        map.setOptions({ draggable: true });
-        drawButton.style.backgroundColor = 'white';
-        map.getDiv().style.cursor = '';
-        if (cursorPolyline) cursorPolyline.setMap(null);
-        if (startMarker) startMarker.setMap(null);
-
-        if (polygonLatLngs.length > 2) {
-            if (activePolyline) activePolyline.setMap(null);
-            activePolygon = new google.maps.Polygon({
-                paths: polygonLatLngs,
-                strokeColor: '#0000FF',
-                strokeOpacity: 0.8,
-                strokeWeight: 3,
-                fillColor: '#0000FF',
-                fillOpacity: 0.2,
-                editable: true,
-                map: map
-            });
-
-            const coordinates = polygonLatLngs.map(p => [p.lng(), p.lat()]);
-            coordinates.push([polygonLatLngs[0].lng(), polygonLatLngs[0].lat()]); // Close polygon
-
-            drawnPolygonGeoJSON = {
-                type: "Feature",
-                geometry: { type: "Polygon", coordinates: [coordinates] },
-                properties: {}
-            };
-
-            const updatePolygonFilter = async () => {
-                if (!activePolygon) return;
-                const path = activePolygon.getPath();
-                if (path.getLength() > 2) {
-                    const newCoords = [];
-                    for (let i = 0; i < path.getLength(); i++) {
-                        const xy = path.getAt(i);
-                        newCoords.push([xy.lng(), xy.lat()]);
-                    }
-                    newCoords.push([path.getAt(0).lng(), path.getAt(0).lat()]);
-                    drawnPolygonGeoJSON.geometry.coordinates = [newCoords];
-                    await refreshCurrentFilters();
-                }
-            };
-            
-            google.maps.event.addListener(activePolygon.getPath(), 'set_at', updatePolygonFilter);
-            google.maps.event.addListener(activePolygon.getPath(), 'insert_at', updatePolygonFilter);
-            google.maps.event.addListener(activePolygon.getPath(), 'remove_at', updatePolygonFilter);
-
-            await refreshCurrentFilters();
-        } else {
-            if (activePolyline) activePolyline.setMap(null);
-            activePolyline = null;
-            activePolygon = null;
-            drawnPolygonGeoJSON = null;
-        }
+        fitMapToBounds();
     }
 
-    clearButton.addEventListener('click', async () => {
-        if (activePolygon) activePolygon.setMap(null);
-        if (activePolyline) activePolyline.setMap(null);
-        if (cursorPolyline) cursorPolyline.setMap(null);
-        if (startMarker) startMarker.setMap(null);
-        activePolygon = null;
-        activePolyline = null;
-        cursorPolyline = null;
-        startMarker = null;
-        polygonLatLngs = [];
-        drawnPolygonGeoJSON = null;
-        isDrawingPolygon = false;
-        map.setOptions({ draggable: true });
-        drawButton.style.backgroundColor = 'white';
-        map.getDiv().style.cursor = '';
-        await refreshCurrentFilters();
-    });    // --- Update Radius ---
-    function updateRadiusCircleAndPin(radius = 0) {
-        if (radiusCircle) { radiusCircle.setMap(null); radiusCircle = null; }
+    // === FILTER CONTROL ===
+    function setupFilterControl() {
+        const container = document.createElement('div');
+        container.className = 'p-2 bg-white rounded';
+        container.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+        container.style.width = '220px';
+        container.style.maxHeight = '75vh';
+        container.style.overflowY = 'auto';
+        container.style.marginRight = '10px';
+        container.style.marginTop = '10px';
+        container.style.cursor = 'default';
 
-        if (radius > 0 && lastClickedLocation) {
-            radiusCircle = new google.maps.Circle({
-                strokeColor: '#FF0000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF0000',
-                fillOpacity: 0.2,
-                map: map,
-                center: lastClickedLocation,
-                radius: radius * 1000
-            });
-        }
-    }
+        container.innerHTML = `
+            <h6><strong>Filter</strong></h6>
 
-    // Red pin marker for searched location (separate from radius circle)
-    function placeLocationPin(location, label) {
-        if (radiusPinMarker) { radiusPinMarker.setMap(null); radiusPinMarker = null; }
-        radiusPinMarker = new google.maps.Marker({
-            position: location,
-            map: map,
-            title: label || 'Selected Location',
-            icon: {
-                url: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-                scaledSize: new google.maps.Size(25, 41)
-            },
-            zIndex: 9999,
-            animation: google.maps.Animation.DROP
-        });
-    }
+            <strong style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:#555;">Search Location</strong>
+            <div style="position:relative;margin-top:5px;">
+                <input type="text" id="gmSearchInput" class="form-control form-control-sm"
+                    placeholder="Search Location..." autocomplete="off" style="padding-right:28px;">
+                <i class="fas fa-times" id="gmClearBtn"
+                    style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:#70757a;font-size:13px;cursor:pointer;display:none;"></i>
+            </div>
 
-    // Enable/disable radius section based on whether location is set
-    function setRadiusSectionEnabled(enabled) {
-        const section = document.getElementById('radiusSection');
-        if (!section) return;
-        section.style.opacity = enabled ? '1' : '0.4';
-        section.style.pointerEvents = enabled ? 'auto' : 'none';
-    }
+            <label><strong>Radius:</strong> <span id="radiusLabel">${radiusKm}</span> km</label>
+            <input type="range" id="radiusRange" min="10" max="500" step="10" value="${radiusKm}" class="form-range mb-2" style="display:block;width:100%;">
 
-    // --- Init Location Search — Google Places Autocomplete ---
-    // .pac-container is repositioned to position:fixed via MutationObserver
-    // to bypass Google Maps container overflow:hidden clipping.
-    function initLocationSearch() {
-        const input = document.getElementById('locationSearchMap');
-        if (!input) {
-            setTimeout(initLocationSearch, 300);
-            return;
-        }
+            <select id="mapFilter" class="form-select form-select-sm mb-2" style="display:block;width:100%;">
+                <option value="all">Show All</option>
+                <option value="hospital">Hospitals</option>
+                <option value="airport">Aviation</option>
+                <option value="police">Police</option>
+                <option value="embassy">Embassy</option>
+            </select>
 
-        const clearBtn = document.getElementById('locationSearchClear');
+            <div id="hospitalFilter" style="display:none;">
+                <strong>Facility Level:</strong><br>
+                ${['Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)']
+                    .map(lvl => `<label style="display:block;font-size:13px;">
+                        <input type="checkbox" name="hospitalLevel" value="${lvl}"> ${lvl}
+                    </label>`).join('')}
+            </div>
 
-        // ── 1. Create Google Places Autocomplete ──────────────────────────────
-        const autocomplete = new google.maps.places.Autocomplete(input, {
-            types: ['geocode', 'establishment'],
-            fields: ['geometry', 'name', 'formatted_address']
+            <div id="airportFilter" style="display:none;margin-top:8px;">
+                <strong>Category:</strong><br>
+                ${['International','Domestic','Military','Regional','Private']
+                    .map(cls => `<label style="display:block;font-size:13px;">
+                        <input type="checkbox" name="airportClass" value="${cls}"> ${cls}
+                    </label>`).join('')}
+            </div>
+
+            <div id="policeFilter" style="display:none;margin-top:8px;">
+                <strong>Police Category:</strong><br>
+                ${[
+                    'Indonesian National Police (Polri) HQ',
+                    'Provincial Police (Polda)',
+                    'Municipality Police (Polres)',
+                    'District Police (Polsek)',
+                    'Police Mobile Brigade (Brimob)',
+                    'Police Bomb Squad (Gegana)'
+                ].map(cat => `
+                    <label style="display:block;font-size:13px;">
+                        <input type="checkbox" name="policeCategory" value="${cat}"> ${cat}
+                    </label>
+                `).join('')}
+            </div>
+
+            <button id="resetFilter" class="btn btn-sm btn-secondary mt-3 w-100">Reset Filter</button>
+        `;
+
+        // Prevent events from passing to the map
+        google.maps.event.addDomListener(container, 'click', e => e.stopPropagation());
+        google.maps.event.addDomListener(container, 'dblclick', e => e.stopPropagation());
+        google.maps.event.addDomListener(container, 'mousedown', e => e.stopPropagation());
+        google.maps.event.addDomListener(container, 'touchstart', e => e.stopPropagation());
+        google.maps.event.addDomListener(container, 'wheel', e => e.stopPropagation());
+
+        map.controls[google.maps.ControlPosition.RIGHT_TOP].push(container);
+
+        const radiusSlider = container.querySelector('#radiusRange');
+        const radiusLabel = container.querySelector('#radiusLabel');
+        radiusSlider.addEventListener('input', () => {
+            radiusKm = parseInt(radiusSlider.value);
+            radiusLabel.textContent = radiusKm;
+            refreshFilters();
         });
 
-        // ── 2. Fix .pac-container position to avoid map overflow:hidden ───────
-        // Google appends .pac-container to <body> but uses position:absolute,
-        // calculated from the element's document offset. Because the map container
-        // applies its own offset context, the top/left values are wrong.
-        // We override with position:fixed + getBoundingClientRect().
+        const filterSelect = container.querySelector('#mapFilter');
+        const hospitalDiv = container.querySelector('#hospitalFilter');
+        const airportDiv = container.querySelector('#airportFilter');
+        const policeDiv = container.querySelector('#policeFilter');
+        const resetBtn = container.querySelector('#resetFilter');
+
+        function refresh() {
+            const selectedType = filterSelect.value;
+            const selectedHospitalLevels = Array.from(container.querySelectorAll('input[name="hospitalLevel"]:checked')).map(el => el.value);
+            const selectedAirportClasses = Array.from(container.querySelectorAll('input[name="airportClass"]:checked')).map(el => el.value);
+            const selectedPoliceCategories = Array.from(container.querySelectorAll('input[name="policeCategory"]:checked')).map(el => el.value);
+            updateMarkers(selectedType, selectedHospitalLevels, selectedAirportClasses, selectedPoliceCategories);
+        }
+
+        filterSelect.addEventListener('change', () => {
+            const val = filterSelect.value;
+            hospitalDiv.style.display = val === 'hospital' ? 'block' : 'none';
+            airportDiv.style.display = val === 'airport' ? 'block' : 'none';
+            policeDiv.style.display = val === 'police' ? 'block' : 'none';
+            refresh();
+        });
+
+        container.querySelectorAll('input[name="hospitalLevel"]').forEach(chk => chk.addEventListener('change', refresh));
+        container.querySelectorAll('input[name="airportClass"]').forEach(chk => chk.addEventListener('change', refresh));
+        container.querySelectorAll('input[name="policeCategory"]').forEach(chk => chk.addEventListener('change', refresh));
+
+        resetBtn.addEventListener('click', () => {
+            container.querySelectorAll('input[type="checkbox"]').forEach(chk => chk.checked = false);
+            filterSelect.value = 'all';
+            hospitalDiv.style.display = 'none';
+            airportDiv.style.display = 'none';
+            policeDiv.style.display = 'none';
+            radiusKm = 100;
+            radiusSlider.value = radiusKm;
+            radiusLabel.textContent = radiusKm;
+
+            const gmInput = container.querySelector('#gmSearchInput');
+            if(gmInput) gmInput.value = '';
+
+            if (searchMarker) {
+                searchMarker.setMap(null);
+                searchMarker = null;
+            }
+            searchLocation = null;
+
+            if (categoryBar) categoryBar.style.display = 'none';
+            clearCategoryMarkers();
+            if (activeCategoryBtn) { resetCategoryBtn(activeCategoryBtn); activeCategoryBtn = null; }
+
+            directionsRenderer.setDirections({routes: []});
+            const panel = document.getElementById('directionsPanel');
+            if(panel) panel.style.display = 'none';
+
+            refresh();
+        });
+
+        return container;
+    }
+
+    function refreshFilters() {
+        const selectedType = document.querySelector('#mapFilter')?.value || 'all';
+        const selectedHospitalLevels = Array.from(document.querySelectorAll('input[name="hospitalLevel"]:checked')).map(el => el.value);
+        const selectedAirportClasses = Array.from(document.querySelectorAll('input[name="airportClass"]:checked')).map(el => el.value);
+        const selectedPoliceCategories = Array.from(document.querySelectorAll('input[name="policeCategory"]:checked')).map(el => el.value);
+        updateMarkers(selectedType, selectedHospitalLevels, selectedAirportClasses, selectedPoliceCategories);
+    }
+
+    // === SEARCH LOCATION CONTROL (now part of the filter panel) ===
+    function setupSearchControl(filterContainer) {
+        const input = filterContainer.querySelector('#gmSearchInput');
+        const clearBtn = filterContainer.querySelector('#gmClearBtn');
+        if (!input || !clearBtn) return;
+
+        input.addEventListener('keydown', (e) => {
+            if(e.key === 'Enter') e.preventDefault();
+        });
+
+        const autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo('bounds', map);
+
+        // The input lives inside a custom map control, so Google's ".pac-container"
+        // dropdown (appended to <body> with position:absolute) ends up clipped/
+        // hidden behind the map's own control panes. Force position:fixed and keep
+        // re-applying it, since Google resets the container's inline style on every
+        // prediction update (a one-shot fix gets silently overwritten).
         let pacContainer = null;
 
         function fixPacPosition() {
             if (!pacContainer) return;
+            if (pacContainer.parentElement !== document.body) {
+                document.body.appendChild(pacContainer);
+            }
             const rect = input.getBoundingClientRect();
-            pacContainer.style.position   = 'fixed';
-            pacContainer.style.zIndex     = '2147483647';
-            pacContainer.style.top        = (rect.bottom + 2) + 'px';
-            pacContainer.style.left       = rect.left + 'px';
-            pacContainer.style.width      = rect.width + 'px';
-            pacContainer.style.borderRadius = '0 0 8px 8px';
-            pacContainer.style.boxShadow  = '0 8px 24px rgba(0,0,0,0.2)';
-            pacContainer.style.fontFamily = 'inherit';
+            pacContainer.style.position = 'fixed';
+            pacContainer.style.zIndex = '2147483647';
+            pacContainer.style.top = (rect.bottom + 2) + 'px';
+            pacContainer.style.left = rect.left + 'px';
+            pacContainer.style.width = rect.width + 'px';
+            pacContainer.style.visibility = 'visible';
+            pacContainer.style.opacity = '1';
+            pacContainer.style.pointerEvents = 'auto';
         }
 
-        // Watch for Google to inject .pac-container into <body>
-        const observer = new MutationObserver(() => {
-            if (!pacContainer) {
-                pacContainer = document.querySelector('.pac-container');
-                if (pacContainer) {
-                    fixPacPosition();
-                    // Re-fix on every style mutation (Google repositions it on scroll etc.)
-                    new MutationObserver(fixPacPosition).observe(
-                        pacContainer, { attributes: true, attributeFilter: ['style'] }
-                    );
-                }
+        function claimPacContainer() {
+            if (pacContainer) return true;
+            pacContainer = document.querySelector('.pac-container');
+            if (pacContainer) {
+                fixPacPosition();
+                new MutationObserver(fixPacPosition).observe(
+                    pacContainer, { attributes: true, attributeFilter: ['style'] }
+                );
+                return true;
             }
-        });
-        observer.observe(document.body, { childList: true, subtree: false });
+            return false;
+        }
 
-        // Keep in sync with input position on scroll / resize
+        const pacObserver = new MutationObserver(() => claimPacContainer());
+        pacObserver.observe(document.body, { childList: true, subtree: true });
+
+        // Fallback in case Google created ".pac-container" before the observer
+        // above started watching (a MutationObserver only reports *future*
+        // mutations, so a container created earlier would otherwise be missed).
+        if (!claimPacContainer()) {
+            const pollId = setInterval(() => {
+                if (claimPacContainer()) clearInterval(pollId);
+            }, 200);
+            setTimeout(() => clearInterval(pollId), 10000);
+        }
+
         window.addEventListener('scroll', fixPacPosition, true);
         window.addEventListener('resize', fixPacPosition);
-        input.addEventListener('focus',  fixPacPosition);
-        input.addEventListener('input',  fixPacPosition);
+        input.addEventListener('focus', fixPacPosition);
+        input.addEventListener('input', fixPacPosition);
 
-        // ── 3. Prevent map from capturing keyboard input ───────────────────────
-        google.maps.event.addDomListener(input, 'keydown',   e => e.stopPropagation());
-        google.maps.event.addDomListener(input, 'mousedown', e => e.stopPropagation());
-
-        // ── 4. Focus styling ───────────────────────────────────────────────────
-        input.addEventListener('focus', () => {
-            input.style.borderColor = '#1a73e8';
-            input.style.boxShadow   = '0 0 0 3px rgba(26,115,232,0.15)';
-        });
-        input.addEventListener('blur', () => {
-            input.style.borderColor = '#ddd';
-            input.style.boxShadow   = 'none';
+        input.addEventListener('input', (e) => {
+            if (e.target.value.length > 0) {
+                clearBtn.style.display = 'block';
+            } else {
+                clearBtn.style.display = 'none';
+            }
         });
 
-        // Show/hide × button
-        input.addEventListener('input', () => {
-            if (clearBtn) clearBtn.style.display = input.value.length ? 'inline' : 'none';
+        clearBtn.addEventListener('click', () => {
+            input.value = '';
+            clearBtn.style.display = 'none';
+            input.focus();
+            if (pacContainer) pacContainer.style.display = 'none';
+
+            if (searchMarker) {
+                searchMarker.setMap(null);
+                searchMarker = null;
+            }
+            searchLocation = null;
+
+            if (categoryBar) categoryBar.style.display = 'none';
+            clearCategoryMarkers();
+            if (activeCategoryBtn) { resetCategoryBtn(activeCategoryBtn); activeCategoryBtn = null; }
+
+            directionsRenderer.setDirections({routes: []});
+            const panel = document.getElementById('directionsPanel');
+            if(panel) panel.style.display = 'none';
         });
 
-        // ── 5. Handle place selection ─────────────────────────────────────────
         autocomplete.addListener('place_changed', () => {
             const place = autocomplete.getPlace();
-            if (!place.geometry || !place.geometry.location) return;
-
-            const loc = {
-                lat: place.geometry.location.lat(),
-                lng: place.geometry.location.lng()
-            };
-            lastClickedLocation = loc;
-
-            map.panTo(loc);
-            map.setZoom(10);
-
-            const label = place.name || place.formatted_address || 'Location';
-            placeLocationPin(loc, label);
-
-            if (clearBtn) clearBtn.style.display = 'inline';
-
-            const badge    = document.getElementById('locationFoundBadge');
-            const badgeName = document.getElementById('locationFoundName');
-            if (badge)     badge.style.display = 'block';
-            if (badgeName) badgeName.textContent = label;
-
-            setRadiusSectionEnabled(true);
-            const radius = parseInt(document.getElementById('radiusRangeMap')?.value || 0);
-            updateRadiusCircleAndPin(radius);
-            refreshCurrentFilters();
-
-            // Show category bar
-            categoryBar.style.display = 'flex';
-        });
-
-        // ── 6. Clear button ───────────────────────────────────────────────────
-        if (clearBtn) {
-            clearBtn.addEventListener('click', () => {
-                input.value = '';
-                clearBtn.style.display = 'none';
-                if (pacContainer) pacContainer.style.display = 'none';
-
-                const badge = document.getElementById('locationFoundBadge');
-                if (badge) badge.style.display = 'none';
-
-                if (radiusPinMarker) { radiusPinMarker.setMap(null); radiusPinMarker = null; }
-                if (radiusCircle)    { radiusCircle.setMap(null);    radiusCircle    = null; }
-                lastClickedLocation = null;
-
-                // Hide category bar & clear category markers
-                categoryBar.style.display = 'none';
-                clearCategoryMarkers();
-                if (activeCategoryBtn) { resetCategoryBtn(activeCategoryBtn); activeCategoryBtn = null; }
-
-                setRadiusSectionEnabled(false);
-                const rEl    = document.getElementById('radiusRangeMap');
-                const rValEl = document.getElementById('radiusValueMap');
-                if (rEl)    rEl.value          = 0;
-                if (rValEl) rValEl.textContent = '0';
-
-                refreshCurrentFilters();
-                input.focus();
-            });
-        }
-    }
-
-    // --- Fetch Data ---
-    async function fetchData(url, filters = {}) {
-        const params = new URLSearchParams();
-        Object.entries(filters).forEach(([k, v]) => {
-            if (Array.isArray(v)) v.forEach(x => params.append(`${k}[]`, x));
-            else if (v !== '' && v != null) params.append(k, v);
-        });
-        if (drawnPolygonGeoJSON) params.append('polygon', JSON.stringify(drawnPolygonGeoJSON));
-        //  console.log(url + '?' + params.toString());
-
-        try {
-            const res = await fetch(`${url}?${params.toString()}`);
-            return res.ok ? await res.json() : [];
-        } catch (e) {
-            console.error(`Error fetching ${url}:`, e);
-            return [];
-        }
-    }    // --- Add Markers ---
-    function clearMarkers(markersArray) {
-        if (!markersArray) return;
-        markersArray.forEach(m => m.setMap(null));
-        markersArray.length = 0;
-    }
-
-    function addMarkers(data, markersArray, defaultIconUrl) {
-        clearMarkers(markersArray);
-        data.forEach(item => {
-            if (!item || !item.latitude || !item.longitude) return;
-
-            let iconSize = new google.maps.Size(24, 24);
-            
-            // Police icon lebih kecil
-            if (item.name_police) {
-                iconSize = new google.maps.Size(12, 12);
+            if (!place.geometry || !place.geometry.location) {
+                return;
             }
 
-            const iconUrl = item.icon || defaultIconUrl || 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png';
+            if (searchMarker) searchMarker.setMap(null);
 
-            const marker = new google.maps.Marker({
-                position: { lat: parseFloat(item.latitude), lng: parseFloat(item.longitude) },
+            searchMarker = new google.maps.Marker({
                 map: map,
+                position: place.geometry.location,
                 icon: {
-                    url: iconUrl,
-                    scaledSize: iconSize
+                    url: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                    scaledSize: new google.maps.Size(25, 41)
                 }
             });
 
-            let itemName = '', detailUrl = '', popupContent = '';
+            const lat = place.geometry.location.lat();
+            const lon = place.geometry.location.lng();
+            searchLocation = { lat: lat, lng: lon };
 
-            if (item.airport_name) {
-                itemName = item.airport_name;
-                detailUrl = `/airports/${item.id}/detail`;
-                popupContent = `
-                    <h5 style="border-bottom:1px solid #cccccc;">${itemName}</h5>
-                    <strong>Classification:</strong> ${item.category || 'N/A'}<br>
-                    <strong>Address:</strong>
-                        ${item.address || 'N/A'}
-                        ${item.city_name ? ', ' + item.city_name : ''}
-                        ${item.district_name ? ', ' + item.district_name : ''}
-                        ${item.province_name ? ', ' + item.province_name : ''}, Myanmar <br>
-                    <strong>Website:</strong> ${item.website || 'N/A'} <br>
-                `;
-            } else if (item.name) {
-                itemName = item.name;
-                detailUrl = `/hospitals/${item.id}`;
-                popupContent = `
-                    <h5 style="border-bottom:1px solid #cccccc;">${itemName}</h5>
-                    <strong>Global Classification:</strong> ${item.facility_category || 'N/A'}<br>
-                    <strong>Country Classification:</strong> ${item.facility_level || 'N/A'}<br>
-                    <strong>Address:</strong>
-                        ${item.address || 'N/A'}
-                        ${item.city ? ', ' + item.city : ''}
-                        ${item.district ? ', ' + item.district : ''}
-                        ${item.provinces_region ? ', ' + item.provinces_region : ''}, Myanmar <br>
-                `;
-            } else if (item.name_police) {
-                itemName = item.name_police;
-                detailUrl = `/police/${item.id}/detail`;
-                popupContent = `
-                    <h5 style="border-bottom:1px solid #cccccc;">${itemName}</h5>
-                    <strong>Category:</strong> ${item.category || 'N/A'}<br>
-                    <strong>Address:</strong>
-                        ${item.location || 'N/A'}
-                        ${item.city_name ? ', ' + item.city_name : ''}
-                        ${item.district_name ? ', ' + item.district_name : ''}
-                        ${item.province_name ? ', ' + item.province_name : ''}, Myanmar <br>
-                    <strong>Phone:</strong> ${item.telephone || 'N/A'}<br>
-                    <strong>Fax:</strong> ${item.fax || 'N/A'}<br>
-                    <strong>Email:</strong> ${item.email || 'N/A'}<br>
-                    <strong>Website:</strong> ${item.website || 'N/A'}<br>
-                `;
+            if (categoryBar) categoryBar.style.display = 'flex';
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: `
+                    <div style="font-size:13px;">
+                        <b>${place.name}</b><br>
+                        <small>Lat: ${lat.toFixed(5)}, Lng: ${lon.toFixed(5)}</small><br>
+                        <button class="btn btn-sm btn-primary mt-2"
+                            onclick="getDirection(${embassyData.latitude}, ${embassyData.longitude})">
+                            Get Direction to Main Embassy
+                        </button>
+                    </div>
+                `
+            });
+
+            infoWindow.open(map, searchMarker);
+            searchMarker.addListener('click', () => {
+                infoWindow.open(map, searchMarker);
+            });
+
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            } else {
+                map.setCenter(place.geometry.location);
+                map.setZoom(14);
             }
-            else if (item.name_embassiees) {
-                itemName = item.name_embassiees;
-                detailUrl = `/embassiees/${item.id}/detail`;
-                popupContent = `
-                    <h5 style="border-bottom:1px solid #cccccc;">${itemName}</h5>
-                    <strong>Address:</strong>
-                        ${item.address || 'N/A'}
-                        ${item.city ? ', ' + item.city : ''}
-                        ${item.district ? ', ' + item.district : ''}
-                        ${item.provinces_region ? ', ' + item.provinces_region : ''}, Myanmar <br>
-                    <strong>Phone:</strong> ${item.telephone || 'N/A'}<br>
-                    <strong>Fax:</strong> ${item.fax || 'N/A'}<br>
-                    <strong>Email:</strong> ${item.email || 'N/A'}<br>
-                    <strong>Website:</strong> ${item.website || 'N/A'}<br>
-                `;
-            }
-
-
-
-            marker.addListener('click', () => {
-                const destLat = parseFloat(item.latitude);
-                const destLng = parseFloat(item.longitude);
-
-                let directionsBtn = '';
-                if (lastClickedLocation && !isNaN(destLat) && !isNaN(destLng)) {
-                    const oLat = lastClickedLocation.lat;
-                    const oLng = lastClickedLocation.lng;
-                    directionsBtn = `
-                        <div style="margin-top:8px;padding-top:8px;border-top:1px solid #eee;display:flex;gap:6px;flex-wrap:wrap;">
-                            <button onclick="showRouteOnMap(${oLat},${oLng},${destLat},${destLng},'${(itemName||'').replace(/'/g,"\\'")}')"
-                               style="display:inline-flex;align-items:center;gap:5px;
-                                      background:#1a73e8;color:#fff;border:none;
-                                      padding:5px 12px;border-radius:6px;font-size:12px;
-                                      font-weight:500;cursor:pointer;">
-                                <svg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'>
-                                    <polygon points='3 11 22 2 13 21 11 13 3 11'/>
-                                </svg>
-                                Get Directions
-                            </button>
-                            <a href="${detailUrl}"
-                               style="display:inline-flex;align-items:center;gap:5px;
-                                      background:#395272;color:#fff;text-decoration:none;
-                                      padding:5px 12px;border-radius:6px;font-size:12px;
-                                      font-weight:500;"
-                               onmouseover="this.style.background='#5686c3'"
-                               onmouseout="this.style.background='#395272'">
-                                <svg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'>
-                                    <circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='12'/><line x1='12' y1='16' x2='12.01' y2='16'/>
-                                </svg>
-                                Read More
-                            </a>
-                        </div>`;
-                } else if (detailUrl) {
-                    directionsBtn = `
-                        <div style="margin-top:8px;padding-top:8px;border-top:1px solid #eee;">
-                            <a href="${detailUrl}"
-                               style="display:inline-flex;align-items:center;gap:5px;
-                                      background:#395272;color:#fff;text-decoration:none;
-                                      padding:5px 12px;border-radius:6px;font-size:12px;
-                                      font-weight:500;"
-                               onmouseover="this.style.background='#5686c3'"
-                               onmouseout="this.style.background='#395272'">
-                                <svg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'>
-                                    <circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='12'/><line x1='12' y1='16' x2='12.01' y2='16'/>
-                                </svg>
-                                Read More
-                            </a>
-                        </div>`;
-                }
-
-                infoWindow.setContent(`<div style="font-size:13px; min-width: 200px;">${popupContent}${directionsBtn}</div>`);
-                infoWindow.open(map, marker);
-            });
-
-            markersArray.push(marker);
         });
     }
 
-    // --- Apply Filters ---
-    async function applyFiltersWithMapControl(
-        facilities = [],
-        hospitalLevels = [],
-        airportClasses = [],
-        provinces = [],
-        radius = 0,
-        airportName = '',
-        hospitalName = ''
-    ) {
-        let common = { provinces };
-        if (radius > 0 && lastClickedLocation) {
-            common.radius = radius;
-            common.center_lat = lastClickedLocation.lat;
-            common.center_lng = lastClickedLocation.lng;
-        }
-
-        totalHospitals = 0;
-        totalAirports = 0;
-        totalPolice = 0;
-        totalEmbassies = 0;
-
-        // jika tidak ada checkbox dipilih => tampilkan semua
-        const showAllFacilities = facilities.length === 0;
-
-        const showHospital =
-            showAllFacilities || facilities.includes('hospital');
-
-        const showAirport =
-            showAllFacilities || facilities.includes('airport');
-
-        const showPolice =
-            showAllFacilities || facilities.includes('police');
-
-        const showEmbassy =
-            showAllFacilities || facilities.includes('embassy');
-
-         // === HOSPITALS ===
-        if (showHospital) {
-             const result = await fetchData('/api/hospital', {
-                ...common,
-                name: hospitalName,
-                category: hospitalLevels
-            });
-
-            addMarkers(result.hospitals, hospitalMarkers, null);
-
-            totalHospitals = result.hospitals.length;
-        } else {
-            clearMarkers(hospitalMarkers);
-        }
-
-        // === AIRPORTS ===
-       if (showAirport) {
-
-            const airportResponse = await fetchData('/api/airports', {
-                ...common,
-                name: airportName
-            });
-
-            const airports = Array.isArray(airportResponse)
-                    ? airportResponse
-                    : airportResponse.airports || [];
-            const categoryCounts = airportResponse.categoryCounts || {};
-
-            const filteredAirports = airports.filter(a => {
-
-                if (airportClasses.length === 0) {
-                    return true;
-                }
-
-                if (!a.category) {
-                    return false;
-                }
-
-                const dbCategories = a.category
-                    .split(',')
-                    .map(c => c.trim().toLowerCase());
-
-                return airportClasses.some(sel =>
-                    dbCategories.includes(sel.toLowerCase())
-                );
-            });
-
-            addMarkers(
-                filteredAirports,
-                airportMarkers,
-                'https://pg.concordreview.com/wp-content/uploads/2024/10/International-Airport.png'
-            );
-
-            totalAirports = filteredAirports.length;
-        }else {
-            clearMarkers(airportMarkers);
-        }
-
-        // === POLICE ===
-       if (showPolice) {
-
-            const result = await fetchData('/api/polices', {
-                ...common
-            });
-
-            const police = result.polices || [];
-            const categoryCounts = result.categoryCounts || {};
-
-            addMarkers(
-                police,
-                policeMarkers,
-                null
-            );
-
-            totalPolice = police.length;
-
-            Object.keys(categoryCounts).forEach(cat => {
-
-                const id = cat.replace(/[^a-zA-Z0-9]/g, '-');
-
-                const el = document.getElementById(`count-${id}`);
-
-                if (el) {
-                    el.textContent = categoryCounts[cat];
-                }
-            });
-        } else {
-            clearMarkers(policeMarkers);
-        }
-
-        // === EMBASSY ===
-        if (showEmbassy) {
-
-            const embassies = await fetchData('/api/embassy', {
-                ...common
-            });
-
-            addMarkers(
-                embassies,
-                embassyMarkers,
-                '/images/embassy-icon-new.png'
-            );
-
-            totalEmbassies = embassies.length;
-
-        } else {
-            clearMarkers(embassyMarkers);
-        }
-
-        updateRadiusCircleAndPin(radius);
-        updateTotalCountDisplay();
-    }
-
-    function updateTotalCountDisplay() {
-        document.getElementById('airportCount').textContent = totalAirports;
-        document.getElementById('hospitalCount').textContent = totalHospitals;
-        document.getElementById('policeCount').textContent = totalPolice;
-        document.getElementById('embassyCount').textContent = totalEmbassies;
-
-        const el = document.getElementById('totalCountDisplay');
-    }    // === COMBINED PANEL ===
-    const combinedPanelDiv = document.createElement('div');
-    combinedPanelDiv.id = 'combinedPanelDiv';
-    Object.assign(combinedPanelDiv.style, {
-        background: 'white',
-        borderRadius: '8px',
-        boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
-        minWidth: '260px',
-        maxWidth: '290px',
-        overflow: 'visible',
-        margin: '10px'
-    });
-
-    combinedPanelDiv.innerHTML = `
-        <button style="background:#007bff;color:white;border:none;width:100%;padding:8px;border-radius:8px 8px 0 0;font-weight:600;letter-spacing:0.3px;">Filter &amp; Radius</button>
-
-        <!-- Search Location - NOT inside scrollable div so dropdown is never clipped -->
-        <div id="searchSection" style="padding:10px 10px 6px 10px;background:white;position:relative;">
-            <strong style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:#555;"> Search Location</strong>
-            <div style="position:relative;margin-top:5px;">
-                <input
-                    type="text"
-                    id="locationSearchMap"
-                    placeholder="Search Location..."
-                    autocomplete="off"
-                    style="width:100%;padding:7px 30px 7px 9px;border:1.5px solid #ddd;border-radius:6px;font-size:13px;box-sizing:border-box;"
-                >
-                <span id="locationSearchClear" title="Clear"
-                    style="position:absolute;right:8px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:15px;color:#aaa;display:none;">&times;</span>
-                <!-- Autocomplete dropdown - inside input wrapper so position relative works correctly -->
-                <div id="locationAutocompleteList"
-                    style="display:none;position:absolute;left:0;right:0;top:100%;margin-top:2px;background:white;border:1px solid #ddd;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,0.18);z-index:999999;max-height:220px;overflow-y:auto;"
-                ></div>
-            </div>
-            <div id="locationFoundBadge" style="display:none;margin-top:6px;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:5px;padding:4px 8px;font-size:12px;color:#2e7d32;">
-                &#128204; <span id="locationFoundName"></span>
-            </div>
-        </div>
-
-        <!-- Radius - also outside scrollable, enabled after location selected -->
-        <div id="radiusSection" style="padding:0 10px 0 10px;opacity:0.4;pointer-events:none;transition:opacity 0.3s;">
-            <hr style="margin:8px 0;">
-            <strong style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:#555;">&#11096; Radius: <span id="radiusValueMap">0</span> km</strong>
-            <input type="range" id="radiusRangeMap" min="0" max="500" value="0" style="width:100%;margin:4px 0;">
-            <div style="display:flex;justify-content:space-between;font-size:11px;color:#888;margin-bottom:5px;">
-                <span>0</span><span>250 km</span><span>500 km</span>
-            </div>
-            <div style="display:flex;gap:5px;margin-bottom:6px;">
-                <button id="applyRadiusMap" class="btn btn-sm btn-primary flex-fill">Apply</button>
-                <button id="resetRadiusMap" class="btn btn-sm btn-danger flex-fill">Reset</button>
-            </div>
-        </div>
-
-        <!-- Scrollable filters below -->
-        <div id="filterPanel" style="padding:0 10px 10px 10px;max-height:52vh;overflow-y:auto;border-top:1px solid #eee;">
-            <div style="padding-top:8px;">
-            <strong style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:#555;">Facilities</strong>
-                    <div class="form-check">
-                        <input class="form-check-input facility-checkbox" type="checkbox" value="hospital" id="facilityHospital">
-                        <label class="form-check-label" for="facilityHospital">
-                            Medical (<span id="hospitalCount">0</span>)
-                        </label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input facility-checkbox" type="checkbox" value="airport" id="facilityAirport">
-                        <label class="form-check-label" for="facilityAirport">
-                            Aviation (<span id="airportCount">0</span>)
-                        </label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input facility-checkbox" type="checkbox" value="police" id="facilityPolice">
-                        <label class="form-check-label" for="facilityPolice">
-                            Police (<span id="policeCount">0</span>)
-                        </label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input facility-checkbox" type="checkbox" value="embassy" id="facilityEmbassy">
-                        <label class="form-check-label" for="facilityEmbassy">
-                            Embassies (<span id="embassyCount">0</span>)
-                        </label>
-                    </div>
-
-                    <hr>
-                    <div class="filter-box" id="provinceSelect">
-                        <label class="filter-label">
-                            Province
-                        </label>
-
-                        <div class="select-input">
-                            <input
-                                type="text"
-                                id="provinceSearch"
-                                placeholder="Select Province"
-                                readonly
-                            >
-                            <i class="bi bi-chevron-down"></i>
-                        </div>
-
-                        <div class="select-dropdown">
-                            <input
-                                type="text"
-                                class="dropdown-search"
-                                id="provinceSearchInput"
-                                placeholder="Search Province..."
-                            >
-
-                            <ul id="provinceList">
-                                @foreach($provinces as $province)
-                                <li>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            class="province-checkbox"
-                                            value="{{ $province->id }}"
-                                        >
-                                        {{ $province->provinces_region }}
-                                    </label>
-                                </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-
-                    <hr>
-                    <button id="resetMapFilter"
-                            class="btn btn-sm btn-secondary w-100"
-                            style="margin-top:auto;">
-                        Reset All
-                    </button>
-                    <div id="totalCountDisplay" style="margin-top:8px;text-align:center;font-size:13px;"></div>
-                </div>
-            </div>`;            google.maps.event.addDomListener(combinedPanelDiv, 'click', e => e.stopPropagation());
-            google.maps.event.addDomListener(combinedPanelDiv, 'dblclick', e => e.stopPropagation());
-            google.maps.event.addDomListener(combinedPanelDiv, 'mousedown', e => e.stopPropagation());
-            google.maps.event.addDomListener(combinedPanelDiv, 'touchstart', e => e.stopPropagation());
-            google.maps.event.addDomListener(combinedPanelDiv, 'wheel', e => e.stopPropagation());
-            map.controls[google.maps.ControlPosition.RIGHT_TOP].push(combinedPanelDiv);
-
-    // === INIT SELECT2 ===
-    setTimeout(() => {
-        if (typeof $ !== 'undefined' && $.fn.select2) {
-            $('.select-search-airport').select2({ placeholder: 'Select Airport', width: '100%' });
-            $('.select-search-hospital').select2({ placeholder: 'Select Hospital', width: '100%' });
-        }
-    }, 300);
-
-    function getCurrentFiltersFromUI() {
-        const facilities = [...document.querySelectorAll('.facility-checkbox:checked')].map(el => el.value);
-        const hLevels = [...document.querySelectorAll('input[name="hospitalLevel"]:checked')].map(e => e.value);
-        const aClasses = [...document.querySelectorAll('input[name="airportClass"]:checked')].map(e => e.value);
-        const provs = [...document.querySelectorAll('.province-checkbox:checked')].map(e => e.value);
-        const radius = parseInt(document.getElementById('radiusRangeMap')?.value || 0);
-        // untuk select2, .value akan tetap bekerja because Select2 keeps value in the <select>
-        const airportName = document.getElementById('airport_name_map')?.value || '';
-        const hospitalName = document.getElementById('hospital_name_map')?.value || '';
-        return { facilities, hLevels, aClasses, provs, radius, airportName, hospitalName };
-    }
-
-    async function refreshCurrentFilters() {
-        const {
-            facilities,
-            hLevels,
-            aClasses,
-            provs,
-            radius,
-            airportName,
-            hospitalName
-        } = getCurrentFiltersFromUI();
-
-        await applyFiltersWithMapControl(
-            facilities,
-            hLevels,
-            aClasses,
-            provs,
-            radius,
-            airportName,
-            hospitalName
-        );
-    }
-
-    // === Event Logic ===
-    document.addEventListener('change', async e => {
-        const facilities = [...document.querySelectorAll('.facility-checkbox:checked')].map(el => el.value);
-        const hLevels = [...document.querySelectorAll('input[name="hospitalLevel"]:checked')].map(e => e.value);
-        const aClasses = [...document.querySelectorAll('input[name="airportClass"]:checked')].map(e => e.value);
-        const provs = [...document.querySelectorAll('.province-checkbox:checked')].map(e => e.value);
-        const radius = parseInt(document.getElementById('radiusRangeMap').value || 0);
-        const airportName = document.getElementById('airport_name_map')?.value || '';
-        const hospitalName = document.getElementById('hospital_name_map')?.value || '';
-
-        await applyFiltersWithMapControl(facilities, hLevels, aClasses, provs, radius, airportName, hospitalName);
-    }, true);
-
-    // === INPUT: update tampilan radius saat slider digeser (live) ===
-document.addEventListener('input', (e) => {
-    if (e.target && e.target.id === 'radiusRangeMap') {
-        const r = parseInt(e.target.value || 0);
-        const el = document.getElementById('radiusValueMap');
-        if (el) el.textContent = r;
-        // hanya update tampilan lingkaran saja (belum apply ke filter)
-        updateRadiusCircleAndPin(r);
-    }
-}, true);
-
-// === CLICK: apply / reset radius dan reset all ===
-// Menggunakan event capturing (true) agar tidak diblok oleh stopPropagation pada map control
-document.addEventListener('click', async (e) => {
-    if (!e.target) return;
-
-    // APPLY RADIUS => ambil filter sekarang lalu panggil applyFiltersWithMapControl dengan radius
-    if (e.target.id === 'applyRadiusMap') {
-        const { facilities, hLevels, aClasses, provs, radius, airportName, hospitalName } = getCurrentFiltersFromUI();
-        if (radius > 0 && !lastClickedLocation) {
-            alert('Cari lokasi terlebih dahulu menggunakan kolom "Search Location" sebelum menggunakan filter radius.');
-            return;
-        }
-        await applyFiltersWithMapControl(facilities, hLevels, aClasses, provs, radius, airportName, hospitalName);
-        return;
-    }
-
-    // RESET RADIUS (hanya reset radius visual & reapply tanpa radius)
-    if (e.target.id === 'resetRadiusMap') {
-        const rEl = document.getElementById('radiusRangeMap');
-        const rValEl = document.getElementById('radiusValueMap');
-        if (rEl) rEl.value = 0;
-        if (rValEl) rValEl.textContent = '0';
-
-        if (radiusCircle) { radiusCircle.setMap(null); radiusCircle = null; }
-        if (radiusPinMarker) { radiusPinMarker.setMap(null); radiusPinMarker = null; }
-        lastClickedLocation = null;
-
-        const { facilities, hLevels, aClasses, provs, airportName, hospitalName } = getCurrentFiltersFromUI();
-        await applyFiltersWithMapControl(facilities, hLevels, aClasses, provs, 0, airportName, hospitalName);
-        return;
-    }
-
-    // RESET ALL FILTERS (tombol Reset All)
-    if (e.target.id === 'resetMapFilter') {
-        // 1) UI reset
-        document.querySelectorAll('#filterPanel input[type="checkbox"]').forEach(cb => { cb.checked = false; });
-        const provinceSearch = document.getElementById('provinceSearch');
-        if (provinceSearch) provinceSearch.value = '';
-        const provinceSearchInput = document.getElementById('provinceSearchInput');
-        if (provinceSearchInput) provinceSearchInput.value = '';
-        document.querySelectorAll('#provinceList li').forEach(li => { li.style.display = ''; });
-
-        // sembunyikan sub-panels
-        const af = document.getElementById('airportFilter');
-        const hf = document.getElementById('hospitalFilter');
-        if (af) af.style.display = 'none';
-        if (hf) hf.style.display = 'none';
-
-        // 2) Reset Select2 (jika ada)
-        if (typeof $ !== 'undefined' && $.fn && $.fn.select2) {
-            $('.select-search-airport').each(function () { $(this).val(null).trigger('change'); });
-            $('.select-search-hospital').each(function () { $(this).val(null).trigger('change'); });
-        } else {
-            const airportSel = document.getElementById('airport_name_map');
-            const hospitalSel = document.getElementById('hospital_name_map');
-            if (airportSel) airportSel.value = '';
-            if (hospitalSel) hospitalSel.value = '';
-        }
-
-        // 3) Reset radius visual & location search
-        const radiusRange = document.getElementById('radiusRangeMap');
-        const radiusValue = document.getElementById('radiusValueMap');
-        if (radiusRange) radiusRange.value = 0;
-        if (radiusValue) radiusValue.textContent = '0';
-        if (radiusCircle) { radiusCircle.setMap(null); radiusCircle = null; }
-        if (radiusPinMarker) { radiusPinMarker.setMap(null); radiusPinMarker = null; }
-        lastClickedLocation = null;
-
-        const locInput = document.getElementById('locationSearchMap');
-        const locClear = document.getElementById('locationSearchClear');
-        const locBadge = document.getElementById('locationFoundBadge');
-        if (locInput) locInput.value = '';
-        if (locClear) locClear.style.display = 'none';
-        if (locBadge) locBadge.style.display = 'none';
-
-        const fixedDrop = document.getElementById('locationDropdownFixed');
-        if (fixedDrop) fixedDrop.style.display = 'none';
-        setRadiusSectionEnabled(false);
-
-        // 4) Remove drawn polygon and layers
-        if (activePolygon) activePolygon.setMap(null);
-        if (activePolyline) activePolyline.setMap(null);
-        if (cursorPolyline) cursorPolyline.setMap(null);
-        if (startMarker) startMarker.setMap(null);
-        activePolygon = null;
-        activePolyline = null;
-        cursorPolyline = null;
-        startMarker = null;
-        polygonLatLngs = [];
-        drawnPolygonGeoJSON = null;
-
-        // 5) Clear markers and counters
-        if (airportMarkers) clearMarkers(airportMarkers);
-        if (hospitalMarkers) clearMarkers(hospitalMarkers);
-        if (policeMarkers) clearMarkers(policeMarkers);
-        if (embassyMarkers) clearMarkers(embassyMarkers);
-        totalAirports = 0;
-        totalHospitals = 0;
-        totalPolice = 0;
-        totalEmbassies = 0;
-        updateTotalCountDisplay();
-
-        // 6) Re-fetch semua data
-        await applyFiltersWithMapControl([], [], [], [], 0, '', '');
-
-        e.stopPropagation();
-        e.preventDefault();
-        return;
-    }
-}, true);
-
-// === LISTEN TO CHANGE on filter inputs (kategori/provinsi/select nama) ===
-// Ini memastikan ketika user change checkbox / select2, filter langsung ter-apply
-function bindFilterChangeAutoApply() {
-    // checkbox change
-    document.querySelectorAll('#filterPanel input[type="checkbox"]').forEach(el => {
-        el.addEventListener('change', async () => {
-            const { facilities, hLevels, aClasses, provs, radius, airportName, hospitalName } = getCurrentFiltersFromUI();
-            await applyFiltersWithMapControl(facilities, hLevels, aClasses, provs, radius, airportName, hospitalName);
-        });
-    });
-
-    // select2 change (nama)
-    // if Select2 is used, listen with jQuery; otherwise plain change event above covers plain <select>
-    if (typeof $ !== 'undefined' && $.fn && $.fn.select2) {
-        $(document).on('change', '#airport_name_map, #hospital_name_map', async function () {
-            const { facilities, hLevels, aClasses, provs, radius, airportName, hospitalName } = getCurrentFiltersFromUI();
-            await applyFiltersWithMapControl(facilities, hLevels, aClasses, provs, radius, airportName, hospitalName);
-        });
-    } else {
-        document.getElementById('airport_name_map')?.addEventListener('change', async () => {
-            const { facilities, hLevels, aClasses, provs, radius, airportName, hospitalName } = getCurrentFiltersFromUI();
-            await applyFiltersWithMapControl(facilities, hLevels, aClasses, provs, radius, airportName, hospitalName);
-        });
-        document.getElementById('hospital_name_map')?.addEventListener('change', async () => {
-            const { facilities, hLevels, aClasses, provs, radius, airportName, hospitalName } = getCurrentFiltersFromUI();
-            await applyFiltersWithMapControl(facilities, hLevels, aClasses, provs, radius, airportName, hospitalName);
-        });
-    }
-}
-
-// call binding after panel is rendered
-setTimeout(() => {
-    bindFilterChangeAutoApply();
-    initLocationSearch();
-}, 350);
-
-    // --- Initial Load ---
-    refreshCurrentFilters();
+    // === JALANKAN ===
+    initializeMap();
+    addMainEmbassyAndCircle();
+    updateMarkers('all', [], [], []);
+    const filterContainer = setupFilterControl();
+    setupSearchControl(filterContainer);
+    setupNearbyCategoryBar();
+});
 </script>
 
 @endpush
-

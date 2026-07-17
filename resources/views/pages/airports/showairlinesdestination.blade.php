@@ -162,7 +162,7 @@
 
     <div class="card mb-4 position-relative">
         <div class="card-body" style="padding:0 7px;">
-            <small><i>Last Updated {{ $airport->created_at->format('M Y') }}</i></small>
+            <small><i>Last Updated / Verified {{ $airport->created_at->format('M Y') }}</i></small>
 
             @role('admin')
             <a href="{{ route('airportdata.edit', $airport->id) }}"

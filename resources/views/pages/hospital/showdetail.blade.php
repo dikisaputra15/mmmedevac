@@ -214,7 +214,7 @@
 
     <div class="card mb-4 position-relative">
         <div class="card-body" style="padding:0 7px;">
-            <small><i>Last Updated {{ $hospital->created_at->format('M Y') }}</i></small>
+            <small><i>Last Updated / Verified {{ $hospital->created_at->format('M Y') }}</i></small>
 
             @role('admin')
             <a href="{{ route('hospitaldata.edit', $hospital->id) }}"
