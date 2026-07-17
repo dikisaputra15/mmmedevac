@@ -523,7 +523,7 @@
 <script>
 // === Inisialisasi Peta ===
 const map = new google.maps.Map(document.getElementById('map'), {
-    center: { lat: -6.80188562253168, lng: 144.0733101155011 },
+    center: { lat: 21.9162, lng: 95.9560 },
     zoom: 5,
     mapTypeId: 'roadmap',
     mapTypeControl: true,
